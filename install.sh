@@ -23,7 +23,7 @@ set -euo pipefail
 
 # Pinned release fetched by the one-line install. scripts/release.sh fills both values when a release is cut.
 RELEASE_VERSION=0.1.0
-RELEASE_SHA256=''
+RELEASE_SHA256='1025c8665005a4d23fd7a7247b1e090f53b4719a3c70ead7f769cf6239bfb887'
 RELEASE_URL="https://github.com/maximeallanic/omnishell/releases/download/v${RELEASE_VERSION}/omnishell-${RELEASE_VERSION}.tar.gz"
 REPO_URL=https://github.com/maximeallanic/omnishell
 
