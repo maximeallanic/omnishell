@@ -23,8 +23,9 @@ First public release.
   and a daily summary notification.
 - Calendar and Tasks use the Google account of GNOME Online Accounts: no OAuth project or key to create.
 - English and French user interface; dates read and shown in the session language.
-- One-line installer with dependency detection for Debian/Ubuntu, Fedora and Arch, checksum-verified model download,
-  `uninstall.sh` (keeps your settings unless `--purge`) and `verify.sh`.
+- One-line installer that downloads a pinned release and checks its sha256, dependency detection for Debian/Ubuntu,
+  Fedora and Arch, checksum-verified model download, `uninstall.sh` (keeps your settings unless `--purge`) and
+  `verify.sh`.
 - `scripts/pack.sh` builds the extension zip for extensions.gnome.org.
 
 [Unreleased]: https://github.com/maximeallanic/gnome-google-hub/compare/v0.1.0...HEAD

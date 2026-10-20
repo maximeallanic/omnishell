@@ -19,7 +19,9 @@ promise about them:
   until it expires. The Gemini sign-in lives in the drawer's own WebKit profile (`~/.local/share/google-hub/webkit`).
 - **Local speech.** Audio is captured only while the listening pill is shown or Gemini's microphone button is
   active, sent to a `whisper-server` bound to `127.0.0.1` and never written to disk.
-- **Verified download.** The speech model is checked against a SHA-1 before use; a mismatch deletes it and stops.
+- **Verified downloads.** The one-line install downloads its release over HTTPS only and checks it against the sha256
+  pinned in `install.sh` before unpacking it. The speech model is checked against a SHA-1 before use; a mismatch
+  deletes it and stops.
 - **Exact removal.** `uninstall.sh` removes a fixed list of paths and never expands a pattern.
 - **Local D-Bus only.** The daemon and the extension talk over the session bus; nothing listens on the network.
 

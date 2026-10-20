@@ -17,29 +17,46 @@
 #   --uninstall          remove Google Hub (same as ./uninstall.sh)
 #   --version, -h, --help
 #
-# One-line install: GOOGLE_HUB_REF picks the release tag or branch to download (default: the pinned release),
-# GOOGLE_HUB_TARBALL a tarball URL or local file to install from instead.
+# One-line install: the script downloads the release pinned below over HTTPS, checks its sha256 before unpacking it,
+# and runs that release's installer. While no release is pinned it refuses and points to a clone instead.
 set -euo pipefail
 
-PINNED_RELEASE=v0.1.0
+# Pinned release fetched by the one-line install. scripts/release.sh fills both values when a release is cut.
+RELEASE_VERSION=0.1.0
+RELEASE_SHA256=''
+RELEASE_URL="https://github.com/maximeallanic/gnome-google-hub/releases/download/v${RELEASE_VERSION}/gnome-google-hub-${RELEASE_VERSION}.tar.gz"
 REPO_URL=https://github.com/maximeallanic/gnome-google-hub
 
-# Piped into bash (curl … | bash) there is no source tree next to this script: download the release and run its
-# installer. The whole function is read before it runs, so the rest of the pipe does not matter.
+# Piped into bash (curl … | bash) there is no source tree next to this script: download the pinned release, check it
+# and run its installer, which keeps its own copy in ~/.local/share/google-hub/source. The download directory is
+# removed on every exit path. The function ends with exit, so the rest of the pipe is never run.
 bootstrap() {
-    local self=${BASH_SOURCE[0]:-} ref=${GOOGLE_HUB_REF:-$PINNED_RELEASE} src dir
+    local self=${BASH_SOURCE[0]:-} tool cache tmp rc=0
     if [[ -n $self && -f $self && -f $(dirname -- "$self")/lib/common.sh ]]; then return 0; fi
     [[ $(id -u) != 0 ]] || { echo "error: run this as your normal user, not as root (sudo is asked for when needed)" >&2; exit 1; }
-    if ! command -v curl >/dev/null || ! command -v tar >/dev/null; then echo "error: curl and tar are needed" >&2; exit 1; fi
-    src=${GOOGLE_HUB_TARBALL:-$REPO_URL/archive/$ref.tar.gz}
-    dir=${XDG_CACHE_HOME:-$HOME/.cache}/google-hub/bootstrap
-    rm -rf -- "$dir"
-    mkdir -p -- "$dir"
-    echo "==> Downloading Google Hub ($ref)"
-    if [[ -f $src ]]; then tar -xzf "$src" -C "$dir" --strip-components=1
-    else curl -fsSL "$src" | tar -xz -C "$dir" --strip-components=1; fi
-    [[ -f $dir/install.sh && -f $dir/lib/common.sh ]] || { echo "error: $src is not a Google Hub source archive" >&2; exit 1; }
-    exec bash "$dir/install.sh" "$@"
+    if [[ -z $RELEASE_SHA256 ]]; then
+        echo "error: no release of Google Hub is pinned in this installer yet." >&2
+        echo "       Use a clone instead: git clone $REPO_URL && gnome-google-hub/install.sh" >&2
+        exit 1
+    fi
+    for tool in curl tar sha256sum; do
+        command -v "$tool" >/dev/null || { echo "error: $tool is needed" >&2; exit 1; }
+    done
+    cache=${XDG_CACHE_HOME:-$HOME/.cache}/google-hub
+    mkdir -p -- "$cache"
+    # Global, not local: the EXIT trap runs after this function has returned.
+    BOOTSTRAP_TMP=$(mktemp -d "$cache/bootstrap.XXXXXX")
+    trap 'rm -rf -- "$BOOTSTRAP_TMP"' EXIT
+    tmp=$BOOTSTRAP_TMP
+    echo "==> Downloading Google Hub $RELEASE_VERSION"
+    curl -fsSL --proto '=https' --proto-redir '=https' --tlsv1.2 -o "$tmp/release.tar.gz" "$RELEASE_URL"
+    echo "$RELEASE_SHA256  $tmp/release.tar.gz" | sha256sum --check --status \
+        || { echo "error: the download does not match the pinned sha256; nothing was installed." >&2; exit 1; }
+    mkdir -- "$tmp/src"
+    tar -xzf "$tmp/release.tar.gz" -C "$tmp/src" --strip-components=1 --no-same-owner
+    [[ -f $tmp/src/install.sh && -f $tmp/src/lib/common.sh ]] || { echo "error: the release is not a Google Hub source archive" >&2; exit 1; }
+    bash "$tmp/src/install.sh" "$@" || rc=$?
+    exit "$rc"
 }
 bootstrap "$@"
 

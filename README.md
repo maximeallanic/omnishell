@@ -120,7 +120,7 @@ From a terminal in your GNOME session, as your normal user:
 curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
 ```
 
-The installer downloads the pinned release, shows what is missing, asks before installing packages with `sudo` (the
+The installer downloads the pinned release and checks its sha256, shows what is missing, asks before installing packages with `sudo` (the
 only step that uses it) and before downloading the speech model, installs everything in your home directory, and
 ends with a check. Then:
 

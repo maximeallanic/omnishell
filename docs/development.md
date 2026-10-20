@@ -69,8 +69,10 @@ own copy; they are inert in the zip but a reviewer will ask about them.
 
 ## Releases
 
-1. Update `GOOGLE_HUB_VERSION` in `lib/common.sh`, `PINNED_RELEASE` in `install.sh` and `CHANGELOG.md`.
-2. Commit, tag `vX.Y.Z`, push the tag. `.github/workflows/release.yml` runs the tests and attaches the source tarball
-   and the extensions.gnome.org zip to a GitHub release.
-3. The one-line installer downloads `https://github.com/maximeallanic/gnome-google-hub/archive/<tag>.tar.gz`, so the
-   tag must exist before `PINNED_RELEASE` points at it on `main`.
+1. Give `CHANGELOG.md` its `## [X.Y.Z] - date` section and commit.
+2. `scripts/release.sh X.Y.Z` sets the version in `lib/common.sh` and `install.sh`, builds the reproducible tarball
+   (git archive, sorted, fixed dates, owners and modes, `gzip -n`), writes its sha256 into `install.sh` and commits
+   `chore(release): X.Y.Z`.
+3. Tag `vX.Y.Z` and push it with `main`. `.github/workflows/release.yml` runs the tests, rebuilds the tarball with
+   `scripts/release.sh --build-only`, fails if it does not match the pin, and publishes it with its sha256 and the
+   extensions.gnome.org zip. The one-line installer on `main` downloads that release asset.

@@ -127,7 +127,7 @@ Depuis un terminal de votre session GNOME, avec votre utilisateur habituel :
 curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
 ```
 
-L'installateur télécharge la version figée, affiche ce qui manque, demande avant d'installer des paquets avec `sudo`
+L'installateur télécharge la version figée et vérifie son sha256, affiche ce qui manque, demande avant d'installer des paquets avec `sudo`
 (la seule étape qui l'utilise) et avant de télécharger le modèle vocal, installe tout dans votre dossier personnel
 et termine par une vérification. Ensuite :
 

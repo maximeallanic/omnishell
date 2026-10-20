@@ -97,16 +97,46 @@ check_not "release copy removed" test -e "$DATA/source"
 check "settings kept" test -f "$CONF/config.json"
 check "model kept" test -f "$DATA/models/ggml-small.bin"
 
-echo "One-line install (piped into bash, from a release tarball)"
+echo "One-line install (piped into bash, from a pinned release tarball)"
+# piped PIN URL [PROTOCOLS]: install.sh fed to bash through a pipe, as by curl | bash, with the pin and the download URL
+# replaced. PROTOCOLS widens curl's protocol list so that a local file:// stands for the GitHub release; left empty,
+# the installer keeps its own HTTPS-only list.
+piped() {
+    sed -e "s|^RELEASE_SHA256=.*|RELEASE_SHA256='$1'|" -e "s|^RELEASE_URL=.*|RELEASE_URL='$2'|" \
+        -e "s|--proto '=https'|--proto '=${3:-https}'|" "$REPO/install.sh" | bash -s -- "${FLAGS[@]}"
+}
+no_download_left() { ! compgen -G "$HOME/.cache/google-hub/bootstrap.*" >/dev/null; }
+for line in "^RELEASE_SHA256=" "^RELEASE_URL=" "--proto '=https' "; do
+    check "install.sh has the '$line' the piped tests replace" grep -q -- "$line" "$REPO/install.sh"
+done
+# The pin is emptied here, as scripts/release.sh does in the tarball: the test does not depend on whether the checkout
+# is a release commit.
+out=$(piped '' https://example.invalid/none.tar.gz 2>&1)
+check_not "piped install refuses without a pinned release" test $? = 0
+check "the refusal says no release is pinned" grep -q "no release of Google Hub is pinned" <<<"$out"
+check "the refusal gives the clone command" grep -q "git clone" <<<"$out"
+check_not "nothing downloaded without a pin" grep -q Downloading <<<"$out"
 tar -C "$(dirname "$REPO")" --exclude=.git --exclude=__pycache__ --transform "s|^$(basename "$REPO")|gnome-google-hub-0.1.0|" \
     -czf "$T_ROOT/release.tar.gz" "$(basename "$REPO")"
-if out=$(GOOGLE_HUB_TARBALL="$T_ROOT/release.tar.gz" bash -s -- "${FLAGS[@]}" <"$REPO/install.sh" 2>&1); then
-    pass "piped install exits 0"
+sum=$(sha256sum "$T_ROOT/release.tar.gz" | cut -d' ' -f1)
+if out=$(piped "$sum" "file://$T_ROOT/release.tar.gz" https,file 2>&1); then pass "piped install exits 0"
 else fail "piped install exits 0: $out"; fi
 check "piped install installed the extension" test -f "$EXT/metadata.json"
-check "piped install ran from the downloaded copy" test -f "$HOME/.cache/google-hub/bootstrap/install.sh"
-out=$(GOOGLE_HUB_TARBALL="$T_ROOT/fake-model.bin" bash -s -- "${FLAGS[@]}" <"$REPO/install.sh" 2>&1)
-check_not "a broken archive is refused" test $? = 0
+check "piped install kept the release copy" test -x "$DATA/source/uninstall.sh"
+check "piped install removed its download" no_download_left
+cp "$T_ROOT/release.tar.gz" "$T_ROOT/tampered.tar.gz"
+printf 'x' >>"$T_ROOT/tampered.tar.gz"
+"$DATA/source/uninstall.sh" -y >/dev/null 2>&1 || fail "uninstall before the tampered test"
+out=$(piped "$sum" "file://$T_ROOT/tampered.tar.gz" https,file 2>&1)
+check_not "a tampered release is refused" test $? = 0
+check "the refusal names the checksum" grep -q "does not match the pinned sha256" <<<"$out"
+check_not "nothing installed from a tampered release" test -e "$EXT/metadata.json"
+check "the refused download was removed" no_download_left
+out=$(piped "$sum" "file://$T_ROOT/release.tar.gz" 2>&1)
+check_not "a non-HTTPS URL is refused" test $? = 0
+check_not "nothing installed from a non-HTTPS URL" test -e "$EXT/metadata.json"
+check "the refused download was removed" no_download_left
+out=$(piped "$sum" "file://$T_ROOT/release.tar.gz" https,file 2>&1) || fail "piped reinstall exits 0: $out"
 
 echo "Purge"
 out=$("$DATA/source/uninstall.sh" -y --purge 2>&1) || fail "purge exits 0: $out"

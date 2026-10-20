@@ -16,7 +16,9 @@ From a terminal inside your GNOME session, as your normal user:
 curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
 ```
 
-This downloads the pinned release (`v0.1.0`) into `~/.cache/google-hub/bootstrap` and runs its installer, which:
+This downloads the release pinned in `install.sh` (`v0.1.0`) over HTTPS, checks it against the sha256 written next
+to it before unpacking anything, and runs its installer. A mismatch stops with nothing installed, and an `install.sh`
+that pins no release yet refuses and gives the clone command. The download is removed afterwards. The installer:
 
 1. checks your distribution, GNOME Shell version and session;
 2. lists the missing system packages and asks before installing them with `sudo` (the only step that uses it);
@@ -28,7 +30,7 @@ This downloads the pinned release (`v0.1.0`) into `~/.cache/google-hub/bootstrap
 Then log out and back in: GNOME Shell loads new extensions only at login on Wayland.
 
 Options go after `bash -s --`, for example `curl -fsSL …/install.sh | bash -s -- --no-model -y`.
-`GOOGLE_HUB_REF=main` installs the development branch instead of the pinned release.
+To install the development branch instead of the pinned release, use a clone (below).
 
 ## From a clone
 

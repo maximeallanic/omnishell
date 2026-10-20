@@ -6,8 +6,8 @@ AI assistant.
 
 ## Before posting anything
 
-- [ ] The repository is public and the `v0.1.0` tag and release exist: `install.sh` downloads the pinned `v0.1.0`
-      release, so the one-line install fails until it does.
+- [ ] The repository is public, `scripts/release.sh 0.1.0` has pinned the release, and the `v0.1.0` tag and release
+      exist: `install.sh` downloads the pinned `v0.1.0` release, so the one-line install fails until it does.
 - [ ] The one-line install works from a fresh user account (`curl … | bash`), and `verify.sh` passes.
 - [ ] Social preview uploaded, description and topics set ([github-metadata.md](github-metadata.md)).
 - [ ] Decide what you say about how the project was built (see "AI disclosure" below), and say the same thing
