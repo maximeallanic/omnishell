@@ -1,0 +1,15 @@
+window.google-hub-panel,
+window.google-hub-panel.csd,
+window.google-hub-panel.csd:backdrop {
+  background: transparent;
+  border-radius: 16px 0 0 16px; /* drawer stuck to the right screen edge: square right corners (a theme may round the 4 corners of window.csd and libadwaita clips the window to that radius; sheet loaded above USER priority, see __main__.py) */
+}
+
+.panel-frame {
+  border-radius: 16px 0 0 16px; /* NavigationDrawer.ContainerShape (CornerLargeEnd, mirrored: drawer on the right) */
+}
+
+.panel-status {
+  background-color: @window_bg_color; /* the window itself is transparent (rounded left corners) */
+  border-radius: 16px 0 0 16px;
+}

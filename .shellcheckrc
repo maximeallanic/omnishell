@@ -1,0 +1,5 @@
+# The scripts share global state across the files they source (options, paths): the "appears unused" warning
+# cannot see across files.
+shell=bash
+external-sources=true
+disable=SC2034

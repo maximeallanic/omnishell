@@ -1,0 +1,54 @@
+name: Bug report
+description: Something does not install or behave as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please remove personal data before you paste anything: e-mail addresses, calendar events, task titles,
+        browser history, Gemini conversations.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `./install.sh --version` (or the commit)
+    validations:
+      required: true
+  - type: input
+    id: gnome
+    attributes:
+      label: GNOME Shell version
+      description: Output of `gnome-shell --version`. Google Hub supports GNOME Shell 50 and 51.
+    validations:
+      required: true
+  - type: input
+    id: distro
+    attributes:
+      label: Distribution and session language
+      description: For example "Fedora 44, French". Content of `PRETTY_NAME` in /etc/os-release, and `echo $LANG`.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where does it go wrong?
+      options: [install.sh, uninstall.sh, verify.sh, search results, Gemini drawer, voice dictation, Calendar or Tasks, other]
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Output of the failing command, of `~/.local/share/google-hub/source/verify.sh`, and
+        `journalctl --user -b -u google-hub-daemon` if relevant (remove personal data).
+      render: shell
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce

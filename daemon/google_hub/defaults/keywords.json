@@ -1,0 +1,7 @@
+{
+  "yt": ["YouTube", "https://www.youtube.com/results?search_query={q}"],
+  "maps": ["Maps", "https://www.google.com/maps/search/{q}"],
+  "w": ["Wikipedia", "https://{lang}.wikipedia.org/w/index.php?search={q}"],
+  "gh": ["GitHub", "https://github.com/search?q={q}"],
+  "drive": ["Drive", "https://drive.google.com/drive/search?q={q}"]
+}

@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:   # reused by the release workflow
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck every shell script
+        run: git ls-files -z '*.sh' tests/shims | xargs -0 shellcheck -x
+
+  test:
+    name: Tests (Debian testing)
+    runs-on: ubuntu-latest
+    # GNOME Shell 50/51, GJS and WebKitGTK 6 are too new for the Ubuntu runner: Debian testing has them.
+    container: debian:testing
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the test dependencies
+        run: |
+          apt-get update
+          grep -v '^#' .github/ci-packages.txt | xargs apt-get install -y --no-install-recommends
+      # The installer refuses to run as root, like any per-user GNOME extension: the tests run as a normal user.
+      - name: Create a test user
+        run: |
+          useradd --create-home tester
+          chown -R tester: "$GITHUB_WORKSPACE"
+      # A container cannot create the user namespaces of WebKit's bubblewrap sandbox; the drawer tests load local
+      # test pages only, so they run without it here (on a desktop the sandbox stays on).
+      - name: Run tests/run.sh
+        run: |
+          runuser -u tester -- env HOME=/home/tester XDG_RUNTIME_DIR=/tmp \
+              WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1 tests/run.sh
+      - name: Pack the extension for extensions.gnome.org
+        run: runuser -u tester -- scripts/pack.sh --out dist
+      - name: Check the zip
+        run: unzip -l dist/*.zip | grep -q 'locale/fr/LC_MESSAGES/google-hub.mo'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: extension-zip
+          path: dist/*.zip
+
+  links:
+    name: Markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --offline --no-progress --include-fragments './*.md' './docs/*.md' './screenshots/*.md' './.github/**/*.md'
+          fail: true

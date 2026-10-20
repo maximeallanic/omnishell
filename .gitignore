@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+dist/
+# Built by install.sh or the tests inside the source tree
+extension/*/schemas/gschemas.compiled
+extension/*/locale/
+*.swp
+*~

@@ -1,0 +1,25 @@
+# Debian testing packages for tests/run.sh (read by .github/workflows/ci.yml; one per line, # for comments).
+ca-certificates
+git
+curl
+shellcheck
+gettext
+python3
+python3-gi
+python3-babel
+python3-dateparser
+gir1.2-glib-2.0
+libglib2.0-bin
+gjs
+weston
+dbus-daemon
+dbus-bin
+gir1.2-gtk-4.0
+gir1.2-adw-1
+gir1.2-webkit-6.0
+gir1.2-gstreamer-1.0
+gir1.2-gst-plugins-base-1.0
+gstreamer1.0-plugins-base
+fonts-cantarell
+gnome-shell
+unzip

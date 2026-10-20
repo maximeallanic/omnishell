@@ -1,0 +1,3 @@
+#!/bin/sh
+# Test shim.
+echo "GNOME Shell ${GH_FAKE_GNOME_VERSION:-51.0}"

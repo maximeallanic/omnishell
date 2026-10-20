@@ -1,0 +1,195 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Maxime Allanic
+# This file is distributed under the same license as the google-hub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: google-hub\n"
+"Report-Msgid-Bugs-To: https://github.com/maximeallanic/gnome-google-hub/"
+"issues\n"
+"POT-Creation-Date: 2026-10-20 12:24+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: daemon/google_hub/calendar.py
+msgid "All day"
+msgstr ""
+
+#. Translators: daily summary when there are tasks for today and overdue ones: "3 tasks today, 1 overdue".
+#: daemon/google_hub/notify.py
+#, python-brace-format
+msgid "{today}, {overdue}"
+msgstr ""
+
+#: daemon/google_hub/notify.py
+#, python-brace-format
+msgid "{n} task today"
+msgid_plural "{n} tasks today"
+msgstr[0] ""
+msgstr[1] ""
+
+#. Translators: second part of "3 tasks today, 1 overdue": the word "task" is not repeated.
+#: daemon/google_hub/notify.py
+#, python-brace-format
+msgid "{n} overdue"
+msgid_plural "{n} overdue"
+msgstr[0] ""
+msgstr[1] ""
+
+#: daemon/google_hub/notify.py
+#, python-brace-format
+msgid "{n} task overdue"
+msgid_plural "{n} tasks overdue"
+msgstr[0] ""
+msgstr[1] ""
+
+#: daemon/google_hub/notify.py
+msgid "Open"
+msgstr ""
+
+#. Translators: search keyword result: "YouTube: cat videos".
+#: daemon/google_hub/omnibox.py
+#, python-brace-format
+msgid "{label}: {query}"
+msgstr ""
+
+#: daemon/google_hub/omnibox.py
+#, python-brace-format
+msgid "Open {url}"
+msgstr ""
+
+#: daemon/google_hub/omnibox.py
+#: extension/google-hub@maximeallanic.github.io/logic.js
+#, python-brace-format
+msgid "Search “{query}” on Google"
+msgstr ""
+
+#: daemon/google_hub/omnibox.py
+#: extension/google-hub@maximeallanic.github.io/logic.js
+#, python-brace-format
+msgid "Ask Gemini: “{query}”"
+msgstr ""
+
+#: daemon/google_hub/service.py
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Connect your Google account"
+msgstr ""
+
+#: daemon/google_hub/service.py
+msgid "Settings → Online Accounts"
+msgstr ""
+
+#. Translators: a task created or completed offline that Google refused once back online.
+#: daemon/google_hub/service.py
+#, python-brace-format
+msgid "Change not saved: {task}"
+msgstr ""
+
+#: daemon/google_hub/service.py
+#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+msgid "Google Tasks"
+msgstr ""
+
+#: daemon/google_hub/tasks.py
+msgid "no language"
+msgstr ""
+
+#. Translators: {languages} is a list of language codes ("fr and en"); date_languages is the config.json
+#. key, not translated.
+#: daemon/google_hub/tasks.py
+#, python-brace-format
+msgid "No due date · dates read in {languages} (date_languages)"
+msgstr ""
+
+#: daemon/google_hub/tasks.py
+#, python-brace-format
+msgid "Create task: {title}"
+msgstr ""
+
+#. Translators: title of the Google sign-in window opened from the drawer.
+#: panel/google_hub_panel/window.py
+msgid "Sign in"
+msgstr ""
+
+#: panel/google_hub_panel/window.py
+#: extension/google-hub@maximeallanic.github.io/panel.js
+msgid "Question copied — paste it into Gemini"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/extension.js
+msgid "Gemini is unavailable offline"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Overdue"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Today"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Next 7 days"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "offline"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "{n} undated"
+msgid_plural "{n} undated"
+msgstr[0] ""
+msgstr[1] ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "See all"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "No upcoming tasks"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Listening…"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Transcribing…"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Nothing heard"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Microphone unavailable"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/logic.js
+msgid "Transcription failed"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/search.js
+msgid "Calendar & Tasks"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+msgid "Tasks"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+msgid "+ Add a task"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+msgid "Mark “{title}” as done"
+msgstr ""

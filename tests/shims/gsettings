@@ -1,0 +1,14 @@
+#!/bin/sh
+# Test shim: gsettings get/set backed by a text file ("schema key value" lines) in $GH_FAKE_DIR.
+store="$GH_FAKE_DIR/gsettings.txt"
+touch "$store"
+case "$1" in
+    get)
+        line=$(grep -F "$2 $3 " "$store" | tail -n 1)
+        if [ -n "$line" ]; then printf '%s\n' "${line#"$2 $3 "}"
+        elif [ "$3" = enabled-extensions ]; then echo '@as []'
+        elif [ "$3" = disable-user-extensions ]; then echo false
+        else echo "No such key '$3'" >&2; exit 1; fi ;;
+    set) grep -vF "$2 $3 " "$store" >"$store.new"; printf '%s %s %s\n' "$2" "$3" "$4" >>"$store.new"; mv "$store.new" "$store" ;;
+    *) echo "gsettings shim: unsupported: $*" >&2; exit 1 ;;
+esac

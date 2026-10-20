@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.google-hub" path="/org/gnome/shell/extensions/google-hub/">
+    <key name="toggle-panel" type="as">
+      <default><![CDATA[['<Super>g']]]></default>
+      <summary>Open or close the Gemini drawer</summary>
+    </key>
+    <key name="voice" type="as">
+      <default><![CDATA[['<Super><Shift>g']]]></default>
+      <summary>Talk to Gemini</summary>
+    </key>
+    <key name="panel-width" type="i">
+      <default>600</default>
+      <summary>Drawer width (logical pixels)</summary>
+    </key>
+    <key name="panel-url" type="s">
+      <default>''</default>
+      <summary>Address loaded in the drawer (empty: Gemini)</summary>
+    </key>
+  </schema>
+</schemalist>

@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=io.github.maximeallanic.GoogleHub
+Exec=/bin/false
+SystemdService=google-hub-daemon.service

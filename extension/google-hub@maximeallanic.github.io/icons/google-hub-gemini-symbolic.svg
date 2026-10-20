@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-1.72 -1.72 19.44 19.44">
+  <!-- Four-pointed sparkle, filled. The ink spans 14/19.44 (0.72) of the frame, like the Shell's status icons;
+       the top bar then sets the displayed size. -->
+  <path fill="#2e3436" d="M8 1c.45 3.4 3.1 6.05 6.5 6.5v1C11.1 8.95 8.45 11.6 8 15h-1c-.45-3.4-3.1-6.05-6.5-6.5v-1C3.9 7.05 6.55 4.4 7 1z" transform="translate(.5 0)"/>
+</svg>

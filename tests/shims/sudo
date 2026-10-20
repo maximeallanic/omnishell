@@ -1,0 +1,4 @@
+#!/bin/sh
+# Test shim: the tests never install packages; a call is recorded and fails.
+echo "$*" >>"$GH_FAKE_DIR/sudo.log"
+exit 1

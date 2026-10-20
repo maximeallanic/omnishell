@@ -1,0 +1,4 @@
+#!/bin/sh
+# Test shim: records every call in $GH_FAKE_DIR/systemctl.log.
+echo "$*" >>"$GH_FAKE_DIR/systemctl.log"
+exit 0

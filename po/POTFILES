@@ -1,0 +1,11 @@
+daemon/google_hub/calendar.py
+daemon/google_hub/notify.py
+daemon/google_hub/omnibox.py
+daemon/google_hub/service.py
+daemon/google_hub/tasks.py
+panel/google_hub_panel/window.py
+extension/google-hub@maximeallanic.github.io/extension.js
+extension/google-hub@maximeallanic.github.io/logic.js
+extension/google-hub@maximeallanic.github.io/panel.js
+extension/google-hub@maximeallanic.github.io/search.js
+extension/google-hub@maximeallanic.github.io/tasks-menu.js

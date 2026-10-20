@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>waiting</title>
+<script>
+const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!R) {
+  document.title = 'DONE nopolyfill';
+} else {
+  const ev = [];
+  const r = new R();
+  r.lang = 'fr-FR';
+  r.interimResults = false;
+  r.onstart = () => ev.push('start');
+  r.addEventListener('audiostart', () => ev.push('audiostart'));
+  r.onspeechstart = () => ev.push('speechstart');
+  r.onspeechend = () => ev.push('speechend');
+  r.onaudioend = () => ev.push('audioend');
+  r.onresult = e => ev.push('result:' + e.results[0][0].transcript + ':' + e.results[0].isFinal);
+  r.onerror = e => ev.push('error:' + e.error);
+  r.onend = () => { ev.push('end'); document.title = 'DONE ' + ev.join(','); };
+  r.start();
+  if (location.hash === '#abort') setTimeout(() => r.abort(), 100);
+}
+</script>
