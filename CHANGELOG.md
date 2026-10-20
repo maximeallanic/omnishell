@@ -5,9 +5,12 @@ the project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-10-20
+## [0.1.1] - 2026-10-20
 
-First public release. The project was renamed from "Google Hub" to Omnishell before this release.
+First published release: 0.1.0 was tagged but never released. Its tag, pushed together with the first push of the
+branch, did not start the release workflow, and the CI ShellCheck job failed on the older ShellCheck of the Ubuntu
+runner (a warning disabled under its 0.11 code only). The project was renamed from "Google Hub" to Omnishell before
+this release.
 
 ### Added
 
@@ -30,5 +33,10 @@ First public release. The project was renamed from "Google Hub" to Omnishell bef
   `verify.sh`.
 - `scripts/pack.sh` builds the extension zip for extensions.gnome.org.
 
-[Unreleased]: https://github.com/maximeallanic/omnishell/compare/v0.1.0...HEAD
+## [0.1.0] - 2026-10-20
+
+Tagged, not released (see 0.1.1).
+
+[Unreleased]: https://github.com/maximeallanic/omnishell/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/maximeallanic/omnishell/releases/tag/v0.1.1
 [0.1.0]: https://github.com/maximeallanic/omnishell/releases/tag/v0.1.0

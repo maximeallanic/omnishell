@@ -16,7 +16,7 @@ From a terminal inside your GNOME session, as your normal user:
 curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
-This downloads the release pinned in `install.sh` (`v0.1.0`) over HTTPS, checks it against the sha256 written next
+This downloads the release pinned in `install.sh` (`v0.1.1`) over HTTPS, checks it against the sha256 written next
 to it before unpacking anything, and runs its installer. A mismatch stops with nothing installed, and an `install.sh`
 that pins no release yet refuses and gives the clone command. The download is removed afterwards. The installer:
 

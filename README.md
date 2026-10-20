@@ -113,7 +113,7 @@ result. Full details: [docs/privacy.md](docs/privacy.md).
   `install.sh` sets up.
 - **Bookmarks and history come from Chromium-family browsers only** (Chrome, Chromium). Firefox is not supported.
 - **The installer speaks English only.** The desktop interface is in English and French.
-- **First release (0.1.0).** Expect rough edges.
+- **First release (0.1.1).** Expect rough edges.
 
 ## Install
 

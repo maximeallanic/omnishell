@@ -120,7 +120,7 @@ recherche n'envoie alors rien tant que vous ne choisissez pas « Rechercher sur 
 - **Favoris et historique viennent des navigateurs de la famille Chromium seulement** (Chrome, Chromium). Firefox
   n'est pas pris en charge.
 - **L'installateur ne parle qu'anglais.** L'interface du bureau est en anglais et en français.
-- **Première version (0.1.0).** Attendez-vous à quelques aspérités.
+- **Première version (0.1.1).** Attendez-vous à quelques aspérités.
 
 ## Installation
 

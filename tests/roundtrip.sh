@@ -116,7 +116,7 @@ check_not "piped install refuses without a pinned release" test $? = 0
 check "the refusal says no release is pinned" grep -q "no release of Omnishell is pinned" <<<"$out"
 check "the refusal gives the clone command" grep -q "git clone" <<<"$out"
 check_not "nothing downloaded without a pin" grep -q Downloading <<<"$out"
-tar -C "$(dirname "$REPO")" --exclude=.git --exclude=__pycache__ --transform "s|^$(basename "$REPO")|omnishell-0.1.0|" \
+tar -C "$(dirname "$REPO")" --exclude=.git --exclude=__pycache__ --transform "s|^$(basename "$REPO")|omnishell-$(sed -n 's/^OMNISHELL_VERSION=//p' "$REPO/lib/common.sh")|" \
     -czf "$T_ROOT/release.tar.gz" "$(basename "$REPO")"
 sum=$(sha256sum "$T_ROOT/release.tar.gz" | cut -d' ' -f1)
 if out=$(piped "$sum" "file://$T_ROOT/release.tar.gz" https,file 2>&1); then pass "piped install exits 0"

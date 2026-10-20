@@ -6,8 +6,8 @@ AI assistant.
 
 ## Before posting anything
 
-- [ ] The repository is public, `scripts/release.sh 0.1.0` has pinned the release, and the `v0.1.0` tag and release
-      exist: `install.sh` downloads the pinned `v0.1.0` release, so the one-line install fails until it does.
+- [ ] The repository is public, `scripts/release.sh 0.1.1` has pinned the release, and the `v0.1.1` tag and release
+      exist: `install.sh` downloads the pinned `v0.1.1` release, so the one-line install fails until it does.
 - [ ] The one-line install works from a fresh user account (`curl … | bash`), and `verify.sh` passes.
 - [ ] Social preview uploaded, description and topics set ([github-metadata.md](github-metadata.md)).
 - [ ] Decide what you say about how the project was built (see "AI disclosure" below), and say the same thing
@@ -43,7 +43,7 @@ make a claim either way.
 
 ## Facts you can use (all from the repository)
 
-- GNOME Shell 50 and 51, Wayland. MIT. Version 0.1.0, first public release.
+- GNOME Shell 50 and 51, Wayland. MIT. Version 0.1.1, first public release.
 - Super, then type: "Search on Google", "Ask Gemini", Google suggestions, direct addresses, Chrome/Chromium
   bookmarks and history, Google Calendar events and Google Tasks, below the applications.
 - Keywords: `yt`, `maps`, `w`, `gh`, `drive`, plus your own. `t Call the plumber tomorrow` creates a Google task with
@@ -156,7 +156,7 @@ appear as you type".
 **Toot (455 characters; Mastodon counts the link as 23, so 436):**
 
 ```text
-Omnishell 0.1.0: Google search, Gemini and Google Tasks built into GNOME Shell 50/51.
+Omnishell 0.1.1: Google search, Gemini and Google Tasks built into GNOME Shell 50/51.
 
 • Super + type: Google suggestions, Ask Gemini, Calendar & Tasks
 • Super+G: Gemini drawer
