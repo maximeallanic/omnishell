@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Google Hub installer: Google search, Gemini, local voice dictation, Calendar and Tasks in GNOME Shell.
+# Omnishell installer: Google search, Gemini, local voice dictation, Calendar and Tasks in GNOME Shell.
 # Runs as your user (never as root), changes only your home directory, is idempotent and reversible (./uninstall.sh).
 #
-#   curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 #   ./install.sh [options]
 #
 # Options:
@@ -14,7 +14,7 @@
 #   --vulkan             also install whisper.cpp's Vulkan GPU backend (Debian and Ubuntu)
 #   --no-session-check   install without a running GNOME session (the service and extension start at next login)
 #   --no-verify          do not run ./verify.sh at the end
-#   --uninstall          remove Google Hub (same as ./uninstall.sh)
+#   --uninstall          remove Omnishell (same as ./uninstall.sh)
 #   --version, -h, --help
 #
 # One-line install: the script downloads the release pinned below over HTTPS, checks its sha256 before unpacking it,
@@ -24,37 +24,37 @@ set -euo pipefail
 # Pinned release fetched by the one-line install. scripts/release.sh fills both values when a release is cut.
 RELEASE_VERSION=0.1.0
 RELEASE_SHA256=''
-RELEASE_URL="https://github.com/maximeallanic/gnome-google-hub/releases/download/v${RELEASE_VERSION}/gnome-google-hub-${RELEASE_VERSION}.tar.gz"
-REPO_URL=https://github.com/maximeallanic/gnome-google-hub
+RELEASE_URL="https://github.com/maximeallanic/omnishell/releases/download/v${RELEASE_VERSION}/omnishell-${RELEASE_VERSION}.tar.gz"
+REPO_URL=https://github.com/maximeallanic/omnishell
 
 # Piped into bash (curl … | bash) there is no source tree next to this script: download the pinned release, check it
-# and run its installer, which keeps its own copy in ~/.local/share/google-hub/source. The download directory is
+# and run its installer, which keeps its own copy in ~/.local/share/omnishell/source. The download directory is
 # removed on every exit path. The function ends with exit, so the rest of the pipe is never run.
 bootstrap() {
     local self=${BASH_SOURCE[0]:-} tool cache tmp rc=0
     if [[ -n $self && -f $self && -f $(dirname -- "$self")/lib/common.sh ]]; then return 0; fi
     [[ $(id -u) != 0 ]] || { echo "error: run this as your normal user, not as root (sudo is asked for when needed)" >&2; exit 1; }
     if [[ -z $RELEASE_SHA256 ]]; then
-        echo "error: no release of Google Hub is pinned in this installer yet." >&2
-        echo "       Use a clone instead: git clone $REPO_URL && gnome-google-hub/install.sh" >&2
+        echo "error: no release of Omnishell is pinned in this installer yet." >&2
+        echo "       Use a clone instead: git clone $REPO_URL && omnishell/install.sh" >&2
         exit 1
     fi
     for tool in curl tar sha256sum; do
         command -v "$tool" >/dev/null || { echo "error: $tool is needed" >&2; exit 1; }
     done
-    cache=${XDG_CACHE_HOME:-$HOME/.cache}/google-hub
+    cache=${XDG_CACHE_HOME:-$HOME/.cache}/omnishell
     mkdir -p -- "$cache"
     # Global, not local: the EXIT trap runs after this function has returned.
     BOOTSTRAP_TMP=$(mktemp -d "$cache/bootstrap.XXXXXX")
     trap 'rm -rf -- "$BOOTSTRAP_TMP"' EXIT
     tmp=$BOOTSTRAP_TMP
-    echo "==> Downloading Google Hub $RELEASE_VERSION"
+    echo "==> Downloading Omnishell $RELEASE_VERSION"
     curl -fsSL --proto '=https' --proto-redir '=https' --tlsv1.2 -o "$tmp/release.tar.gz" "$RELEASE_URL"
     echo "$RELEASE_SHA256  $tmp/release.tar.gz" | sha256sum --check --status \
         || { echo "error: the download does not match the pinned sha256; nothing was installed." >&2; exit 1; }
     mkdir -- "$tmp/src"
     tar -xzf "$tmp/release.tar.gz" -C "$tmp/src" --strip-components=1 --no-same-owner
-    [[ -f $tmp/src/install.sh && -f $tmp/src/lib/common.sh ]] || { echo "error: the release is not a Google Hub source archive" >&2; exit 1; }
+    [[ -f $tmp/src/install.sh && -f $tmp/src/lib/common.sh ]] || { echo "error: the release is not a Omnishell source archive" >&2; exit 1; }
     bash "$tmp/src/install.sh" "$@" || rc=$?
     exit "$rc"
 }
@@ -86,7 +86,7 @@ while (($#)); do
         --no-session-check) SESSION_CHECK=0 ;;
         --no-verify) RUN_VERIFY=0 ;;
         --uninstall) shift; exec "$REPO_ROOT/uninstall.sh" "$@" ;;
-        --version) echo "google-hub $GOOGLE_HUB_VERSION"; exit 0 ;;
+        --version) echo "omnishell $OMNISHELL_VERSION"; exit 0 ;;
         -h|--help) usage; exit 0 ;;
         *) die "unknown option: $1 (see --help)" ;;
     esac
@@ -148,14 +148,14 @@ step_deps() {
     ((DRY_RUN)) && return 0
     # What is still missing after the installation decides how far we can go.
     check_deps "$FAMILY" core
-    ((${#MISSING_CHECKS[@]} == 0)) || die "still missing, Google Hub cannot run without: ${MISSING_CHECKS[*]#*:}"
+    ((${#MISSING_CHECKS[@]} == 0)) || die "still missing, Omnishell cannot run without: ${MISSING_CHECKS[*]#*:}"
     check_deps "$FAMILY" voice
     if ((${#MISSING_CHECKS[@]})); then VOICE_READY=0; msg_warn "dictation will be unavailable (missing: ${MISSING_CHECKS[*]#*:})"; fi
 }
 
 FAMILY=unsupported
 VOICE_READY=1
-printf '%sGoogle Hub %s%s installer\n' "$C_BOLD" "$GOOGLE_HUB_VERSION" "$C_OFF"
+printf '%sOmnishell %s%s installer\n' "$C_BOLD" "$OMNISHELL_VERSION" "$C_OFF"
 ((DRY_RUN)) && msg_info "dry run: nothing is changed"
 preflight
 step_deps
@@ -169,7 +169,7 @@ step_source_copy
 
 cat <<EOF
 
-${C_BOLD}Google Hub is installed.${C_OFF} Next:
+${C_BOLD}Omnishell is installed.${C_OFF} Next:
   1. Log out and back in, so GNOME Shell loads the extension (Wayland cannot reload the Shell in place).
   2. Settings > Online Accounts > Google, with Calendar enabled, for Calendar and Tasks.
   3. Press Super+G and sign in to Gemini in the drawer once.

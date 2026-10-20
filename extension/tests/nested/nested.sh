@@ -12,16 +12,16 @@
 #   --monitor WxH@R   virtual monitor (default 1920x1080@60)
 #   --stock-theme F   Shell theme resource file to use instead of the system one (for a host whose theme was replaced,
 #                     e.g. a dpkg diversion of gnome-shell-theme.gresource): its sheets are overlaid with G_RESOURCE_OVERLAYS
-# The extension of this repository is copied with the "google-hub-bench" metadata key, which exports its *Debug
+# The extension of this repository is copied with the "omnishell-bench" metadata key, which exports its *Debug
 # methods and switches the nested Shell to unsafe mode (org.gnome.Shell.Eval and Screenshot for the driver).
 # Exit codes: 0 ok; 1 failure; 2 refusal, usage or lock held; 3 the real dconf database changed; 4 the host runtime
 # directory changed.
 set -u
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO=$(cd "$HERE/../../.." && pwd)
-UUID=google-hub@maximeallanic.github.io
-NAME=io.github.maximeallanic.GoogleHubShell
-OBJ_PATH=/io/github/maximeallanic/GoogleHubShell
+UUID=omnishell@maximeallanic.github.io
+NAME=io.github.maximeallanic.OmnishellShell
+OBJ_PATH=/io/github/maximeallanic/OmnishellShell
 usage() { echo "nested.sh: $1" >&2; exit 2; }
 
 if [[ ${1:-} != --inner ]]; then
@@ -42,7 +42,7 @@ if [[ ${1:-} != --inner ]]; then
     done
     [[ -n $DRIVER ]] || usage "--driver is required"
     # One bench at a time (two nested Shells would fight over nothing, but double the load).
-    exec 9>"${TMPDIR:-/tmp}/google-hub-bench.lock" || usage "cannot open the lock"
+    exec 9>"${TMPDIR:-/tmp}/omnishell-bench.lock" || usage "cannot open the lock"
     flock -n 9 || usage "another bench session is running"
     [[ -n $OUT ]] || OUT=$(mktemp -d)
     mkdir -p "$OUT" && OUT=$(cd "$OUT" && pwd) || exit 2
@@ -60,20 +60,20 @@ if [[ ${1:-} != --inner ]]; then
     # Audio stays private too: the bench never records or plays through the host.
     mkdir -m 0700 "$TMP/run" "$TMP/data" || exit 2
     export XDG_RUNTIME_DIR="$TMP/run" PIPEWIRE_RUNTIME_DIR="$TMP/run" PULSE_RUNTIME_PATH="$TMP/run/pulse" \
-        GOOGLE_HUB_HOST_RUN="$HOST_RUN" GVFS_DISABLE_FUSE=1
+        OMNISHELL_HOST_RUN="$HOST_RUN" GVFS_DISABLE_FUSE=1
     unset WAYLAND_DISPLAY DISPLAY
     export XDG_CONFIG_HOME="$TMP/config" XDG_DATA_HOME="$TMP/data" XDG_CACHE_HOME="$TMP/cache" XDG_STATE_HOME="$TMP/state"
-    export GOOGLE_HUB_BENCH_TMP="$TMP" GOOGLE_HUB_REAL_BUS="${DBUS_SESSION_BUS_ADDRESS:-}" GOOGLE_HUB_BENCH_LOCALE="$LOCALE" \
-        GOOGLE_HUB_BENCH_MONITOR="$MONITOR" GOOGLE_HUB_BENCH_PREPARE="$PREPARE" GOOGLE_HUB_BENCH_DRIVER="$DRIVER" \
-        GOOGLE_HUB_BENCH_STOCK="$STOCK"
-    GOOGLE_HUB_BENCH_KEYFILES=$(IFS=:; echo "${KEYFILES[*]-}")
-    export GOOGLE_HUB_BENCH_KEYFILES
+    export OMNISHELL_BENCH_TMP="$TMP" OMNISHELL_REAL_BUS="${DBUS_SESSION_BUS_ADDRESS:-}" OMNISHELL_BENCH_LOCALE="$LOCALE" \
+        OMNISHELL_BENCH_MONITOR="$MONITOR" OMNISHELL_BENCH_PREPARE="$PREPARE" OMNISHELL_BENCH_DRIVER="$DRIVER" \
+        OMNISHELL_BENCH_STOCK="$STOCK"
+    OMNISHELL_BENCH_KEYFILES=$(IFS=:; echo "${KEYFILES[*]-}")
+    export OMNISHELL_BENCH_KEYFILES
     # Private bus without the file indexer: activated there it would crawl the real HOME (session_bus.py).
     BUS_CONF=$(python3 "$HERE/session_bus.py" "$TMP/bus") || { rm -rf -- "$TMP"; exit 2; }
     dbus-run-session --config-file="$BUS_CONF" -- bash "$HERE/nested.sh" --inner "$OUT" "$TMP" 9>&- </dev/null
     code=$?
     RUN_AFTER=$(list_run)
-    pattern='^(google-hub-bench-|gnome-shell-disable-extensions$|\.mutter-Xwaylandauth\.|\.X[0-9]+-lock$)'
+    pattern='^(omnishell-bench-|gnome-shell-disable-extensions$|\.mutter-Xwaylandauth\.|\.X[0-9]+-lock$)'
     created=$(comm -13 <(printf '%s\n' "$RUN_BEFORE") <(printf '%s\n' "$RUN_AFTER") | grep -E "$pattern")
     gone=$(comm -23 <(printf '%s\n' "$RUN_BEFORE") <(printf '%s\n' "$RUN_AFTER") |
         grep -E "$pattern|^(wayland-|bus$|pipewire|pulse$|dconf$|doc$)")
@@ -91,13 +91,13 @@ fi
 # --- inner part: runs inside the private session bus ---
 refuse() { echo "nested.sh --inner refused: $1" >&2; exit 2; }
 OUT=$2 TMP=$3
-[[ -n ${GOOGLE_HUB_BENCH_TMP:-} && $TMP == "$GOOGLE_HUB_BENCH_TMP" ]] || refuse "unexpected TMP: $TMP"
+[[ -n ${OMNISHELL_BENCH_TMP:-} && $TMP == "$OMNISHELL_BENCH_TMP" ]] || refuse "unexpected TMP: $TMP"
 [[ $TMP == "${TMPDIR:-/tmp}"/tmp.* && -d $TMP ]] || refuse "TMP outside ${TMPDIR:-/tmp}/tmp.*: $TMP"
 for v in XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME; do
     [[ ${!v:-} == "$TMP"/* ]] || refuse "$v is not temporary: ${!v:-}"
 done
-[[ -n ${DBUS_SESSION_BUS_ADDRESS:-} && $DBUS_SESSION_BUS_ADDRESS != "${GOOGLE_HUB_REAL_BUS:-}" ]] || refuse "real session bus"
-[[ ${XDG_RUNTIME_DIR:-} == "$TMP/run" && $XDG_RUNTIME_DIR != "${GOOGLE_HUB_HOST_RUN:-}" ]] ||
+[[ -n ${DBUS_SESSION_BUS_ADDRESS:-} && $DBUS_SESSION_BUS_ADDRESS != "${OMNISHELL_REAL_BUS:-}" ]] || refuse "real session bus"
+[[ ${XDG_RUNTIME_DIR:-} == "$TMP/run" && $XDG_RUNTIME_DIR != "${OMNISHELL_HOST_RUN:-}" ]] ||
     refuse "XDG_RUNTIME_DIR is not private: ${XDG_RUNTIME_DIR:-}"
 [[ -z ${WAYLAND_DISPLAY:-} && -z ${DISPLAY:-} ]] || refuse "WAYLAND_DISPLAY/DISPLAY of the host inherited"
 
@@ -129,14 +129,14 @@ cp -r "$REPO/extension/$UUID" "$EXT" || exit 1
 python3 - "$EXT/metadata.json" <<'PY' || exit 1
 import json, sys
 meta = json.load(open(sys.argv[1]))
-meta["google-hub-bench"] = True
+meta["omnishell-bench"] = True
 json.dump(meta, open(sys.argv[1], "w"))
 PY
 glib-compile-schemas --strict "$EXT/schemas" || exit 1
 for po in "$REPO"/po/*.po; do
     lang=$(basename "$po" .po)
     mkdir -p "$EXT/locale/$lang/LC_MESSAGES"
-    msgfmt --check -o "$EXT/locale/$lang/LC_MESSAGES/google-hub.mo" "$po" || exit 1
+    msgfmt --check -o "$EXT/locale/$lang/LC_MESSAGES/omnishell.mo" "$po" || exit 1
 done
 # External search providers off: activated on the private bus they would search the real HOME.
 cat >"$TMP/dconf-src/00-bench.keyfile" <<K
@@ -149,31 +149,31 @@ welcome-dialog-last-shown-version='999'
 disable-external=true
 K
 n=10
-IFS=: read -ra EXTRA <<<"${GOOGLE_HUB_BENCH_KEYFILES:-}"
+IFS=: read -ra EXTRA <<<"${OMNISHELL_BENCH_KEYFILES:-}"
 for k in ${EXTRA[@]+"${EXTRA[@]}"}; do cp "$k" "$TMP/dconf-src/$n.keyfile"; n=$((n + 1)); done
 dconf compile "$XDG_CONFIG_HOME/dconf/user" "$TMP/dconf-src" || { echo "dconf compile failed" >&2; exit 1; }
 
 LOCALE_ENV=()
 for v in $(compgen -e); do [[ $v =~ ^(LANG|LANGUAGE|LC_[A-Z]+)$ ]] && LOCALE_ENV+=(-u "$v"); done
-LOCALE_ENV+=("LANG=$GOOGLE_HUB_BENCH_LOCALE")
+LOCALE_ENV+=("LANG=$OMNISHELL_BENCH_LOCALE")
 # Services the private bus activates (the daemon) get the bench locale too, as gnome-session arranges in a real
 # session; the bus itself was started with the host environment. An empty value counts as unset for GLib.
-ACTIVATION_ENV=("LANG=$GOOGLE_HUB_BENCH_LOCALE")
+ACTIVATION_ENV=("LANG=$OMNISHELL_BENCH_LOCALE")
 for v in $(compgen -e); do [[ $v =~ ^(LANGUAGE|LC_[A-Z]+)$ ]] && ACTIVATION_ENV+=("$v="); done
 dbus-update-activation-environment "${ACTIVATION_ENV[@]}" || { echo "cannot set the activation environment" >&2; exit 1; }
-if [[ -n ${GOOGLE_HUB_BENCH_PREPARE:-} ]]; then
-    env "${LOCALE_ENV[@]}" GOOGLE_HUB_REPO="$REPO" bash "$GOOGLE_HUB_BENCH_PREPARE" "$OUT" || { echo "prepare script failed" >&2; exit 1; }
+if [[ -n ${OMNISHELL_BENCH_PREPARE:-} ]]; then
+    env "${LOCALE_ENV[@]}" OMNISHELL_REPO="$REPO" bash "$OMNISHELL_BENCH_PREPARE" "$OUT" || { echo "prepare script failed" >&2; exit 1; }
 fi
 THEME_ENV=()
-if [[ -n ${GOOGLE_HUB_BENCH_STOCK:-} ]]; then
+if [[ -n ${OMNISHELL_BENCH_STOCK:-} ]]; then
     mkdir -p "$TMP/stock-theme"
-    for r in $(gresource list "$GOOGLE_HUB_BENCH_STOCK" /org/gnome/shell/theme); do
-        gresource extract "$GOOGLE_HUB_BENCH_STOCK" "$r" >"$TMP/stock-theme/$(basename "$r")" || exit 1
+    for r in $(gresource list "$OMNISHELL_BENCH_STOCK" /org/gnome/shell/theme); do
+        gresource extract "$OMNISHELL_BENCH_STOCK" "$r" >"$TMP/stock-theme/$(basename "$r")" || exit 1
     done
     THEME_ENV=("G_RESOURCE_OVERLAYS=/org/gnome/shell/theme=$TMP/stock-theme")
 fi
-DISPLAY_NAME="google-hub-bench-$$"
-env "${LOCALE_ENV[@]}" ${THEME_ENV[@]+"${THEME_ENV[@]}"} gnome-shell --headless --virtual-monitor "$GOOGLE_HUB_BENCH_MONITOR" --wayland \
+DISPLAY_NAME="omnishell-bench-$$"
+env "${LOCALE_ENV[@]}" ${THEME_ENV[@]+"${THEME_ENV[@]}"} gnome-shell --headless --virtual-monitor "$OMNISHELL_BENCH_MONITOR" --wayland \
     --wayland-display "$DISPLAY_NAME" >"$OUT/shell.log" 2>&1 &
 SHELL_PID=$!
 ready=0
@@ -185,4 +185,4 @@ for _ in $(seq 1 240); do
     sleep 0.5
 done
 ((ready)) || { echo "the extension never answered Ping (see $OUT/shell.log)" >&2; exit 1; }
-env "${LOCALE_ENV[@]}" WAYLAND_DISPLAY="$DISPLAY_NAME" GOOGLE_HUB_REPO="$REPO" bash "$GOOGLE_HUB_BENCH_DRIVER" "$OUT"
+env "${LOCALE_ENV[@]}" WAYLAND_DISPLAY="$DISPLAY_NAME" OMNISHELL_REPO="$REPO" bash "$OMNISHELL_BENCH_DRIVER" "$OUT"

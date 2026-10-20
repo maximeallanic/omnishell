@@ -43,7 +43,7 @@ jobs:
       - name: Pack the extension for extensions.gnome.org
         run: runuser -u tester -- scripts/pack.sh --out dist
       - name: Check the zip
-        run: unzip -l dist/*.zip | grep -q 'locale/fr/LC_MESSAGES/google-hub.mo'
+        run: unzip -l dist/*.zip | grep -q 'locale/fr/LC_MESSAGES/omnishell.mo'
       - uses: actions/upload-artifact@v4
         with:
           name: extension-zip

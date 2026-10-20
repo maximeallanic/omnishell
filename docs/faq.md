@@ -35,7 +35,7 @@ No: GNOME Shell 50 or 51 on Wayland only.
 Any Chromium-based browser: set `chrome_dir` in `config.json`. Firefox is not supported.
 
 **Can the drawer show something else than Gemini?**
-The `panel-url` setting loads another address, but Google Hub's "Ask" only knows Gemini's page.
+The `panel-url` setting loads another address, but Omnishell's "Ask" only knows Gemini's page.
 
 **Does it use my GPU?**
 Only for dictation, if whisper.cpp was built with a GPU backend (Vulkan with `--vulkan` on Debian and Ubuntu).

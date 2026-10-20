@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only probes of an installed Google Hub, for verify.sh. Prints one JSON value on stdout.
+"""Read-only probes of an installed Omnishell, for verify.sh. Prints one JSON value on stdout.
 
 Usage: bus_probe.py status | search TERM | tasks | extension-state UUID | shell-state | composer
        bus_probe.py transcribe DAEMON_DIR WAV
@@ -9,11 +9,11 @@ import sys
 
 from gi.repository import Gio, GLib
 
-HUB = ("io.github.maximeallanic.GoogleHub", "/io/github/maximeallanic/GoogleHub", "io.github.maximeallanic.GoogleHub")
-SHELL = ("io.github.maximeallanic.GoogleHubShell", "/io/github/maximeallanic/GoogleHubShell",
-         "io.github.maximeallanic.GoogleHubShell")
-PANEL = ("io.github.maximeallanic.GoogleHubPanel", "/io/github/maximeallanic/GoogleHubPanel",
-         "io.github.maximeallanic.GoogleHubPanel")
+HUB = ("io.github.maximeallanic.Omnishell", "/io/github/maximeallanic/Omnishell", "io.github.maximeallanic.Omnishell")
+SHELL = ("io.github.maximeallanic.OmnishellShell", "/io/github/maximeallanic/OmnishellShell",
+         "io.github.maximeallanic.OmnishellShell")
+PANEL = ("io.github.maximeallanic.OmnishellPanel", "/io/github/maximeallanic/OmnishellPanel",
+         "io.github.maximeallanic.OmnishellPanel")
 EXTENSIONS = ("org.gnome.Shell.Extensions", "/org/gnome/Shell/Extensions", "org.gnome.Shell.Extensions")
 
 
@@ -28,15 +28,15 @@ def transcribe(daemon_dir, wav):
     sys.path.insert(0, daemon_dir)
     from pathlib import Path
 
-    import google_hub
-    from google_hub.config import DEFAULT_MODEL, load_config
-    from google_hub.whisper import WhisperServer
-    if not google_hub.__file__.startswith(daemon_dir + "/"):
-        raise RuntimeError(f"google_hub loaded from {google_hub.__file__}, not from {daemon_dir}")
-    config = Path(GLib.get_user_config_dir()) / "google-hub" / "config.json"
+    import omnishell
+    from omnishell.config import DEFAULT_MODEL, load_config
+    from omnishell.whisper import WhisperServer
+    if not omnishell.__file__.startswith(daemon_dir + "/"):
+        raise RuntimeError(f"omnishell loaded from {omnishell.__file__}, not from {daemon_dir}")
+    config = Path(GLib.get_user_config_dir()) / "omnishell" / "config.json"
     cfg = load_config(config)
     model = (Path(cfg["whisper_model"]).expanduser() if cfg["whisper_model"]
-             else Path(GLib.get_user_data_dir()) / "google-hub" / "models" / DEFAULT_MODEL)
+             else Path(GLib.get_user_data_dir()) / "omnishell" / "models" / DEFAULT_MODEL)
     server = WhisperServer(model, language="auto", binary=cfg["whisper_server"], idle_s=60)
     try:
         return server.transcribe(Path(wav).read_bytes())

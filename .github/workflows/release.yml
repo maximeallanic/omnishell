@@ -40,15 +40,15 @@ jobs:
         shell: bash
         run: |
           scripts/pack.sh --out dist
-          (cd dist && sha256sum google-hub@maximeallanic.github.io.shell-extension.zip \
-              > google-hub@maximeallanic.github.io.shell-extension.zip.sha256)
+          (cd dist && sha256sum omnishell@maximeallanic.github.io.shell-extension.zip \
+              > omnishell@maximeallanic.github.io.shell-extension.zip.sha256)
       - name: Publish
         shell: bash
         run: |
           version="${TAG#v}"
           flags=()
           if [[ $TAG == v0.* ]]; then flags+=(--prerelease); fi
-          gh release create "$TAG" "dist/gnome-google-hub-$version.tar.gz" "dist/gnome-google-hub-$version.tar.gz.sha256" \
-              dist/google-hub@maximeallanic.github.io.shell-extension.zip \
-              dist/google-hub@maximeallanic.github.io.shell-extension.zip.sha256 \
+          gh release create "$TAG" "dist/omnishell-$version.tar.gz" "dist/omnishell-$version.tar.gz.sha256" \
+              dist/omnishell@maximeallanic.github.io.shell-extension.zip \
+              dist/omnishell@maximeallanic.github.io.shell-extension.zip.sha256 \
               --repo "$GITHUB_REPOSITORY" --verify-tag --title "$TAG" --notes-file dist/notes.md "${flags[@]}"

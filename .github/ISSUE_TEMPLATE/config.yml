@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question or idea
-    url: https://github.com/maximeallanic/gnome-google-hub/discussions
+    url: https://github.com/maximeallanic/omnishell/discussions
     about: Ask for help or propose something in a Discussion before opening an issue.
   - name: Security vulnerability
-    url: https://github.com/maximeallanic/gnome-google-hub/security/advisories/new
+    url: https://github.com/maximeallanic/omnishell/security/advisories/new
     about: Please report security issues privately (see SECURITY.md).

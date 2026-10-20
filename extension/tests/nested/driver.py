@@ -16,9 +16,9 @@ import urllib.request
 
 from gi.repository import Gio, GLib
 
-SHELL = "io.github.maximeallanic.GoogleHubShell"
-SHELL_PATH = "/io/github/maximeallanic/GoogleHubShell"
-PANEL = "io.github.maximeallanic.GoogleHubPanel"
+SHELL = "io.github.maximeallanic.OmnishellShell"
+SHELL_PATH = "/io/github/maximeallanic/OmnishellShell"
+PANEL = "io.github.maximeallanic.OmnishellPanel"
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 out = sys.argv[1]

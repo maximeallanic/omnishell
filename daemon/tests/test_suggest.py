@@ -6,7 +6,7 @@ from pathlib import Path
 
 from gi.repository import Gio, GLib
 
-from google_hub.suggest import EXTENSION_UUID, KEY, SCHEMA_ID, SuggestionSwitch, find_schema
+from omnishell.suggest import EXTENSION_UUID, KEY, SCHEMA_ID, SuggestionSwitch, find_schema
 
 SCHEMA_XML = (Path(__file__).resolve().parents[2] / "extension" / EXTENSION_UUID / "schemas"
               / f"{SCHEMA_ID}.gschema.xml")

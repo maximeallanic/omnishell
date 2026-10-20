@@ -7,7 +7,7 @@ the project uses [Semantic Versioning](https://semver.org/).
 
 ## [0.1.0] - 2026-10-20
 
-First public release.
+First public release. The project was renamed from "Google Hub" to Omnishell before this release.
 
 ### Added
 
@@ -30,5 +30,5 @@ First public release.
   `verify.sh`.
 - `scripts/pack.sh` builds the extension zip for extensions.gnome.org.
 
-[Unreleased]: https://github.com/maximeallanic/gnome-google-hub/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/maximeallanic/gnome-google-hub/releases/tag/v0.1.0
+[Unreleased]: https://github.com/maximeallanic/omnishell/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/maximeallanic/omnishell/releases/tag/v0.1.0

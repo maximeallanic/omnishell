@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from google_hub.omnibox import google_items, load_keywords, looks_like_url, parse_suggest
+from omnishell.omnibox import google_items, load_keywords, looks_like_url, parse_suggest
 
 
 class TestOmnibox(unittest.TestCase):

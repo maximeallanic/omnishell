@@ -1,0 +1,9 @@
+{
+  "uuid": "omnishell@maximeallanic.github.io",
+  "name": "Omnishell",
+  "description": "Google services in GNOME: omnibox in the search, Gemini in a side drawer with local Whisper dictation, Calendar and Tasks.",
+  "gettext-domain": "omnishell",
+  "shell-version": ["50", "51"],
+  "session-modes": ["user", "unlock-dialog"],
+  "settings-schema": "org.gnome.shell.extensions.omnishell"
+}

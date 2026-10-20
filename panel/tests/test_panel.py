@@ -12,7 +12,7 @@ PANEL = HERE.parent
 
 def run_panel(page, *args, timeout=40, url=None, env_extra=None):
     env = dict(os.environ, PYTHONPATH=str(PANEL), **(env_extra or {}))
-    p = subprocess.run([sys.executable, "-W", "ignore", "-m", "google_hub_panel", "--test",
+    p = subprocess.run([sys.executable, "-W", "ignore", "-m", "omnishell_panel", "--test",
                         "--url", url or (PAGES / page).as_uri().replace("%23", "#"), *args],
                        capture_output=True, text=True, timeout=timeout, env=env)
     # Passed on to the test's stderr: run.sh runs unittest with -b, which shows it only when the test fails.

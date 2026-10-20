@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Google Hub daemon with demo data, for the README screenshots in the nested Shell (dev/screenshots/run.sh).
+"""Omnishell daemon with demo data, for the README screenshots in the nested Shell (dev/screenshots/run.sh).
 
 The real HubService and its real stores, fed by a local fake of the Google APIs (tests/fake_google.py) with
 invented tasks and events, a generated browser profile, canned suggestions and a listener that pretends to hear a
 sentence. No Google account, no network call, no microphone: nothing personal can reach a screenshot.
 
 Usage: demo_daemon.py   (on the nested session bus; XDG_CONFIG_HOME/XDG_CACHE_HOME must be private)
-Environment: GOOGLE_HUB_DEMO_PHRASE  the sentence the fake listener "hears"."""
+Environment: OMNISHELL_DEMO_PHRASE  the sentence the fake listener "hears"."""
 import json
 import logging
 import math
@@ -20,20 +20,20 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
-# The daemon copied by prepare.sh next to its compiled catalogues (google_hub/i18n.py looks for ../locale), then
+# The daemon copied by prepare.sh next to its compiled catalogues (omnishell/i18n.py looks for ../locale), then
 # this repository for the test fakes.
-sys.path[:0] = [os.path.join(os.environ.get("XDG_DATA_HOME", ""), "google-hub", "daemon"), str(REPO / "daemon")]
+sys.path[:0] = [os.path.join(os.environ.get("XDG_DATA_HOME", ""), "omnishell", "daemon"), str(REPO / "daemon")]
 
 from gi.repository import Gio, GLib  # noqa: E402
 
-from google_hub.calendar import CalendarStore  # noqa: E402
-from google_hub.chrome import ChromeIndex  # noqa: E402
-from google_hub.dates import DateReader  # noqa: E402
-from google_hub.google_api import GoogleApi  # noqa: E402
-from google_hub.omnibox import load_keywords  # noqa: E402
-from google_hub.service import Deps, HubService  # noqa: E402
-from google_hub.session_locale import session_locale, wikipedia_language  # noqa: E402
-from google_hub.tasks import TaskStore  # noqa: E402
+from omnishell.calendar import CalendarStore  # noqa: E402
+from omnishell.chrome import ChromeIndex  # noqa: E402
+from omnishell.dates import DateReader  # noqa: E402
+from omnishell.google_api import GoogleApi  # noqa: E402
+from omnishell.omnibox import load_keywords  # noqa: E402
+from omnishell.service import Deps, HubService  # noqa: E402
+from omnishell.session_locale import session_locale, wikipedia_language  # noqa: E402
+from omnishell.tasks import TaskStore  # noqa: E402
 from tests.fake_google import FakeGoogle, FakeTokens  # noqa: E402
 
 log = logging.getLogger("demo")
@@ -128,8 +128,8 @@ class DemoListener:
 def main():
     logging.basicConfig(level=logging.INFO, format="%(levelname)s demo: %(message)s")
     config = Path(GLib.get_user_config_dir())
-    cache = Path(GLib.get_user_cache_dir()) / "google-hub"
-    bench_tmp = os.environ.get("GOOGLE_HUB_BENCH_TMP", "")
+    cache = Path(GLib.get_user_cache_dir()) / "omnishell"
+    bench_tmp = os.environ.get("OMNISHELL_BENCH_TMP", "")
     if not bench_tmp or not str(config).startswith(bench_tmp + "/"):
         sys.exit("demo_daemon.py: refusing to run outside the nested bench (XDG_CONFIG_HOME is not private)")
     chrome_root = config / "chromium"
@@ -138,7 +138,7 @@ def main():
     api = GoogleApi(FakeTokens(), tasks_base=g.url, cal_base=g.url, timeout=5)
     dates = DateReader.from_session([])
     ui = session_locale("LC_MESSAGES")
-    phrase = os.environ.get("GOOGLE_HUB_DEMO_PHRASE", "What is the weather like in Paris tomorrow morning?")
+    phrase = os.environ.get("OMNISHELL_DEMO_PHRASE", "What is the weather like in Paris tomorrow morning?")
     bus = Gio.bus_get_sync(Gio.BusType.SESSION)
     deps = Deps(
         tokens=FakeTokens(), chrome=ChromeIndex(root=chrome_root, cache_dir=cache),

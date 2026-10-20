@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1280" height="640" viewBox="0 0 1280 640">
+  <!-- GitHub social preview (1280x640, readable at 320 px wide). The two cards are real captures from
+       screenshots/, cropped and scaled only: the web search group of search.png and the Tasks card of
+       clock-menu-tasks.png. Render with a browser, which follows the relative links to the captures (librsvg refuses
+       images outside the SVG's own folder): see docs/marketing/github-metadata.md. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16171d"/>
+      <stop offset="1" stop-color="#132a4a"/>
+    </linearGradient>
+    <clipPath id="search-clip"><rect x="56" y="292" width="688" height="315" rx="24"/></clipPath>
+    <clipPath id="tasks-clip"><rect x="876" y="58" width="358" height="521" rx="20"/></clipPath>
+  </defs>
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <g font-family="Adwaita Sans, Inter, Cantarell, sans-serif">
+    <text x="64" y="80" font-size="26" font-weight="600" fill="#8fb8f5">For GNOME Shell 50 and 51</text>
+    <text x="60" y="164" font-size="92" font-weight="800" fill="#ffffff">Omnishell</text>
+    <text x="64" y="212" font-size="32" fill="#ffffff">Search, assistant and tasks for GNOME</text>
+    <text x="64" y="256" font-size="20" fill="#b8bcc6">Voice transcribed on your computer · Open source · Not affiliated with Google</text>
+  </g>
+
+  <!-- Web search group of screenshots/search.png (source area 50,279 506x232), scaled by 1.36. -->
+  <g clip-path="url(#search-clip)">
+    <svg x="56" y="292" width="688" height="315" viewBox="50 279 506 232" preserveAspectRatio="xMinYMin slice">
+      <image width="1120" height="720" xlink:href="../../screenshots/search.png"/>
+    </svg>
+  </g>
+
+  <!-- Tasks card of screenshots/clock-menu-tasks.png (source area 480,534 282x410), scaled by 1.27. -->
+  <g clip-path="url(#tasks-clip)">
+    <svg x="876" y="58" width="358" height="521" viewBox="480 534 282 410" preserveAspectRatio="xMinYMin slice">
+      <image width="800" height="980" xlink:href="../../screenshots/clock-menu-tasks.png"/>
+    </svg>
+  </g>
+</svg>

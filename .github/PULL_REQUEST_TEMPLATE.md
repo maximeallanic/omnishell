@@ -23,4 +23,4 @@ Fixes #
 - [ ] Code, comments and messages are in English; no language, locale or script is hard-coded
 - [ ] No source file over 500 lines
 - [ ] I fixed the cause, not the symptom (no swallowed errors, no special cases)
-- [ ] I read [CONTRIBUTING.md](https://github.com/maximeallanic/gnome-google-hub/blob/main/CONTRIBUTING.md) and the PR title is a Conventional Commit
+- [ ] I read [CONTRIBUTING.md](https://github.com/maximeallanic/omnishell/blob/main/CONTRIBUTING.md) and the PR title is a Conventional Commit

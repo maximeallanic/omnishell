@@ -1,4 +1,4 @@
-"""Translation catalogues of po/ (domain google-hub): they compile, and keep the placeholders of their msgids."""
+"""Translation catalogues of po/ (domain omnishell): they compile, and keep the placeholders of their msgids."""
 import gettext
 import re
 import shutil
@@ -21,9 +21,9 @@ class CatalogueTest(unittest.TestCase):
         lang = po.stem
         out = Path(self.tmp.name, lang, "LC_MESSAGES")
         out.mkdir(parents=True)
-        subprocess.run(["msgfmt", "--check", "-o", str(out / "google-hub.mo"), str(po)],
+        subprocess.run(["msgfmt", "--check", "-o", str(out / "omnishell.mo"), str(po)],
                        check=True, capture_output=True)
-        return gettext.translation("google-hub", localedir=self.tmp.name, languages=[lang])
+        return gettext.translation("omnishell", localedir=self.tmp.name, languages=[lang])
 
     def test_catalogues_keep_placeholders(self):
         pos = sorted(PO_DIR.glob("*.po"))

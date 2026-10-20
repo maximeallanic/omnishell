@@ -3,7 +3,7 @@ from datetime import date, datetime
 
 from babel import Locale
 
-from google_hub.dates import DateReader, session_languages
+from omnishell.dates import DateReader, session_languages
 
 TODAY = date(2026, 10, 3)  # a Saturday
 FR_FR = Locale.parse("fr_FR")
@@ -56,7 +56,7 @@ class TestTrailingDate(unittest.TestCase):
         self.assertEqual(FR.parse_trailing_date("buy bread tomorrow", TODAY), ("buy bread tomorrow", None))
 
     def test_unsupported_language_is_dropped_loudly(self):
-        with self.assertLogs("google_hub.dates", "WARNING"):
+        with self.assertLogs("omnishell.dates", "WARNING"):
             r = DateReader(["fr", "xx"], "DMY", FR_FR)
         self.assertEqual(r.languages, ["fr"])
 

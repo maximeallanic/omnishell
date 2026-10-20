@@ -1,6 +1,6 @@
 import unittest
 
-from google_hub.text import matches, normalize
+from omnishell.text import matches, normalize
 
 
 class TestText(unittest.TestCase):

@@ -4,22 +4,22 @@ Three processes, all running as you, talking over the D-Bus session bus.
 
 ```
 GNOME Shell
-└─ extension google-hub@maximeallanic.github.io (GJS)
-     search.js       three search providers (Google, Chrome, Calendar & Tasks); one daemon call per typed text
+└─ extension omnishell@maximeallanic.github.io (GJS)
+     search.js       three search providers (web search, Chrome, Calendar & Tasks); one daemon call per typed text
      panel.js        starts the drawer, keeps it ready off screen, places it on the monitor under the pointer
      drawer-motion.js, m3e/   the drawer's spring motion (vendored M3E toolkit)
      voice-pill.js   the "Listening…" pill
      tasks-menu.js   Tasks section of the clock menu
-     control.js      io.github.maximeallanic.GoogleHubShell: Ping, Toggle, Ask, Voice, GetState
+     control.js      io.github.maximeallanic.OmnishellShell: Ping, Toggle, Ask, Voice, GetState
      logic.js        pure logic (tested with gjs): rows, geometry, drawer life cycle
         │                                              │
-        │ io.github.maximeallanic.GoogleHub            │ io.github.maximeallanic.GoogleHubPanel
+        │ io.github.maximeallanic.Omnishell            │ io.github.maximeallanic.OmnishellPanel
         ▼                                              ▼
-google-hub-daemon (Python, systemd user service)   google-hub-panel (Python, GTK 4 + WebKitGTK 6)
+omnishell-daemon (Python, systemd user service)   omnishell-panel (Python, GTK 4 + WebKitGTK 6)
   Search, Activate                                    Show, Hide, Ask, Focus, ProbeComposer
   ListTasks, CompleteTask, AddTask                    gemini.google.com in its own WebKit profile
   Listen, StopListen, CancelListen                    speech-polyfill.js: SpeechRecognition → daemon Listen
-  ├─ omnibox.py   Google group: keywords, addresses, suggestion rows
+  ├─ omnibox.py   web search group: keywords, addresses, suggestion rows
   ├─ suggest.py   suggestion request, gated by the search-suggestions GSettings key
   ├─ chrome.py    bookmarks and history (a copy of the History database)
   ├─ goa.py       Google token from GNOME Online Accounts
@@ -30,15 +30,15 @@ google-hub-daemon (Python, systemd user service)   google-hub-panel (Python, GTK
 
 ## The daemon
 
-`daemon/google_hub/` owns the bus name `io.github.maximeallanic.GoogleHub` (interface in `introspection.xml`). It is
-a systemd user service (`google-hub-daemon.service`) and is also D-Bus activatable, so the first search starts it if
+`daemon/omnishell/` owns the bus name `io.github.maximeallanic.Omnishell` (interface in `introspection.xml`). It is
+a systemd user service (`omnishell-daemon.service`) and is also D-Bus activatable, so the first search starts it if
 it is not running. Every call is answered from a worker thread; the search waits at most a fixed budget and
 returns what is ready (suggestions, history, events) so that typing never blocks.
 
 - **Google account.** `goa.py` follows GNOME Online Accounts' object manager and asks the account for an OAuth access
   token (`GetAccessToken`). GOA's Google provider already requests the Calendar and Tasks scopes: no OAuth client of
   our own, no key in the code.
-- **Tasks** are cached in `~/.cache/google-hub/tasks.json`. A change made offline is applied locally, queued and
+- **Tasks** are cached in `~/.cache/omnishell/tasks.json`. A change made offline is applied locally, queued and
   replayed when the network returns (GNOME's network monitor); a change Google refuses produces a notification.
 - **Calendar**: the events of the next 30 days, cached five minutes.
 - **Suggestions** come from Google's public suggest endpoint in the session language, only while the extension's
@@ -51,7 +51,7 @@ returns what is ready (suggestions, history, events) so that typing never blocks
 
 ## The drawer
 
-`panel/google_hub_panel/` is a separate GTK 4 program because a Shell extension cannot embed a web view. The
+`panel/omnishell_panel/` is a separate GTK 4 program because a Shell extension cannot embed a web view. The
 extension starts it with `Meta.WaylandClient`, which lets the Shell recognise its window, keep it out of Alt+Tab, the
 dock and the overview, and place it.
 
@@ -72,14 +72,14 @@ forwards it to the daemon's `Listen()`: Gemini's own microphone button uses loca
 ## The extension
 
 Search providers are registered with GNOME Shell's internal search API; the three groups share one daemon call per
-typed text. Without the daemon, the Google group still shows "Search on Google" and "Ask Gemini", built locally.
+typed text. Without the daemon, the web search group still shows "Search on Google" and "Ask Gemini", built locally.
 
 The extension runs in the `user` and `unlock-dialog` session modes: during the lock screen it removes its icon and
 keybindings and stops its D-Bus interface but keeps the drawer process, so the Gemini conversation survives a lock.
 
 ## Languages
 
-One gettext domain, `google-hub`, for the three parts (`po/`). The extension uses the Shell's gettext, the Python
+One gettext domain, `omnishell`, for the three parts (`po/`). The extension uses the Shell's gettext, the Python
 side `gettext` with the languages GLib reports, so all three follow the session like GNOME does. Nothing parses text
 with a language-specific list: dates go through dateparser, URL detection accepts any script, and the "long enough to
 search" threshold is in UTF-8 bytes so that one Han character counts like three Latin letters.
@@ -89,9 +89,9 @@ search" threshold is in UTF-8 bytes so that one Han character counts like three 
 | Path | What |
 |---|---|
 | `install.sh`, `uninstall.sh`, `verify.sh`, `lib/` | Installer, checks, removal |
-| `extension/google-hub@maximeallanic.github.io/` | GNOME Shell extension |
-| `daemon/google_hub/` | Daemon |
-| `panel/google_hub_panel/` | Gemini drawer |
+| `extension/omnishell@maximeallanic.github.io/` | GNOME Shell extension |
+| `daemon/omnishell/` | Daemon |
+| `panel/omnishell_panel/` | Gemini drawer |
 | `data/` | systemd unit, D-Bus activation file, desktop entry (paths filled in by the installer) |
 | `po/` | Translations |
 | `scripts/` | `pack.sh` (extensions.gnome.org zip), `update-po.sh` |

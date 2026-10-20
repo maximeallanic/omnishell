@@ -1,4 +1,4 @@
-# Using Google Hub
+# Using Omnishell
 
 ## Search
 
@@ -8,16 +8,16 @@ applications:
 
 | Group | What it shows | Enter does |
 |---|---|---|
-| **Google** | The address you typed (`github.com/gnome`), "Search on Google", "Ask Gemini", four Google suggestions, or the keyword search (`yt`, `w`, `maps`…) | Opens the browser, or the Gemini drawer with your question |
+| **Web search** | The address you typed (`github.com/gnome`), "Search on Google", "Ask Gemini", four Google suggestions, or the keyword search (`yt`, `w`, `maps`…) | Opens the browser, or the Gemini drawer with your question |
 | **Chrome** | Matching bookmarks and history of your Chromium-family browser | Opens the page |
 | **Calendar & Tasks** | Events of the next 30 days and open tasks that match; a day (`tomorrow`, `friday`, `12/10`) lists that day's events | Opens the event or the task in Google |
 
-![Search for "gnome": Google suggestions and Chrome bookmarks](../screenshots/search.png)
+![Search for "gnome": Google suggestions in the web search group and Chrome bookmarks](../screenshots/search.png)
 
 ### Keyword searches
 
 `yt cat videos`, `maps coffee`, `w Ada Lovelace`, `gh gnome-shell`, `drive budget` search those sites directly. Add
-your own in `keywords.json` ([configuration](configuration.md#search-keywords-configgoogle-hubkeywordsjson)).
+your own in `keywords.json` ([configuration](configuration.md#search-keywords-configomnishellkeywordsjson)).
 
 ### Create a task
 
@@ -48,7 +48,7 @@ your account (sign in once in the drawer), with your history and subscription.
 transcribed on your computer by Whisper and sent to Gemini in the drawer. Press Super+Shift+G again or click the pill
 to stop listening early, Escape to cancel.
 
-The microphone button inside Gemini uses the same local engine: WebKitGTK has no speech recognition, so Google Hub
+The microphone button inside Gemini uses the same local engine: WebKitGTK has no speech recognition, so Omnishell
 provides it.
 
 ![The listening pill](../screenshots/voice-pill.png)

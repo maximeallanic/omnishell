@@ -11,13 +11,13 @@ copy_tree() {
     tar -C "$src" --exclude=__pycache__ --exclude=.git --exclude=./screenshots -cf - . | tar -C "$dst" -xf -
 }
 
-# compile_catalogues DIR: po/LANG.po -> DIR/LANG/LC_MESSAGES/google-hub.mo for every language in po/.
+# compile_catalogues DIR: po/LANG.po -> DIR/LANG/LC_MESSAGES/omnishell.mo for every language in po/.
 compile_catalogues() {
     local po lang
     for po in "$REPO_ROOT"/po/*.po; do
         lang=$(basename "$po" .po)
         run mkdir -p "$1/$lang/LC_MESSAGES"
-        run msgfmt --check -o "$1/$lang/LC_MESSAGES/google-hub.mo" "$po"
+        run msgfmt --check -o "$1/$lang/LC_MESSAGES/omnishell.mo" "$po"
     done
 }
 
@@ -46,25 +46,25 @@ step_model() {
 
 step_files() {
     msg_step "Daemon, Gemini drawer and settings"
-    copy_tree "$REPO_ROOT/daemon/google_hub" "$DATA/daemon/google_hub"
-    copy_tree "$REPO_ROOT/panel/google_hub_panel" "$DATA/panel/google_hub_panel"
+    copy_tree "$REPO_ROOT/daemon/omnishell" "$DATA/daemon/omnishell"
+    copy_tree "$REPO_ROOT/panel/omnishell_panel" "$DATA/panel/omnishell_panel"
     compile_catalogues "$DATA/locale"
     run mkdir -p "$CONF" "$(dirname "$DESKTOP_FILE")" "$(dirname "$ICON_FILE")" "$UNIT_DIR" "$(dirname "$DBUS_SERVICE")"
     if [[ -f $CONF/keywords.json ]]; then msg_ok "keeping your $CONF/keywords.json"
-    else run cp "$REPO_ROOT/daemon/google_hub/defaults/keywords.json" "$CONF/keywords.json"; fi
+    else run cp "$REPO_ROOT/daemon/omnishell/defaults/keywords.json" "$CONF/keywords.json"; fi
     if [[ -f $CONF/config.json ]]; then msg_ok "keeping your $CONF/config.json"
     elif ((DRY_RUN)); then printf '    %s[dry run]%s write %s\n' "$C_DIM" "$C_OFF" "$CONF/config.json"
     else
-        # The defaults come from the code (google_hub/config.py), never from a second copy here.
+        # The defaults come from the code (omnishell/config.py), never from a second copy here.
         python3 -I - "$REPO_ROOT/daemon" >"$CONF/config.json" <<'PY'
 import json, sys
 sys.path.insert(0, sys.argv[1])
-from google_hub.config import DEFAULTS
+from omnishell.config import DEFAULTS
 print(json.dumps(DEFAULTS, indent=2))
 PY
     fi
     run cp "$REPO_ROOT/data/$PANEL_APP_ID.desktop" "$DESKTOP_FILE"
-    run cp "$REPO_ROOT/extension/$UUID/icons/google-hub-gemini-symbolic.svg" "$ICON_FILE"
+    run cp "$REPO_ROOT/extension/$UUID/icons/omnishell-gemini-symbolic.svg" "$ICON_FILE"
     install_unit "$REPO_ROOT/data/$UNIT" "$UNIT_DIR/$UNIT"
     run cp "$REPO_ROOT/data/$BUS_NAME.service" "$DBUS_SERVICE"
     msg_ok "files installed under $DATA and $CONF"

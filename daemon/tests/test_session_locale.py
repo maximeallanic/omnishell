@@ -1,6 +1,6 @@
 import unittest
 
-from google_hub.session_locale import google_hl, session_locale, wikipedia_language
+from omnishell.session_locale import google_hl, session_locale, wikipedia_language
 
 
 class TestSessionLocale(unittest.TestCase):
@@ -15,7 +15,7 @@ class TestSessionLocale(unittest.TestCase):
         self.assertEqual(str(session_locale("LC_TIME", ["sr_RS@latin", "C"])), "sr_Latn_RS")
         self.assertEqual(str(session_locale("LC_TIME", ["sr_RS.UTF-8", "C"])), "sr_Cyrl_RS")
         self.assertEqual(str(session_locale("LC_TIME", ["ca_ES.UTF-8@valencia", "C"])), "ca_ES")
-        with self.assertLogs("google_hub.session_locale", "WARNING"):
+        with self.assertLogs("omnishell.session_locale", "WARNING"):
             loc = session_locale("LC_TIME", ["xx_YY.UTF-8", "xx"])
         self.assertEqual(loc.language, "en")
         self.assertEqual(session_locale("LC_TIME", ["xx", "fr_FR", "C"]).language, "fr")

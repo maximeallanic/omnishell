@@ -1,11 +1,11 @@
 # shellcheck shell=bash disable=SC2034  # the constants below are used by the scripts that source this file
 # Shared by install.sh, uninstall.sh and verify.sh: version, paths, messages, prompts.
 
-GOOGLE_HUB_VERSION=0.1.0
-UUID=google-hub@maximeallanic.github.io
-BUS_NAME=io.github.maximeallanic.GoogleHub
-PANEL_APP_ID=io.github.maximeallanic.GoogleHubPanel
-DOCS_URL=https://github.com/maximeallanic/gnome-google-hub/blob/main/docs
+OMNISHELL_VERSION=0.1.0
+UUID=omnishell@maximeallanic.github.io
+BUS_NAME=io.github.maximeallanic.Omnishell
+PANEL_APP_ID=io.github.maximeallanic.OmnishellPanel
+DOCS_URL=https://github.com/maximeallanic/omnishell/blob/main/docs
 # Whisper model downloaded by default (whisper.cpp models/README.md gives the SHA-1).
 MODEL_NAME=ggml-small.bin
 MODEL_URL=https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin
@@ -18,15 +18,15 @@ CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
 STATE_HOME=${XDG_STATE_HOME:-$HOME/.local/state}
 
 EXT_DIR=$DATA_HOME/gnome-shell/extensions/$UUID
-DATA=$DATA_HOME/google-hub                  # daemon/, panel/, locale/, models/, webkit/ (Gemini sign-in), source/
-CONF=$CONFIG_HOME/google-hub                # config.json, keywords.json
-CACHE=$CACHE_HOME/google-hub                # copy of the browser history, tasks.json (offline queue)
-STATE=$STATE_HOME/google-hub                # summary.json
+DATA=$DATA_HOME/omnishell                  # daemon/, panel/, locale/, models/, webkit/ (Gemini sign-in), source/
+CONF=$CONFIG_HOME/omnishell                # config.json, keywords.json
+CACHE=$CACHE_HOME/omnishell                # copy of the browser history, tasks.json (offline queue)
+STATE=$STATE_HOME/omnishell                # summary.json
 UNIT_DIR=$CONFIG_HOME/systemd/user
-UNIT=google-hub-daemon.service
+UNIT=omnishell-daemon.service
 DBUS_SERVICE=$DATA_HOME/dbus-1/services/$BUS_NAME.service
 DESKTOP_FILE=$DATA_HOME/applications/$PANEL_APP_ID.desktop
-ICON_FILE=$DATA_HOME/icons/hicolor/symbolic/apps/google-hub-gemini-symbolic.svg
+ICON_FILE=$DATA_HOME/icons/hicolor/symbolic/apps/omnishell-gemini-symbolic.svg
 # What to tell the user to run again: the release copy kept by the installer works after a one-line install too.
 REINSTALL=$DATA/source/install.sh
 

@@ -6,9 +6,9 @@ from pathlib import Path
 
 from babel import Locale
 
-from google_hub.google_api import ApiError, GoogleApi
-from google_hub.dates import DateReader
-from google_hub.tasks import TaskStore
+from omnishell.google_api import ApiError, GoogleApi
+from omnishell.dates import DateReader
+from omnishell.tasks import TaskStore
 from tests.fake_google import FakeGoogle, FakeTokens, closed_port_url
 
 FR_FR = Locale.parse("fr_FR")
@@ -184,7 +184,7 @@ class TestTasks(unittest.TestCase):
         self.assertEqual(titles, ["lait", "pain"])
 
     def test_complete_rolls_back_on_any_error(self):
-        from google_hub.google_api import NoAccountError
+        from omnishell.google_api import NoAccountError
         s = self.store()
         s.refresh()
         self.api.tokens.account = False

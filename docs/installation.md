@@ -13,7 +13,7 @@
 From a terminal inside your GNOME session, as your normal user:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
 This downloads the release pinned in `install.sh` (`v0.1.0`) over HTTPS, checks it against the sha256 written next
@@ -35,8 +35,8 @@ To install the development branch instead of the pinned release, use a clone (be
 ## From a clone
 
 ```sh
-git clone https://github.com/maximeallanic/gnome-google-hub.git
-cd gnome-google-hub
+git clone https://github.com/maximeallanic/omnishell.git
+cd omnishell
 ./install.sh            # --help for the options
 ```
 
@@ -51,7 +51,7 @@ cd gnome-google-hub
 | `--no-verify` | Do not run `verify.sh` at the end. |
 | `--uninstall` | Same as `./uninstall.sh`. |
 
-Running the installer again updates Google Hub and keeps your settings.
+Running the installer again updates Omnishell and keeps your settings.
 
 ## Dependencies
 
@@ -95,7 +95,7 @@ Dictation runs [whisper.cpp](https://github.com/ggml-org/whisper.cpp) on your co
 `whisper-server` on `127.0.0.1` at the first dictation and stops it after 15 minutes without use. You need the
 `whisper-server` program and a model file:
 
-- **The model** is downloaded by the installer to `~/.local/share/google-hub/models/ggml-small.bin` (multilingual,
+- **The model** is downloaded by the installer to `~/.local/share/omnishell/models/ggml-small.bin` (multilingual,
   about 466 MB). To use another one (`ggml-base.bin` is faster, `ggml-medium.bin` more accurate), download it from
   [the whisper.cpp model repository](https://huggingface.co/ggerganov/whisper.cpp) and set `whisper_model` in
   `config.json` (see [configuration](configuration.md)).
@@ -121,7 +121,7 @@ install -Dm755 build/bin/whisper-server ~/.local/bin/whisper-server
 
 If `~/.local/bin` is not in the service's `PATH`, put the absolute path in `config.json`:
 `"whisper_server": "/home/you/.local/bin/whisper-server"`. Then run `./install.sh` again (it downloads the model if
-you skipped it) or `systemctl --user restart google-hub-daemon`, and check with `verify.sh`.
+you skipped it) or `systemctl --user restart omnishell-daemon`, and check with `verify.sh`.
 
 ## After installing
 
@@ -129,31 +129,31 @@ you skipped it) or `systemctl --user restart google-hub-daemon`, and check with 
 2. **Settings > Online Accounts > Google**, with *Calendar* enabled (Google Tasks uses the same permission), for
    Calendar and Tasks.
 3. **Press Super+G** and sign in to Gemini in the drawer once. The session is kept in the drawer's own profile.
-4. **Check**: `~/.local/share/google-hub/source/verify.sh`. It prints one line per check (`OK`, `WARN`, `FAIL`) and a
+4. **Check**: `~/.local/share/omnishell/source/verify.sh`. It prints one line per check (`OK`, `WARN`, `FAIL`) and a
    hint for each problem; `--quick` skips the real dictation test.
 
 ## What is installed where
 
 | Path | What |
 |---|---|
-| `~/.local/share/gnome-shell/extensions/google-hub@maximeallanic.github.io/` | The GNOME Shell extension |
-| `~/.local/share/google-hub/daemon/`, `panel/`, `locale/` | The daemon, the Gemini drawer and their translations |
-| `~/.local/share/google-hub/models/` | Speech model |
-| `~/.local/share/google-hub/webkit/` | The drawer's browser profile (your Gemini sign-in) |
-| `~/.local/share/google-hub/source/` | A copy of this release, for `verify.sh` and `uninstall.sh` |
-| `~/.config/google-hub/config.json`, `keywords.json` | Your settings |
-| `~/.config/systemd/user/google-hub-daemon.service` | The background service |
-| `~/.local/share/dbus-1/services/io.github.maximeallanic.GoogleHub.service` | D-Bus activation of the daemon |
-| `~/.local/share/applications/io.github.maximeallanic.GoogleHubPanel.desktop`, `~/.local/share/icons/…` | Launcher entry and icon of the drawer |
-| `~/.cache/google-hub/`, `~/.local/state/google-hub/` | Browser history copy, offline task queue, summary state |
+| `~/.local/share/gnome-shell/extensions/omnishell@maximeallanic.github.io/` | The GNOME Shell extension |
+| `~/.local/share/omnishell/daemon/`, `panel/`, `locale/` | The daemon, the Gemini drawer and their translations |
+| `~/.local/share/omnishell/models/` | Speech model |
+| `~/.local/share/omnishell/webkit/` | The drawer's browser profile (your Gemini sign-in) |
+| `~/.local/share/omnishell/source/` | A copy of this release, for `verify.sh` and `uninstall.sh` |
+| `~/.config/omnishell/config.json`, `keywords.json` | Your settings |
+| `~/.config/systemd/user/omnishell-daemon.service` | The background service |
+| `~/.local/share/dbus-1/services/io.github.maximeallanic.Omnishell.service` | D-Bus activation of the daemon |
+| `~/.local/share/applications/io.github.maximeallanic.OmnishellPanel.desktop`, `~/.local/share/icons/…` | Launcher entry and icon of the drawer |
+| `~/.cache/omnishell/`, `~/.local/state/omnishell/` | Browser history copy, offline task queue, summary state |
 
 Nothing is written outside your home directory, except the packages you agree to install.
 
 ## Uninstall
 
 ```sh
-~/.local/share/google-hub/source/uninstall.sh            # keeps settings, model and Gemini sign-in
-~/.local/share/google-hub/source/uninstall.sh --purge    # removes them too
+~/.local/share/omnishell/source/uninstall.sh            # keeps settings, model and Gemini sign-in
+~/.local/share/omnishell/source/uninstall.sh --purge    # removes them too
 ```
 
 It disables the extension and the service and removes exactly the paths above (`--dry-run` lists them). System
@@ -161,7 +161,7 @@ packages are left installed: remove them with your package manager if nothing el
 
 ## extensions.gnome.org
 
-`scripts/pack.sh` builds `dist/google-hub@maximeallanic.github.io.shell-extension.zip` with `gnome-extensions pack`
+`scripts/pack.sh` builds `dist/omnishell@maximeallanic.github.io.shell-extension.zip` with `gnome-extensions pack`
 (schemas, French catalogue, icons and the motion toolkit included). The zip contains the Shell extension only: the
 search results, Calendar, Tasks and dictation come from the daemon, and the drawer is a separate program, so the
 zip on its own shows the "Search on Google" and "Ask Gemini" rows and nothing else works until `install.sh` has run.

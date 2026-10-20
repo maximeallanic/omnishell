@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.omnishell" path="/org/gnome/shell/extensions/omnishell/">
+    <key name="toggle-panel" type="as">
+      <default><![CDATA[['<Super>g']]]></default>
+      <summary>Open or close the Gemini drawer</summary>
+    </key>
+    <key name="voice" type="as">
+      <default><![CDATA[['<Super><Shift>g']]]></default>
+      <summary>Talk to Gemini</summary>
+    </key>
+    <key name="panel-width" type="i">
+      <default>600</default>
+      <summary>Drawer width (logical pixels)</summary>
+    </key>
+    <key name="panel-url" type="s">
+      <default>''</default>
+      <summary>Address loaded in the drawer (empty: Gemini)</summary>
+    </key>
+    <key name="search-suggestions" type="b">
+      <default>true</default>
+      <summary>Google suggestions in the search</summary>
+      <description>Send the text typed in the GNOME search to Google's suggestion service and show its suggestions. When false, no suggestion request is made.</description>
+    </key>
+  </schema>
+</schemalist>

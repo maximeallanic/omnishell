@@ -1,7 +1,7 @@
 // Run: gjs -m tests/test_async.js (from extension/)
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
-import {untilCancelled} from '../google-hub@maximeallanic.github.io/async.js';
+import {untilCancelled} from '../omnishell@maximeallanic.github.io/async.js';
 
 function eq(a, b, name) {
     if (JSON.stringify(a) !== JSON.stringify(b)) {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Check a Google Hub installation. Read-only: it changes nothing. Exit status 0 when nothing failed.
+# Check a Omnishell installation. Read-only: it changes nothing. Exit status 0 when nothing failed.
 #
 #   ./verify.sh [--quick] [--strict]
 #
@@ -65,7 +65,7 @@ fi
 for po in "$REPO_ROOT"/po/*.po; do
     lang=$(basename "$po" .po)
     for dir in "$DATA/locale" "$EXT_DIR/locale"; do
-        [[ -f $dir/$lang/LC_MESSAGES/google-hub.mo ]] || fail "translation '$lang' missing from $dir (run $REINSTALL)"
+        [[ -f $dir/$lang/LC_MESSAGES/omnishell.mo ]] || fail "translation '$lang' missing from $dir (run $REINSTALL)"
     done
 done
 
@@ -97,7 +97,7 @@ if ((EXT_ACTIVE)) && shell=$(probe shell-state 2>/dev/null); then
         if [[ $(probe composer 2>/dev/null) == true ]]; then pass "Gemini prompt found (signed in, page selectors current)"
         else warn "Gemini prompt not found: press Super+G and sign in ($DOCS_URL/troubleshooting.md#gemini)"; fi
     else
-        warn "Gemini drawer not started yet (it starts with the Shell; check journalctl --user -b | grep google-hub)"
+        warn "Gemini drawer not started yet (it starts with the Shell; check journalctl --user -b | grep omnishell)"
     fi
 fi
 
@@ -126,9 +126,9 @@ if ((VOICE && ! QUICK)); then
 fi
 
 # A source tree next to the installed copy: they must match (a stale install is the usual cause of odd behaviour).
-if [[ -d $REPO_ROOT/daemon/google_hub && $(readlink -f "$REPO_ROOT") != "$(readlink -f "$DATA/source" 2>/dev/null)" ]]; then
+if [[ -d $REPO_ROOT/daemon/omnishell && $(readlink -f "$REPO_ROOT") != "$(readlink -f "$DATA/source" 2>/dev/null)" ]]; then
     section "Installed copy"
-    for pair in "daemon/google_hub:$DATA/daemon/google_hub" "panel/google_hub_panel:$DATA/panel/google_hub_panel" \
+    for pair in "daemon/omnishell:$DATA/daemon/omnishell" "panel/omnishell_panel:$DATA/panel/omnishell_panel" \
         "extension/$UUID:$EXT_DIR"; do
         if diff -rq -x __pycache__ -x gschemas.compiled -x locale "$REPO_ROOT/${pair%%:*}" "${pair#*:}" >/dev/null 2>&1; then
             pass "${pair%%:*} matches this source tree"

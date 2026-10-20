@@ -1,12 +1,11 @@
-# French catalogue of Google Hub (daemon, Gemini drawer and Shell extension), domain "google-hub".
+# French catalogue of Omnishell (daemon, Gemini drawer and Shell extension), domain "omnishell".
 # Compiled by install.sh into the extension (locale/) and next to the daemon and the drawer
-# (~/.local/share/google-hub/locale). Sources: po/POTFILES.
+# (~/.local/share/omnishell/locale). Sources: po/POTFILES.
 msgid ""
 msgstr ""
-"Project-Id-Version: google-hub\n"
-"Report-Msgid-Bugs-To: https://github.com/maximeallanic/gnome-google-hub/"
-"issues\n"
-"POT-Creation-Date: 2026-10-20 14:38+0200\n"
+"Project-Id-Version: omnishell\n"
+"Report-Msgid-Bugs-To: https://github.com/maximeallanic/omnishell/issues\n"
+"POT-Creation-Date: 2026-10-20 15:02+0200\n"
 "PO-Revision-Date: 2026-10-20 00:00+0200\n"
 "Last-Translator: Maxime Allanic\n"
 "Language-Team: French\n"
@@ -16,17 +15,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: daemon/google_hub/calendar.py
+#: daemon/omnishell/calendar.py
 msgid "All day"
 msgstr "Toute la journée"
 
 #. Translators: daily summary when there are tasks for today and overdue ones: "3 tasks today, 1 overdue".
-#: daemon/google_hub/notify.py
+#: daemon/omnishell/notify.py
 #, python-brace-format
 msgid "{today}, {overdue}"
 msgstr "{today}, {overdue}"
 
-#: daemon/google_hub/notify.py
+#: daemon/omnishell/notify.py
 #, python-brace-format
 msgid "{n} task today"
 msgid_plural "{n} tasks today"
@@ -34,157 +33,157 @@ msgstr[0] "{n} tâche aujourd’hui"
 msgstr[1] "{n} tâches aujourd’hui"
 
 #. Translators: second part of "3 tasks today, 1 overdue": the word "task" is not repeated.
-#: daemon/google_hub/notify.py
+#: daemon/omnishell/notify.py
 #, python-brace-format
 msgid "{n} overdue"
 msgid_plural "{n} overdue"
 msgstr[0] "{n} en retard"
 msgstr[1] "{n} en retard"
 
-#: daemon/google_hub/notify.py
+#: daemon/omnishell/notify.py
 #, python-brace-format
 msgid "{n} task overdue"
 msgid_plural "{n} tasks overdue"
 msgstr[0] "{n} tâche en retard"
 msgstr[1] "{n} tâches en retard"
 
-#: daemon/google_hub/notify.py
+#: daemon/omnishell/notify.py
 msgid "Open"
 msgstr "Ouvrir"
 
 #. Translators: search keyword result: "YouTube: cat videos".
-#: daemon/google_hub/omnibox.py
+#: daemon/omnishell/omnibox.py
 #, python-brace-format
 msgid "{label}: {query}"
 msgstr "{label} : {query}"
 
-#: daemon/google_hub/omnibox.py
+#: daemon/omnishell/omnibox.py
 #, python-brace-format
 msgid "Open {url}"
 msgstr "Ouvrir {url}"
 
-#: daemon/google_hub/omnibox.py
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: daemon/omnishell/omnibox.py
+#: extension/omnishell@maximeallanic.github.io/logic.js
 #, python-brace-format
 msgid "Search “{query}” on Google"
 msgstr "Rechercher « {query} » sur Google"
 
-#: daemon/google_hub/omnibox.py
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: daemon/omnishell/omnibox.py
+#: extension/omnishell@maximeallanic.github.io/logic.js
 #, python-brace-format
 msgid "Ask Gemini: “{query}”"
 msgstr "Demander à Gemini : « {query} »"
 
-#: daemon/google_hub/service.py
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: daemon/omnishell/service.py
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Connect your Google account"
 msgstr "Connecter votre compte Google"
 
-#: daemon/google_hub/service.py
+#: daemon/omnishell/service.py
 msgid "Settings → Online Accounts"
 msgstr "Paramètres → Comptes en ligne"
 
 #. Translators: a task created or completed offline that Google refused once back online.
-#: daemon/google_hub/service.py
+#: daemon/omnishell/service.py
 #, python-brace-format
 msgid "Change not saved: {task}"
 msgstr "Modification non enregistrée : {task}"
 
-#: daemon/google_hub/service.py
-#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+#: daemon/omnishell/service.py
+#: extension/omnishell@maximeallanic.github.io/tasks-menu.js
 msgid "Google Tasks"
 msgstr "Tâches Google"
 
-#: daemon/google_hub/tasks.py
+#: daemon/omnishell/tasks.py
 msgid "no language"
 msgstr "aucune langue"
 
 #. Translators: {languages} is a list of language codes ("fr and en"); date_languages is the config.json
 #. key, not translated.
-#: daemon/google_hub/tasks.py
+#: daemon/omnishell/tasks.py
 #, python-brace-format
 msgid "No due date · dates read in {languages} (date_languages)"
 msgstr "Sans échéance · dates lues en {languages} (date_languages)"
 
-#: daemon/google_hub/tasks.py
+#: daemon/omnishell/tasks.py
 #, python-brace-format
 msgid "Create task: {title}"
 msgstr "Créer la tâche : {title}"
 
 #. Translators: title of the Google sign-in window opened from the drawer.
-#: panel/google_hub_panel/window.py
+#: panel/omnishell_panel/window.py
 msgid "Sign in"
 msgstr "Connexion"
 
-#: panel/google_hub_panel/window.py
-#: extension/google-hub@maximeallanic.github.io/panel.js
+#: panel/omnishell_panel/window.py
+#: extension/omnishell@maximeallanic.github.io/panel.js
 msgid "Question copied — paste it into Gemini"
 msgstr "Question copiée — colle-la dans Gemini"
 
-#: extension/google-hub@maximeallanic.github.io/extension.js
+#: extension/omnishell@maximeallanic.github.io/extension.js
 msgid "Gemini is unavailable offline"
 msgstr "Gemini indisponible hors ligne"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Overdue"
 msgstr "En retard"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Today"
 msgstr "Aujourd’hui"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Next 7 days"
 msgstr "7 prochains jours"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "offline"
 msgstr "hors ligne"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "{n} undated"
 msgid_plural "{n} undated"
 msgstr[0] "{n} sans date"
 msgstr[1] "{n} sans date"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "See all"
 msgstr "Tout voir"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "No upcoming tasks"
 msgstr "Aucune tâche à venir"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Listening…"
 msgstr "J’écoute…"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Transcribing…"
 msgstr "Transcription…"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Nothing heard"
 msgstr "Rien entendu"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Microphone unavailable"
 msgstr "Micro indisponible"
 
-#: extension/google-hub@maximeallanic.github.io/logic.js
+#: extension/omnishell@maximeallanic.github.io/logic.js
 msgid "Transcription failed"
 msgstr "Transcription impossible"
 
-#: extension/google-hub@maximeallanic.github.io/prefs.js
+#: extension/omnishell@maximeallanic.github.io/prefs.js
 msgid "Search"
 msgstr "Recherche"
 
-#: extension/google-hub@maximeallanic.github.io/prefs.js
+#: extension/omnishell@maximeallanic.github.io/prefs.js
 msgid "Google suggestions"
 msgstr "Suggestions Google"
 
 #. Translators: subtitle of the "Google suggestions" switch in the preferences window.
-#: extension/google-hub@maximeallanic.github.io/prefs.js
+#: extension/omnishell@maximeallanic.github.io/prefs.js
 msgid ""
 "Sends what you type in the search to Google as you type, to suggest "
 "searches. When off, nothing you type is sent until you pick a result."
@@ -193,18 +192,22 @@ msgstr ""
 "pour suggérer des recherches. Désactivé, rien de ce que vous tapez n’est "
 "envoyé tant que vous ne choisissez pas un résultat."
 
-#: extension/google-hub@maximeallanic.github.io/search.js
+#: extension/omnishell@maximeallanic.github.io/search.js
+msgid "Web search"
+msgstr "Recherche web"
+
+#: extension/omnishell@maximeallanic.github.io/search.js
 msgid "Calendar & Tasks"
 msgstr "Agenda & Tâches"
 
-#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+#: extension/omnishell@maximeallanic.github.io/tasks-menu.js
 msgid "Tasks"
 msgstr "Tâches"
 
-#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+#: extension/omnishell@maximeallanic.github.io/tasks-menu.js
 msgid "+ Add a task"
 msgstr "+ Ajouter une tâche"
 
-#: extension/google-hub@maximeallanic.github.io/tasks-menu.js
+#: extension/omnishell@maximeallanic.github.io/tasks-menu.js
 msgid "Mark “{title}” as done"
 msgstr "Marquer « {title} » comme faite"

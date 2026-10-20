@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from google_hub.whisper import WhisperServer, default_threads
+from omnishell.whisper import WhisperServer, default_threads
 
 TESTS = Path(__file__).parent
 

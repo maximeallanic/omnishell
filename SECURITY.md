@@ -9,14 +9,14 @@ they are verified.
 
 ## What is in scope
 
-Google Hub handles a Google access token, your calendar and tasks, your browser history and the microphone. What we
+Omnishell handles a Google access token, your calendar and tasks, your browser history and the microphone. What we
 promise about them:
 
 - **No root.** The installer and every component run as your user and change only your home directory. `sudo` is
   used only to install missing distribution packages, after showing the exact command and asking (or with
   `--install-deps`).
 - **No stored credentials.** The Google access token comes from GNOME Online Accounts and is kept in memory only,
-  until it expires. The Gemini sign-in lives in the drawer's own WebKit profile (`~/.local/share/google-hub/webkit`).
+  until it expires. The Gemini sign-in lives in the drawer's own WebKit profile (`~/.local/share/omnishell/webkit`).
 - **Local speech.** Audio is captured only while the listening pill is shown or Gemini's microphone button is
   active, sent to a `whisper-server` bound to `127.0.0.1` and never written to disk.
 - **Verified downloads.** The one-line install downloads its release over HTTPS only and checks it against the sha256

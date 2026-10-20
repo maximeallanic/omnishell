@@ -37,42 +37,30 @@ runs on ChromeOS) and `google` alone (too broad, and it strengthens the official
 ## Social preview
 
 `docs/marketing/social-preview.png`, 1280×640, under 1 MB. Upload it in Settings > General > Social preview. It is
-built from two real captures (`screenshots/search.png`, Google group only; `screenshots/clock-menu-tasks.png`, Tasks
-card only), cropped and scaled, with the title, "For GNOME Shell 50 and 51", "Search, Gemini and Tasks in GNOME
-Shell" and "Voice transcribed on your computer · Open source · Unofficial". The Chrome logo of the search capture is
-cropped out; the "Google" row icon is the project's own drawing.
+built from two real captures (`screenshots/search.png`, web search group only; `screenshots/clock-menu-tasks.png`, Tasks
+card only), cropped and scaled, with the title, "For GNOME Shell 50 and 51", "Search, assistant and tasks for GNOME"
+and "Voice transcribed on your computer · Open source · Not affiliated with Google". The Chrome logo of the search
+capture is cropped out; the web search row icon is the project's own drawing. Source:
+`docs/marketing/social-preview.svg`, which links the captures by relative path. librsvg refuses images outside the
+SVG's own folder, so render it with a browser, from `docs/marketing/`:
 
-## Name check (recommendation only, nothing renamed)
+```sh
+google-chrome --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1280,640 \
+    --user-data-dir="$(mktemp -d)" --screenshot="$PWD/social-preview.png" "file://$PWD/social-preview.svg"
+```
 
-Current: **Google Hub for GNOME**, repository `gnome-google-hub`, extension UUID
-`google-hub@maximeallanic.github.io`.
+## Name
 
-What works: it says what it is in two words, and "for GNOME" is searchable. No other GNOME or Linux project called
-"Google Hub" turned up in a search on 2026-10-20 (there are two unrelated extensions named "GnomeHub").
+**Omnishell**, subtitle "Search, assistant and tasks for GNOME"; repository `omnishell`, extension UUID
+`omnishell@maximeallanic.github.io`. The project was renamed before its first release because Google's rules forbid
+Google product names in an app name:
 
-What does not:
+- Google's trademark guidelines: a third-party product name must not include Google trademarks or confusingly
+  similar terms ([Trademark guidelines for proper usage](https://partnermarketinghub.withgoogle.com/brands/google/trademarks-and-terms/trademark-guidelines-for-proper-usage/)).
+- Google API branding rules for apps that use Google APIs (Calendar and Tasks here): the app name must not contain
+  Google product names ([Google Cloud help, app branding](https://support.google.com/cloud/answer/13804963)).
 
-- **Google's brand guidance says not to put Google names in a product name.** Google's brand guidance for apps
-  that use its APIs reads "Don't use any Google product names, or confusingly similar names, as part of your
-  company name, product name, domain name, or social media profile", and asks for a name that is "wholly your
-  own" ([about.google, APIs guidance](https://about.google/brand-resource-center/guidance/apis/)). Google Hub calls
-  the Calendar and Tasks APIs, so this guidance applies. Saying what the software works with, as the README does,
-  is fine; having "Google" lead the name is the part it advises against.
-- **It reads as official.** "Google Hub" sounds like a Google product (and close to Google's own "Nest Hub", once
-  sold as "Google Home Hub"). The non-affiliation notice counters this, but the name often shows up alone: in
-  search results, link previews and the Extensions app.
-- **It is hard to search for.** "Google Hub" results are dominated by Google's own hardware.
-
-Options, if the owner decides to rename before or after launch (each needs a collision check on GitHub,
-extensions.gnome.org, Flathub and a trademark search first):
-
-| Name | Pattern | Note |
-|---|---|---|
-| **Tabless** | "Tabless: Google search, Gemini and Tasks for GNOME" | Says the benefit (fewer browser tabs); wholly its own. |
-| **Daybar** | "Daybar for GNOME" | Fits the clock menu and morning summary; weaker on search and Gemini. |
-| **Sidekick for GNOME** | "Sidekick: Google search, Gemini and Tasks in GNOME Shell" | Generic word, likely crowded. |
-| Keep "Google Hub" | As today | Lowest effort; accept the risk that Google, GitHub or extensions.gnome.org asks for a change later. |
-
-A rename touches the UUID, GSettings schema id, D-Bus names, paths under `~/.local/share/google-hub` and the
-installer, so it is cheaper before the first public release than after. That is a code change and is out of scope
-here.
+Google services are named only to say what the software works with ("Google suggestions", "Gemini", "Google
+Tasks"), always next to the non-affiliation notice. A web search on 2026-10-20 found no GNOME or Linux desktop
+project called Omnishell (an unrelated Python shell, `D1j1t0/OmniShell`, and a Dart package spelled `omnyshell`
+exist). Before launch, still check extensions.gnome.org, Flathub and a trademark register.

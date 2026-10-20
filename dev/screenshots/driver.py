@@ -3,7 +3,7 @@
 drawer and the demo daemon, and saves PNGs of the whole virtual monitor through org.gnome.Shell.Screenshot.
 
 Usage: driver.py OUT [SHOT...]   (default: every shot). Writes OUT/<shot>.png.
-Environment: GOOGLE_HUB_SHOT_QUERIES  JSON object overriding the search texts typed per shot (other languages)."""
+Environment: OMNISHELL_SHOT_QUERIES  JSON object overriding the search texts typed per shot (other languages)."""
 import json
 import os
 import sys
@@ -11,13 +11,13 @@ import time
 
 from gi.repository import Gio, GLib
 
-SHELL = ("io.github.maximeallanic.GoogleHubShell", "/io/github/maximeallanic/GoogleHubShell",
-         "io.github.maximeallanic.GoogleHubShell")
+SHELL = ("io.github.maximeallanic.OmnishellShell", "/io/github/maximeallanic/OmnishellShell",
+         "io.github.maximeallanic.OmnishellShell")
 GNOME_SHELL = ("org.gnome.Shell", "/org/gnome/Shell", "org.gnome.Shell")
 SCREENSHOT = ("org.gnome.Shell.Screenshot", "/org/gnome/Shell/Screenshot", "org.gnome.Shell.Screenshot")
-HUB = ("io.github.maximeallanic.GoogleHub", "/io/github/maximeallanic/GoogleHub", "io.github.maximeallanic.GoogleHub")
+HUB = ("io.github.maximeallanic.Omnishell", "/io/github/maximeallanic/Omnishell", "io.github.maximeallanic.Omnishell")
 QUERIES = {"search": "gnome", "calendar": "meeting", "add-task": "t Call the plumber tomorrow", "typing": "gtk docs"}
-QUERIES.update(json.loads(os.environ.get("GOOGLE_HUB_SHOT_QUERIES") or "{}"))
+QUERIES.update(json.loads(os.environ.get("OMNISHELL_SHOT_QUERIES") or "{}"))
 
 out = sys.argv[1]
 bus = Gio.bus_get_sync(Gio.BusType.SESSION)

@@ -7,7 +7,7 @@ import time
 import unittest
 from pathlib import Path
 
-from google_hub.chrome import ChromeIndex, find_chrome_root
+from omnishell.chrome import ChromeIndex, find_chrome_root
 
 EPOCH_DELTA = 11644473600  # seconds between 1601-01-01 and 1970-01-01
 

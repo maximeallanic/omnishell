@@ -1,6 +1,8 @@
-# Google Hub for GNOME
+# Omnishell
 
-[![CI](https://github.com/maximeallanic/gnome-google-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/maximeallanic/gnome-google-hub/actions/workflows/ci.yml)
+Search, assistant and tasks for GNOME.
+
+[![CI](https://github.com/maximeallanic/omnishell/actions/workflows/ci.yml/badge.svg)](https://github.com/maximeallanic/omnishell/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GNOME Shell 50 | 51](https://img.shields.io/badge/GNOME%20Shell-50%20%7C%2051-4a86cf.svg)](docs/installation.md#requirements)
 
@@ -14,7 +16,7 @@ Gemini one shortcut away, Google Tasks in the clock menu, and voice questions tr
 </p>
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
 GNOME Shell 50 or 51 on Wayland. The installer asks before every `sudo` and before the speech model download;
@@ -28,7 +30,7 @@ GNOME Shell 50 or 51 on Wayland. The installer asks before every `sudo` and befo
 
 If your day runs on Google, a GNOME desktop keeps sending you back to browser tabs: one to search, one for Gemini,
 one to see what is due today. ChromeOS puts Google search in its launcher and your calendar and tasks in its date
-tray. Google Hub does the same on GNOME, in the places GNOME already has: the search you open with Super, the clock
+tray. Omnishell does the same on GNOME, in the places GNOME already has: the search you open with Super, the clock
 menu, the top bar.
 
 - **No API key, no Google Cloud project.** Calendar and Tasks use the Google account you add in Settings > Online
@@ -59,7 +61,7 @@ menu, the top bar.
 
 <table>
   <tr>
-    <td><img src="screenshots/search.png" width="440" alt="Search for “gnome”: applications, then the Google group with suggestions and the Chrome group with bookmarks"></td>
+    <td><img src="screenshots/search.png" width="440" alt="Search for “gnome”: applications, then the web search group with Google suggestions and the Chrome group with bookmarks"></td>
     <td><img src="screenshots/clock-menu-tasks.png" width="360" alt="Clock menu with a Tasks section: overdue, today, next 7 days, and an Add a task field"></td>
   </tr>
   <tr>
@@ -74,7 +76,7 @@ why they read oddly); the drawer is shown signed out. How they were made:
 
 ## Privacy
 
-Google Hub connects your desktop to Google, so part of what you do goes to Google. Here is the split.
+Omnishell connects your desktop to Google, so part of what you do goes to Google. Here is the split.
 
 | Goes to Google | Stays on your computer |
 |---|---|
@@ -104,7 +106,7 @@ result. Full details: [docs/privacy.md](docs/privacy.md).
   distributions' package indexes, not installed in a test yet. Reports from other distributions are very welcome.
 - **The Gemini drawer drives a web page.** It is the real gemini.google.com, and "Ask Gemini" types your question
   into it. When Google changes that page, sending the question can break until the selectors in
-  [selectors.js](panel/google_hub_panel/selectors.js) are updated.
+  [selectors.js](panel/omnishell_panel/selectors.js) are updated.
 - **Fedora has no `whisper-server` package.** Voice needs whisper.cpp built once
   ([how](docs/installation.md#dictation-without-a-whisper-server-package)). Everything else works.
 - **Not on extensions.gnome.org yet.** The extension needs a background service and the drawer program, which only
@@ -118,7 +120,7 @@ result. Full details: [docs/privacy.md](docs/privacy.md).
 From a terminal in your GNOME session, as your normal user:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
 The installer downloads the pinned release and checks its sha256, shows what is missing, asks before installing packages with `sudo` (the
@@ -129,22 +131,22 @@ ends with a check. Then:
 2. Settings > Online Accounts > Google, with Calendar enabled (Tasks uses the same permission).
 3. Press Super+G and sign in to Gemini once.
 
-Prefer to look first? `git clone https://github.com/maximeallanic/gnome-google-hub && cd gnome-google-hub &&
+Prefer to look first? `git clone https://github.com/maximeallanic/omnishell && cd omnishell &&
 ./install.sh --dry-run`. Per-distribution packages, options and building whisper.cpp:
 [docs/installation.md](docs/installation.md).
 
 Check or remove it at any time:
 
 ```sh
-~/.local/share/google-hub/source/verify.sh
-~/.local/share/google-hub/source/uninstall.sh     # --purge also removes settings, model and Gemini sign-in
+~/.local/share/omnishell/source/verify.sh
+~/.local/share/omnishell/source/uninstall.sh     # --purge also removes settings, model and Gemini sign-in
 ```
 
 ## Usage
 
 | Do | Get |
 |---|---|
-| Super, then type | Google, Chrome and Calendar & Tasks results below the applications |
+| Super, then type | Web search, Chrome and Calendar & Tasks results below the applications |
 | `yt …`, `maps …`, `w …`, `gh …`, `drive …` | A direct search on that site |
 | `t Buy bread friday` | A Google task due Friday |
 | `tomorrow`, `monday`… | That day's events |
@@ -152,7 +154,7 @@ Check or remove it at any time:
 | Super+Shift+G | Ask Gemini by voice (again or click: stop; Escape: cancel) |
 | Clock menu | Your tasks; tick to complete, "+ Add a task" |
 
-Shortcuts and the drawer width are GSettings keys; `~/.config/google-hub/config.json` sets the speech model and
+Shortcuts and the drawer width are GSettings keys; `~/.config/omnishell/config.json` sets the speech model and
 language, the summary hour, the browser profile and extra date languages; `keywords.json` adds search keywords. More
 in [docs/usage.md](docs/usage.md) and [docs/configuration.md](docs/configuration.md).
 
@@ -170,11 +172,11 @@ and voice work. Calendar and Tasks need the account.
 
 **What does it add to what GNOME already does?**
 With a Google account in Online Accounts, GNOME already shows your Google Calendar events in the clock menu and in
-GNOME Calendar. Google Hub adds what GNOME does not have: Google results and suggestions in the search, events and
+GNOME Calendar. Omnishell adds what GNOME does not have: Google results and suggestions in the search, events and
 tasks in the search, Google Tasks in the clock menu, and Gemini in the Shell.
 
 **Why not a Gemini desktop app or a Gemini panel extension?**
-Use one if a separate window or a chat in the panel is what you want; some of them need a Gemini API key. Google Hub
+Use one if a separate window or a chat in the panel is what you want; some of them need a Gemini API key. Omnishell
 opens the Gemini web app you already use, with your account and history, as a drawer tied to the GNOME search and
 the keyboard.
 
@@ -197,7 +199,7 @@ most problems and how to fix them.
 ## Help it get better
 
 Try it and say how it went, especially on Fedora, Arch, Ubuntu or another distribution: open an
-[issue](https://github.com/maximeallanic/gnome-google-hub/issues) with the output of `verify.sh`. Translations, fixes
+[issue](https://github.com/maximeallanic/omnishell/issues) with the output of `verify.sh`. Translations, fixes
 when Gemini's page changes, and a star if it saves you a few tabs are all welcome. See
 [CONTRIBUTING.md](CONTRIBUTING.md), [SUPPORT.md](SUPPORT.md) and the [code of conduct](CODE_OF_CONDUCT.md). Security
 issues: [SECURITY.md](SECURITY.md).
@@ -206,6 +208,6 @@ issues: [SECURITY.md](SECURITY.md).
 
 [MIT](LICENSE) © 2026 Maxime Allanic. Third-party notices: [NOTICE.md](NOTICE.md).
 
-Google Hub is not affiliated with, endorsed by or sponsored by Google LLC. Google, Gemini, Google Calendar, Google
+Omnishell is not affiliated with, endorsed by or sponsored by Google LLC. Google, Gemini, Google Calendar, Google
 Tasks, Google Drive, Google Maps, YouTube and Chrome are trademarks of Google LLC, named here only to say what the
 software works with. The icons shipped with the extension are drawn for this project; they are not Google logos.

@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping. Google Hub is a GNOME Shell extension (GJS), a background daemon (Python) and a Gemini drawer
+Thanks for helping. Omnishell is a GNOME Shell extension (GJS), a background daemon (Python) and a Gemini drawer
 (Python, GTK 4 and WebKitGTK), with a shell installer.
 
 ## Ways to contribute
@@ -9,7 +9,7 @@ Thanks for helping. Google Hub is a GNOME Shell extension (GJS), a background da
   reproduce and the output of `verify.sh`. Never paste personal data (events, tasks, history, Gemini conversations).
 - **Try it on another setup** (Fedora, Arch, Ubuntu, another language) and say what worked and what did not. Only
   Debian testing has been run for real so far.
-- **Translate it**: copy `po/google-hub.pot` to `po/<lang>.po`, translate, and run `scripts/update-po.sh --check`.
+- **Translate it**: copy `po/omnishell.pot` to `po/<lang>.po`, translate, and run `scripts/update-po.sh --check`.
   The installer compiles every catalogue it finds; nothing else to register.
 - **Fix something or add a feature**, as described below.
 
@@ -46,11 +46,11 @@ you submit, including anything produced with the help of a tool: read it, run it
 | Path | What |
 |---|---|
 | `install.sh`, `uninstall.sh`, `verify.sh` | The three entry points. `lib/` holds their parts: `common`, `deps` (per-distribution packages), `steps`, `uninstall`, `bus_probe.py`. |
-| `extension/google-hub@maximeallanic.github.io/` | The GNOME Shell extension: search providers, drawer placement and motion, voice pill, Tasks in the clock menu. `m3e/` is the vendored motion toolkit (see NOTICE.md). |
-| `daemon/google_hub/` | `io.github.maximeallanic.GoogleHub` on the session bus: search, Google APIs through GNOME Online Accounts, Whisper. |
-| `panel/google_hub_panel/` | The Gemini drawer (GTK 4 + WebKitGTK 6). |
+| `extension/omnishell@maximeallanic.github.io/` | The GNOME Shell extension: search providers, drawer placement and motion, voice pill, Tasks in the clock menu. `m3e/` is the vendored motion toolkit (see NOTICE.md). |
+| `daemon/omnishell/` | `io.github.maximeallanic.Omnishell` on the session bus: search, Google APIs through GNOME Online Accounts, Whisper. |
+| `panel/omnishell_panel/` | The Gemini drawer (GTK 4 + WebKitGTK 6). |
 | `data/` | systemd user unit, D-Bus activation file, launcher. |
-| `po/` | Translations (one domain, `google-hub`, for the three parts). |
+| `po/` | Translations (one domain, `omnishell`, for the three parts). |
 | `dev/screenshots/` | The README pictures, taken in a nested GNOME Shell with demo data. |
 | `tests/`, `daemon/tests/`, `panel/tests/`, `extension/tests/` | Tests (below). |
 
@@ -75,13 +75,13 @@ Heavy suites (the drawer, the nested Shell) start real compositors: on a busy ma
 `systemd-run --user --scope -p MemoryMax=6G tests/run.sh --nested`.
 
 What the tests cannot cover: signing in to Google and Gemini, Gemini's real page (its selectors live in
-`panel/google_hub_panel/selectors.js` and may change at any time), a real microphone, and the Fedora and Arch
+`panel/omnishell_panel/selectors.js` and may change at any time), a real microphone, and the Fedora and Arch
 package names (checked as text only).
 
 ## Translations
 
 ```sh
-scripts/update-po.sh          # regenerate po/google-hub.pot and merge it into every po/*.po
+scripts/update-po.sh          # regenerate po/omnishell.pot and merge it into every po/*.po
 scripts/update-po.sh --check  # what CI runs: every string translated, every gettext file listed in po/POTFILES
 ```
 

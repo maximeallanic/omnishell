@@ -1,6 +1,6 @@
 // Run: gjs -m tests/test_logic.js (from extension/)
-import {DRAWER_INITIAL, drawerNext, formatDay, linearIndicator, localeTags, drawerGeometry, drawerPosition, activation, fallbackItems, geminiAvailable, shouldHideOnFocus, groupItems, nextRespawnDelay, panelGeometry, pillText, taskRows} from '../google-hub@maximeallanic.github.io/logic.js';
-import {format, setGettext} from '../google-hub@maximeallanic.github.io/i18n.js';
+import {DRAWER_INITIAL, drawerNext, formatDay, linearIndicator, localeTags, drawerGeometry, drawerPosition, activation, fallbackItems, geminiAvailable, shouldHideOnFocus, groupItems, nextRespawnDelay, panelGeometry, pillText, taskRows} from '../omnishell@maximeallanic.github.io/logic.js';
+import {format, setGettext} from '../omnishell@maximeallanic.github.io/i18n.js';
 
 function eq(a, b, name) {
     if (JSON.stringify(a) !== JSON.stringify(b)) {

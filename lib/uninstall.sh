@@ -8,7 +8,7 @@
 
 do_uninstall() {
     local purge=$1 path
-    msg_step "Removing Google Hub"
+    msg_step "Removing Omnishell"
     if session_ready && ((SESSION_CHECK)); then
         run python3 -I "$LIB/enabled_extensions.py" remove "$UUID" >/dev/null || msg_warn "could not edit enabled-extensions"
         run systemctl --user disable --now "$UNIT" >/dev/null 2>&1 || true
@@ -32,5 +32,5 @@ do_uninstall() {
     # Last: the copy of the release this script may be running from.
     if [[ -e $DATA/source ]]; then run rm -rf -- "$DATA/source"; fi
     if ((purge)) && [[ -d $DATA ]] && [[ -z $(ls -A "$DATA") ]]; then run rmdir -- "$DATA"; fi
-    msg_ok "Google Hub removed. Log out and back in to unload the extension from the running Shell."
+    msg_ok "Omnishell removed. Log out and back in to unload the extension from the running Shell."
 }

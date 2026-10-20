@@ -4,8 +4,8 @@
 # the demo daemon (demo_daemon.py: invented tasks and events, no Google account, no microphone).
 #
 # Usage: run.sh OUT_DIR [--locale LOCALE] [--shots "search calendar add-task tasks typing voice"]
-# Environment: GOOGLE_HUB_SHOT_QUERIES (texts typed, as JSON, for another language), GOOGLE_HUB_DEMO_PHRASE,
-#              GOOGLE_HUB_STOCK_GRESOURCE (the Shell theme resource to use, see below).
+# Environment: OMNISHELL_SHOT_QUERIES (texts typed, as JSON, for another language), OMNISHELL_DEMO_PHRASE,
+#              OMNISHELL_STOCK_GRESOURCE (the Shell theme resource to use, see below).
 set -u
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REPO=$(cd "$HERE/../.." && pwd)
@@ -15,12 +15,12 @@ LOCALE=en_US.UTF-8
 while (($#)); do
     case "$1" in
         --locale) LOCALE=${2:?}; shift 2 ;;
-        --shots) export GOOGLE_HUB_SHOTS=${2:?}; shift 2 ;;
+        --shots) export OMNISHELL_SHOTS=${2:?}; shift 2 ;;
         *) echo "unknown option: $1" >&2; exit 2 ;;
     esac
 done
 mkdir -p "$OUT"
-KEYS=$(mktemp "${TMPDIR:-/tmp}/google-hub-shots.XXXXXX.keyfile")
+KEYS=$(mktemp "${TMPDIR:-/tmp}/omnishell-shots.XXXXXX.keyfile")
 trap 'rm -f -- "$KEYS"' EXIT
 # Dark style and the weekday in the clock; nothing else differs from a fresh GNOME session. The drawer loads a blank
 # page: the README's drawer picture is a separate capture (screenshots/README.md), because repeated automated loads
@@ -32,12 +32,12 @@ enable-animations=true
 enable-hot-corners=false
 clock-show-weekday=true
 
-[org/gnome/shell/extensions/google-hub]
+[org/gnome/shell/extensions/omnishell]
 panel-url='about:blank'
 K
 # A host whose Shell theme was replaced (dpkg diversion of the theme resource, as the m3e-gnome login-screen
-# theming does) is shot with the distribution's original theme; GOOGLE_HUB_STOCK_GRESOURCE overrides the choice.
-STOCK=${GOOGLE_HUB_STOCK_GRESOURCE:-}
+# theming does) is shot with the distribution's original theme; OMNISHELL_STOCK_GRESOURCE overrides the choice.
+STOCK=${OMNISHELL_STOCK_GRESOURCE:-}
 THEME=/usr/share/gnome-shell/gnome-shell-theme.gresource
 if [[ -z $STOCK ]] && command -v dpkg-divert >/dev/null; then
     real=$(dpkg-divert --truename "$THEME")

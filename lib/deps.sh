@@ -146,6 +146,6 @@ dep_consequence() {
     case "$1" in
         voice) echo 'voice dictation will not work' ;;
         panel) echo 'the Gemini drawer will not open' ;;
-        *) echo 'Google Hub cannot run' ;;
+        *) echo 'Omnishell cannot run' ;;
     esac
 }

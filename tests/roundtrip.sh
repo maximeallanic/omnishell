@@ -14,7 +14,7 @@ fail() { printf '  FAIL  %s\n' "$*"; FAILS=$((FAILS + 1)); }
 check() { local d=$1; shift; if "$@" >/dev/null 2>&1; then pass "$d"; else fail "$d"; fi; }
 check_not() { local d=$1; shift; if "$@" >/dev/null 2>&1; then fail "$d"; else pass "$d"; fi; }
 
-T_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/google-hub-test.XXXXXX")
+T_ROOT=$(mktemp -d "${TMPDIR:-/tmp}/omnishell-test.XXXXXX")
 trap 'rm -rf -- "$T_ROOT"' EXIT
 export HOME="$T_ROOT/hôme with space" GH_FAKE_DIR="$T_ROOT/fake" NO_COLOR=1
 mkdir -p "$HOME" "$GH_FAKE_DIR"
@@ -24,10 +24,10 @@ export PATH="$TESTS_DIR/shims:/usr/bin:/bin"
 [[ $(command -v gsettings) == "$TESTS_DIR/shims/gsettings" ]] || { echo "sandbox PATH leak: gsettings" >&2; exit 2; }
 [[ $(command -v systemctl) == "$TESTS_DIR/shims/systemctl" ]] || { echo "sandbox PATH leak: systemctl" >&2; exit 2; }
 
-UUID=google-hub@maximeallanic.github.io
-DATA="$HOME/.local/share/google-hub"
+UUID=omnishell@maximeallanic.github.io
+DATA="$HOME/.local/share/omnishell"
 EXT="$HOME/.local/share/gnome-shell/extensions/$UUID"
-CONF="$HOME/.config/google-hub"
+CONF="$HOME/.config/omnishell"
 FLAGS=(--no-model --no-deps -y --no-verify)
 enabled() { gsettings get org.gnome.shell enabled-extensions | grep -qF "'$UUID'"; }
 
@@ -41,24 +41,24 @@ echo "Install"
 if out=$("$REPO/install.sh" "${FLAGS[@]}" 2>&1); then pass "install exits 0"; else fail "install exits 0: $out"; fi
 check "extension copied" test -f "$EXT/metadata.json"
 check "extension schemas compiled" test -f "$EXT/schemas/gschemas.compiled"
-check "extension French catalogue" test -f "$EXT/locale/fr/LC_MESSAGES/google-hub.mo"
-check "daemon French catalogue" test -f "$DATA/locale/fr/LC_MESSAGES/google-hub.mo"
-check "daemon installed" test -f "$DATA/daemon/google_hub/__main__.py"
-check "drawer installed" test -f "$DATA/panel/google_hub_panel/__main__.py"
+check "extension French catalogue" test -f "$EXT/locale/fr/LC_MESSAGES/omnishell.mo"
+check "daemon French catalogue" test -f "$DATA/locale/fr/LC_MESSAGES/omnishell.mo"
+check "daemon installed" test -f "$DATA/daemon/omnishell/__main__.py"
+check "drawer installed" test -f "$DATA/panel/omnishell_panel/__main__.py"
 check "no bytecode copied" test -z "$(find "$DATA" "$EXT" -name __pycache__)"
 check "config.json is the code's defaults" python3 -c 'import json, sys; c = json.load(open(sys.argv[1])); assert c["whisper_model"] == "" and "summary_hour" in c' "$CONF/config.json"
 check "keywords.json installed" test -f "$CONF/keywords.json"
-check "systemd unit installed" test -f "$HOME/.config/systemd/user/google-hub-daemon.service"
-check "unit points at the installed daemon" grep -qxF "Environment=\"PYTHONPATH=$DATA/daemon\"" "$HOME/.config/systemd/user/google-hub-daemon.service"
-check "D-Bus activation file installed" test -f "$HOME/.local/share/dbus-1/services/io.github.maximeallanic.GoogleHub.service"
-check "launcher installed" test -f "$HOME/.local/share/applications/io.github.maximeallanic.GoogleHubPanel.desktop"
-check "icon installed" test -f "$HOME/.local/share/icons/hicolor/symbolic/apps/google-hub-gemini-symbolic.svg"
+check "systemd unit installed" test -f "$HOME/.config/systemd/user/omnishell-daemon.service"
+check "unit points at the installed daemon" grep -qxF "Environment=\"PYTHONPATH=$DATA/daemon\"" "$HOME/.config/systemd/user/omnishell-daemon.service"
+check "D-Bus activation file installed" test -f "$HOME/.local/share/dbus-1/services/io.github.maximeallanic.Omnishell.service"
+check "launcher installed" test -f "$HOME/.local/share/applications/io.github.maximeallanic.OmnishellPanel.desktop"
+check "icon installed" test -f "$HOME/.local/share/icons/hicolor/symbolic/apps/omnishell-gemini-symbolic.svg"
 check "extension enabled" enabled
-check "service enabled and restarted" grep -q 'restart google-hub-daemon.service' "$GH_FAKE_DIR/systemctl.log"
+check "service enabled and restarted" grep -q 'restart omnishell-daemon.service' "$GH_FAKE_DIR/systemctl.log"
 check "release copy kept for uninstall/verify" test -x "$DATA/source/uninstall.sh"
 check_not "release copy has no screenshots" test -e "$DATA/source/screenshots"
 check_not "no sudo call" test -e "$GH_FAKE_DIR/sudo.log"
-check_not "nothing written outside HOME's XDG folders" test -e "$HOME/google-hub"
+check_not "nothing written outside HOME's XDG folders" test -e "$HOME/omnishell"
 
 echo "Reinstall keeps user settings"
 echo '{"whisper_language": "ja"}' >"$CONF/config.json"
@@ -91,7 +91,7 @@ echo "Uninstall"
 out=$("$DATA/source/uninstall.sh" -y 2>&1) || fail "uninstall exits 0: $out"
 check_not "extension removed" test -e "$EXT"
 check_not "daemon removed" test -e "$DATA/daemon"
-check_not "unit removed" test -e "$HOME/.config/systemd/user/google-hub-daemon.service"
+check_not "unit removed" test -e "$HOME/.config/systemd/user/omnishell-daemon.service"
 check_not "extension disabled" enabled
 check_not "release copy removed" test -e "$DATA/source"
 check "settings kept" test -f "$CONF/config.json"
@@ -105,7 +105,7 @@ piped() {
     sed -e "s|^RELEASE_SHA256=.*|RELEASE_SHA256='$1'|" -e "s|^RELEASE_URL=.*|RELEASE_URL='$2'|" \
         -e "s|--proto '=https'|--proto '=${3:-https}'|" "$REPO/install.sh" | bash -s -- "${FLAGS[@]}"
 }
-no_download_left() { ! compgen -G "$HOME/.cache/google-hub/bootstrap.*" >/dev/null; }
+no_download_left() { ! compgen -G "$HOME/.cache/omnishell/bootstrap.*" >/dev/null; }
 for line in "^RELEASE_SHA256=" "^RELEASE_URL=" "--proto '=https' "; do
     check "install.sh has the '$line' the piped tests replace" grep -q -- "$line" "$REPO/install.sh"
 done
@@ -113,10 +113,10 @@ done
 # is a release commit.
 out=$(piped '' https://example.invalid/none.tar.gz 2>&1)
 check_not "piped install refuses without a pinned release" test $? = 0
-check "the refusal says no release is pinned" grep -q "no release of Google Hub is pinned" <<<"$out"
+check "the refusal says no release is pinned" grep -q "no release of Omnishell is pinned" <<<"$out"
 check "the refusal gives the clone command" grep -q "git clone" <<<"$out"
 check_not "nothing downloaded without a pin" grep -q Downloading <<<"$out"
-tar -C "$(dirname "$REPO")" --exclude=.git --exclude=__pycache__ --transform "s|^$(basename "$REPO")|gnome-google-hub-0.1.0|" \
+tar -C "$(dirname "$REPO")" --exclude=.git --exclude=__pycache__ --transform "s|^$(basename "$REPO")|omnishell-0.1.0|" \
     -czf "$T_ROOT/release.tar.gz" "$(basename "$REPO")"
 sum=$(sha256sum "$T_ROOT/release.tar.gz" | cut -d' ' -f1)
 if out=$(piped "$sum" "file://$T_ROOT/release.tar.gz" https,file 2>&1); then pass "piped install exits 0"
@@ -147,13 +147,13 @@ echo "Custom XDG_DATA_HOME (with a space and a percent sign)"
 xdg="$HOME/my data/50%"
 if out=$(XDG_DATA_HOME="$xdg" "$REPO/install.sh" "${FLAGS[@]}" 2>&1); then pass "install exits 0"
 else fail "install exits 0: $out"; fi
-check "daemon under XDG_DATA_HOME" test -f "$xdg/google-hub/daemon/google_hub/__main__.py"
+check "daemon under XDG_DATA_HOME" test -f "$xdg/omnishell/daemon/omnishell/__main__.py"
 check "extension under XDG_DATA_HOME" test -f "$xdg/gnome-shell/extensions/$UUID/metadata.json"
-check "unit names that daemon, % escaped" grep -qxF "Environment=\"PYTHONPATH=$HOME/my data/50%%/google-hub/daemon\"" \
-    "$HOME/.config/systemd/user/google-hub-daemon.service"
-out=$(XDG_DATA_HOME="$xdg" "$xdg/google-hub/source/uninstall.sh" -y --purge 2>&1) || fail "uninstall exits 0: $out"
-check_not "nothing left under XDG_DATA_HOME" test -e "$xdg/google-hub"
-check_not "unit removed" test -e "$HOME/.config/systemd/user/google-hub-daemon.service"
+check "unit names that daemon, % escaped" grep -qxF "Environment=\"PYTHONPATH=$HOME/my data/50%%/omnishell/daemon\"" \
+    "$HOME/.config/systemd/user/omnishell-daemon.service"
+out=$(XDG_DATA_HOME="$xdg" "$xdg/omnishell/source/uninstall.sh" -y --purge 2>&1) || fail "uninstall exits 0: $out"
+check_not "nothing left under XDG_DATA_HOME" test -e "$xdg/omnishell"
+check_not "unit removed" test -e "$HOME/.config/systemd/user/omnishell-daemon.service"
 
 echo "Distribution detection"
 # shellcheck source=lib/common.sh
@@ -170,7 +170,7 @@ check "EndeavourOS (ID_LIKE)" test "$(family $'ID=endeavouros\nID_LIKE=arch')" =
 check "openSUSE is reported unsupported" test "$(family $'ID=opensuse-tumbleweed\nID_LIKE="opensuse suse"')" = unsupported
 check "Fedora has no whisper-server package" test "$(pkg_for fedora cmd:whisper-server)" = -
 if command -v apt-cache >/dev/null; then
-    check_not "a package the repositories lack is reported, not installed" pkg_available debian google-hub-no-such-package
+    check_not "a package the repositories lack is reported, not installed" pkg_available debian omnishell-no-such-package
     check "a package the repositories have is offered" pkg_available debian coreutils
 fi
 check "every row has five fields" test -z "$(printf '%s' "$DEP_TABLE" | sed '/^$/d' | awk -F'|' 'NF != 5')"

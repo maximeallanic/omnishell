@@ -24,7 +24,7 @@ body:
     id: gnome
     attributes:
       label: GNOME Shell version
-      description: Output of `gnome-shell --version`. Google Hub supports GNOME Shell 50 and 51.
+      description: Output of `gnome-shell --version`. Omnishell supports GNOME Shell 50 and 51.
     validations:
       required: true
   - type: input
@@ -45,8 +45,8 @@ body:
     id: output
     attributes:
       label: Output
-      description: Output of the failing command, of `~/.local/share/google-hub/source/verify.sh`, and
-        `journalctl --user -b -u google-hub-daemon` if relevant (remove personal data).
+      description: Output of the failing command, of `~/.local/share/omnishell/source/verify.sh`, and
+        `journalctl --user -b -u omnishell-daemon` if relevant (remove personal data).
       render: shell
   - type: textarea
     id: steps

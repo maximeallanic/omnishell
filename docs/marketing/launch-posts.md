@@ -67,10 +67,10 @@ make a claim either way.
 **Title** (pick one, all ≤ 80 characters, no exclamation marks, no superlatives):
 
 - `Show HN: Google search, Gemini and Google Tasks built into GNOME Shell` (70)
-- `Show HN: Google Hub – Gemini drawer and Google Tasks for GNOME Shell` (68)
+- `Show HN: Omnishell – Gemini drawer and Google Tasks for GNOME Shell` (67)
 - `Show HN: GNOME Shell integration for Google search, Gemini and Tasks` (68)
 
-**URL:** `https://github.com/maximeallanic/gnome-google-hub`
+**URL:** `https://github.com/maximeallanic/omnishell`
 
 **First comment: write it yourself.** A structure that works on Show HN, with what to put in each part:
 
@@ -92,7 +92,7 @@ extensions.gnome.org?", "Is `curl | bash` necessary?" (answer: clone and `./inst
 Rewrite in your own words before posting. Flair: whatever the sidebar uses for extensions. Attach the GIF or link
 the repository; a native video or GIF upload usually does better than a bare link.
 
-**Title:** `Google Hub: Google search, Gemini and Google Tasks in GNOME Shell (50/51, local Whisper voice)`
+**Title:** `Omnishell: Google search, Gemini and Google Tasks in GNOME Shell (50/51, local Whisper voice)`
 
 **Body:**
 
@@ -114,7 +114,7 @@ the repository; a native video or GIF upload usually does better than a bare lin
 >
 > `[AUTHOR: one line on why you built it, and how it was built.]`
 >
-> https://github.com/maximeallanic/gnome-google-hub
+> https://github.com/maximeallanic/omnishell
 >
 > Not affiliated with Google.
 
@@ -130,7 +130,7 @@ privacy split, not with Gemini.
 
 **Body:**
 
-> Some of us run Linux but still live in Google Calendar, Tasks and Gemini. Google Hub puts those in GNOME Shell
+> Some of us run Linux but still live in Google Calendar, Tasks and Gemini. Omnishell puts those in GNOME Shell
 > instead of browser tabs: Google suggestions in the GNOME search, Gemini in a Super+G drawer, Google Tasks in the
 > clock menu, and voice questions transcribed on your machine with whisper.cpp.
 >
@@ -145,7 +145,7 @@ privacy split, not with Gemini.
 >
 > `[AUTHOR: why you built it, and how it was built.]`
 >
-> https://github.com/maximeallanic/gnome-google-hub — MIT, not affiliated with Google.
+> https://github.com/maximeallanic/omnishell — MIT, not affiliated with Google.
 
 ## Mastodon
 
@@ -153,10 +153,10 @@ Hashtags help discovery on the Fediverse. Attach `screenshots/search-typing.gif`
 "Typing 'gtk docs' in the GNOME search: Google suggestions, Ask Gemini and a matching page from the browser history
 appear as you type".
 
-**Toot (463 characters; Mastodon counts the link as 23, so 437):**
+**Toot (455 characters; Mastodon counts the link as 23, so 436):**
 
 ```text
-Google Hub 0.1.0: Google search, Gemini and Google Tasks built into GNOME Shell 50/51.
+Omnishell 0.1.0: Google search, Gemini and Google Tasks built into GNOME Shell 50/51.
 
 • Super + type: Google suggestions, Ask Gemini, Calendar & Tasks
 • Super+G: Gemini drawer
@@ -165,7 +165,7 @@ Google Hub 0.1.0: Google search, Gemini and Google Tasks built into GNOME Shell 
 
 Search text goes to Google for suggestions; voice and history stay local. No telemetry. MIT, unofficial.
 
-https://github.com/maximeallanic/gnome-google-hub
+https://github.com/maximeallanic/omnishell
 
 #GNOME #Linux #FOSS
 ```

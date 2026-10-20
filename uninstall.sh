@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Remove Google Hub. Runs as your user and removes only what install.sh installed, by exact path.
+# Remove Omnishell. Runs as your user and removes only what install.sh installed, by exact path.
 #
 #   ./uninstall.sh [--dry-run] [-y|--yes] [--purge]
 #
@@ -28,7 +28,7 @@ while (($#)); do
     shift
 done
 [[ $(id -u) != 0 ]] || die "run this as your normal user, not as root"
-if ((PURGE)); then question="Remove Google Hub and delete your settings, Gemini sign-in, speech model and task cache?"
-else question="Remove Google Hub (your settings, Gemini sign-in and speech model are kept)?"; fi
+if ((PURGE)); then question="Remove Omnishell and delete your settings, Gemini sign-in, speech model and task cache?"
+else question="Remove Omnishell (your settings, Gemini sign-in and speech model are kept)?"; fi
 ask "$question" n || { msg_info "Nothing removed."; exit 0; }
 do_uninstall "$PURGE"

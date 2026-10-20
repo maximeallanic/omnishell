@@ -1,6 +1,6 @@
 # Privacy
 
-Google Hub connects your desktop to Google. This page says exactly what leaves your computer, and what does not.
+Omnishell connects your desktop to Google. This page says exactly what leaves your computer, and what does not.
 
 ## What is sent to Google
 
@@ -12,7 +12,7 @@ Google Hub connects your desktop to Google. This page says exactly what leaves y
 | You use the drawer | Whatever you do in Gemini | `gemini.google.com`, under Google's terms |
 
 What you type in the search goes to Google's suggestion service as you type, as in a browser's address bar. To stop
-it, open the extension's preferences (Extensions app, or `gnome-extensions prefs google-hub@maximeallanic.github.io`)
+it, open the extension's preferences (Extensions app, or `gnome-extensions prefs omnishell@maximeallanic.github.io`)
 and turn off **Google suggestions**, or set the GSettings key `search-suggestions` to `false`
 ([configuration](configuration.md)). The change applies at once: the daemon, which is the process that would send
 the request, reads the switch before every search and sends nothing while it is off. The search still shows "Search
@@ -24,13 +24,13 @@ web results. If the daemon cannot find the extension's settings schema, it treat
 - **Your voice.** Audio is recorded only while the "Listening…" pill is on screen or Gemini's microphone button is
   active. It is kept in memory, transcribed by `whisper-server` on `127.0.0.1`, and dropped. Only the transcribed text
   is sent, to Gemini, as if you had typed it.
-- **Your browser history and bookmarks** are read from a copy of the profile's database in `~/.cache/google-hub/` and
+- **Your browser history and bookmarks** are read from a copy of the profile's database in `~/.cache/omnishell/` and
   matched locally. They are never sent anywhere.
 - **Your Google credentials.** The access token comes from GNOME Online Accounts and stays in the daemon's memory. The
-  Gemini sign-in is a cookie in the drawer's own profile, `~/.local/share/google-hub/webkit/`.
-- **Tasks** are cached in `~/.cache/google-hub/tasks.json` so that the clock menu works offline.
+  Gemini sign-in is a cookie in the drawer's own profile, `~/.local/share/omnishell/webkit/`.
+- **Tasks** are cached in `~/.cache/omnishell/tasks.json` so that the clock menu works offline.
 
-Google Hub has no telemetry, no analytics and no server of its own. The only other download is the speech model,
+Omnishell has no telemetry, no analytics and no server of its own. The only other download is the speech model,
 once, from Hugging Face.
 
 ## Removing your data

@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 
 from babel import Locale
 
-from google_hub.calendar import CalendarStore
-from google_hub.dates import DateReader
-from google_hub.google_api import GoogleApi
+from omnishell.calendar import CalendarStore
+from omnishell.dates import DateReader
+from omnishell.google_api import GoogleApi
 from tests.fake_google import FakeGoogle, FakeTokens
 
 FR_FR = Locale.parse("fr_FR")

@@ -8,8 +8,8 @@ command -v weston >/dev/null || { echo "weston missing: sudo apt-get install wes
 # 108 bytes and WebKitGTK puts its longest one at "$XDG_RUNTIME_DIR/webkitgtk/a11y-proxy-XXXXXX". Config, data and
 # cache go under $TMPDIR, whatever its length.
 SOCKET_MAX=107 LONGEST_SOCKET=/webkitgtk/a11y-proxy-XXXXXX
-RT="$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/google-hub-tests.XXXXXX")" || exit 2
-RUN="$(mktemp -d "${TMPDIR:-/tmp}/google-hub-panel-tests.XXXXXX")" || { rmdir -- "$RT"; exit 2; }
+RT="$(mktemp -d "${XDG_RUNTIME_DIR:-/tmp}/omnishell-tests.XXXXXX")" || exit 2
+RUN="$(mktemp -d "${TMPDIR:-/tmp}/omnishell-panel-tests.XXXXXX")" || { rmdir -- "$RT"; exit 2; }
 chmod 700 "$RT" "$RUN"
 # Services activated on the private bus mount FUSE file systems in the private runtime folder (gvfs, document portal):
 # unmounted first, and a folder is left in place if one is still there (rm must not cross a mount).
@@ -34,19 +34,19 @@ fi
 export XDG_RUNTIME_DIR="$RT" XDG_CONFIG_HOME="$RUN/config" XDG_DATA_HOME="$RUN/data" XDG_CACHE_HOME="$RUN/cache"
 mkdir "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" || exit 2
 unset WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS
-export GSETTINGS_BACKEND=memory GOOGLE_HUB_PANEL_DIR="$HERE/.." PYTHONDONTWRITEBYTECODE=1
+export GSETTINGS_BACKEND=memory OMNISHELL_PANEL_DIR="$HERE/.." PYTHONDONTWRITEBYTECODE=1
 [[ $# -gt 0 ]] || set -- discover -s tests -t .
 # -b: unittest shows what a test wrote on stderr (the panel's own stderr, see run_panel) only when that test fails.
 if [[ $1 == discover ]]; then set -- discover -b "${@:2}"; else set -- -b "$@"; fi
 # shellcheck disable=SC2016  # expanded by the inner bash, on the private bus
 dbus-run-session -- bash -c '
-    weston --backend=headless --renderer=gl --socket=google-hub-tests --width=1920 --height=1080 --idle-time=0 \
+    weston --backend=headless --renderer=gl --socket=omnishell-tests --width=1920 --height=1080 --idle-time=0 \
         >"$XDG_RUNTIME_DIR/weston.log" 2>&1 &
     weston=$!
-    for _ in $(seq 100); do [[ -S "$XDG_RUNTIME_DIR/google-hub-tests" ]] && break; sleep 0.1; done
-    [[ -S "$XDG_RUNTIME_DIR/google-hub-tests" ]] || { cat "$XDG_RUNTIME_DIR/weston.log" >&2; exit 2; }
-    export WAYLAND_DISPLAY=google-hub-tests GDK_BACKEND=wayland
-    cd "$GOOGLE_HUB_PANEL_DIR" && python3 -W ignore -m unittest "$@"
+    for _ in $(seq 100); do [[ -S "$XDG_RUNTIME_DIR/omnishell-tests" ]] && break; sleep 0.1; done
+    [[ -S "$XDG_RUNTIME_DIR/omnishell-tests" ]] || { cat "$XDG_RUNTIME_DIR/weston.log" >&2; exit 2; }
+    export WAYLAND_DISPLAY=omnishell-tests GDK_BACKEND=wayland
+    cd "$OMNISHELL_PANEL_DIR" && python3 -W ignore -m unittest "$@"
     code=$?
     kill "$weston"; wait "$weston" 2>/dev/null
     exit $code' _ "$@" 2> >(grep -v -E "dbus-daemon\[|^$|xdg-desktop-portal|atspi|keyring|discover_other_daemon|Non-compatible display|cannot open display|bus can.t be made" >&2)

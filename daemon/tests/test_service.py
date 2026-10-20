@@ -11,14 +11,14 @@ from gi.repository import Gio, GLib
 
 from babel import Locale
 
-from google_hub.calendar import CalendarStore
-from google_hub.dates import DateReader
-from google_hub.google_api import GoogleApi
-from google_hub import suggest as suggest_module
-from google_hub.service import BUS_NAME, IFACE, LISTEN_TIMEOUT_MS, PATH, Deps, HubService
-from google_hub.tasks import TaskStore
-from google_hub.voice import FIRST_SAMPLE_S, MAX_CAPTURE_MS, CaptureError
-from google_hub.whisper import INFERENCE_TIMEOUT_S, KILL_GRACE_S, PROBE_TIMEOUT_S, START_TIMEOUT_S
+from omnishell.calendar import CalendarStore
+from omnishell.dates import DateReader
+from omnishell.google_api import GoogleApi
+from omnishell import suggest as suggest_module
+from omnishell.service import BUS_NAME, IFACE, LISTEN_TIMEOUT_MS, PATH, Deps, HubService
+from omnishell.tasks import TaskStore
+from omnishell.voice import FIRST_SAMPLE_S, MAX_CAPTURE_MS, CaptureError
+from omnishell.whisper import INFERENCE_TIMEOUT_S, KILL_GRACE_S, PROBE_TIMEOUT_S, START_TIMEOUT_S
 from tests.fake_google import FakeGoogle, FakeTokens
 
 FR_FR = Locale.parse("fr_FR")
@@ -242,7 +242,7 @@ class TestService(unittest.TestCase):
         self.g.routes[("PATCH", "/lists/L1/tasks/b")] = (500, {"error": {"message": "boom"}})
         with self.assertRaises(GLib.Error) as cm:
             self.call("CompleteTask", GLib.Variant("(ss)", ("L1", "b")))
-        self.assertIn("io.github.maximeallanic.GoogleHub.Error.Api", cm.exception.message)
+        self.assertIn("io.github.maximeallanic.Omnishell.Error.Api", cm.exception.message)
 
     def svc_refresh(self):
         done = threading.Event()
@@ -362,7 +362,7 @@ class TestService(unittest.TestCase):
         url = self.deps.task_store.api.tasks_base
         self.deps.task_store.api.tasks_base = "http://127.0.0.1:9"
         done = threading.Event()
-        with self.assertLogs("google_hub.service", "INFO") as logs:
+        with self.assertLogs("omnishell.service", "INFO") as logs:
             self.svc.call_soon(lambda: self.svc.run_summary(done.set))
             self.assertTrue(done.wait(5))
         self.assertIn("deferred", logs.output[0])
@@ -378,7 +378,7 @@ class TestService(unittest.TestCase):
     def test_daily_summary_failure_is_logged_and_releases(self):
         Path(self.tmp.name, "state").write_text("not a directory")  # state_dir.mkdir() raises
         done = threading.Event()
-        with self.assertLogs("google_hub.service", "ERROR") as logs:
+        with self.assertLogs("omnishell.service", "ERROR") as logs:
             self.svc.call_soon(lambda: self.svc.run_summary(done.set))
             self.assertTrue(done.wait(5), "done must run even when the job fails")
         self.assertIn("failed", logs.output[0])

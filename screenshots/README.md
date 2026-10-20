@@ -20,7 +20,7 @@ The full-screen captures were then cropped with ffmpeg to the area of interest; 
 
 | File | What | Locale |
 |---|---|---|
-| `search.png` | Search for "gnome": applications, Google group, Chrome bookmarks and history | en_US |
+| `search.png` | Search for "gnome": applications, web search group, Chrome bookmarks and history | en_US |
 | `search-calendar.png` | Search for "meeting": a calendar event | en_US |
 | `search-add-task.png`, `search-add-task.fr.png` | `t Call the plumber tomorrow` / `t Appeler le plombier demain`: task creation with its due date | en_US / fr_FR |
 | `clock-menu-tasks.png`, `clock-menu-tasks.fr.png` | Tasks in the clock menu (the task titles are fixture data, in English in both) | en_US / fr_FR |

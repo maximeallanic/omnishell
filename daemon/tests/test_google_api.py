@@ -1,6 +1,6 @@
 import unittest
 
-from google_hub.google_api import ApiError, GoogleApi, NoAccountError, OfflineError
+from omnishell.google_api import ApiError, GoogleApi, NoAccountError, OfflineError
 from tests.fake_google import FakeGoogle, FakeTokens, closed_port_url
 
 

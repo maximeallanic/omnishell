@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=io.github.maximeallanic.Omnishell
+Exec=/bin/false
+SystemdService=omnishell-daemon.service

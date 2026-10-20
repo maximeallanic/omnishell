@@ -1,6 +1,8 @@
-# Google Hub pour GNOME
+# Omnishell
 
-[![CI](https://github.com/maximeallanic/gnome-google-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/maximeallanic/gnome-google-hub/actions/workflows/ci.yml)
+Recherche, assistant et tâches pour GNOME.
+
+[![CI](https://github.com/maximeallanic/omnishell/actions/workflows/ci.yml/badge.svg)](https://github.com/maximeallanic/omnishell/actions/workflows/ci.yml)
 [![Licence : MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 [![GNOME Shell 50 | 51](https://img.shields.io/badge/GNOME%20Shell-50%20%7C%2051-4a86cf.svg)](docs/installation.md#requirements)
 
@@ -15,7 +17,7 @@ sur votre propre ordinateur.
 </p>
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
 GNOME Shell 50 ou 51 sous Wayland. L'installateur demande avant chaque `sudo` et avant de télécharger le modèle
@@ -29,7 +31,7 @@ vocal ; [ce qu'il fait](#installation).
 
 Quand votre journée tourne sur Google, un bureau GNOME vous renvoie sans cesse vers des onglets : un pour chercher,
 un pour Gemini, un pour voir ce qui est à faire aujourd'hui. ChromeOS met la recherche Google dans son lanceur, votre
-agenda et vos tâches dans le panneau de la date. Google Hub fait de même sur GNOME, aux endroits que GNOME a déjà :
+agenda et vos tâches dans le panneau de la date. Omnishell fait de même sur GNOME, aux endroits que GNOME a déjà :
 la recherche qui s'ouvre avec Super, le menu de l'horloge, la barre du haut.
 
 - **Ni clé d'API, ni projet Google Cloud.** L'Agenda et les Tâches passent par le compte Google ajouté dans
@@ -62,7 +64,7 @@ la recherche qui s'ouvre avec Super, le menu de l'horloge, la barre du haut.
 
 <table>
   <tr>
-    <td><img src="screenshots/search.png" width="440" alt="Recherche de « gnome » : applications, groupe Google avec suggestions et groupe Chrome avec favoris"></td>
+    <td><img src="screenshots/search.png" width="440" alt="Recherche de « gnome » : applications, groupe Recherche web avec les suggestions Google et groupe Chrome avec favoris"></td>
     <td><img src="screenshots/clock-menu-tasks.fr.png" width="360" alt="Menu de l'horloge avec une section Tâches : en retard, aujourd'hui, 7 prochains jours et un champ Ajouter une tâche"></td>
   </tr>
   <tr>
@@ -77,7 +79,7 @@ d'où leur tournure étrange ; titres des tâches en anglais) ; le volet est mon
 
 ## Confidentialité
 
-Google Hub relie votre bureau à Google : une partie de ce que vous faites part donc chez Google. Voici le partage.
+Omnishell relie votre bureau à Google : une partie de ce que vous faites part donc chez Google. Voici le partage.
 
 | Part chez Google | Reste sur votre ordinateur |
 |---|---|
@@ -110,7 +112,7 @@ recherche n'envoie alors rien tant que vous ne choisissez pas « Rechercher sur 
   bienvenus.
 - **Le volet Gemini pilote une page web.** C'est le vrai gemini.google.com, et « Demander à Gemini » y tape votre
   question. Quand Google modifie cette page, l'envoi de la question peut casser jusqu'à la mise à jour des sélecteurs
-  de [selectors.js](panel/google_hub_panel/selectors.js).
+  de [selectors.js](panel/omnishell_panel/selectors.js).
 - **Fedora n'a pas de paquet `whisper-server`.** La voix demande de compiler whisper.cpp une fois
   ([comment](docs/installation.md#dictation-without-a-whisper-server-package)). Tout le reste fonctionne.
 - **Pas encore sur extensions.gnome.org.** L'extension a besoin d'un service en arrière-plan et du programme du
@@ -125,7 +127,7 @@ recherche n'envoie alors rien tant que vous ne choisissez pas « Rechercher sur 
 Depuis un terminal de votre session GNOME, avec votre utilisateur habituel :
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/maximeallanic/gnome-google-hub/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/maximeallanic/omnishell/main/install.sh | bash
 ```
 
 L'installateur télécharge la version figée et vérifie son sha256, affiche ce qui manque, demande avant d'installer des paquets avec `sudo`
@@ -136,22 +138,22 @@ et termine par une vérification. Ensuite :
 2. Paramètres > Comptes en ligne > Google, avec Agenda activé (les Tâches utilisent la même autorisation).
 3. Appuyez sur Super+G et connectez-vous une fois à Gemini.
 
-Envie de regarder d'abord ? `git clone https://github.com/maximeallanic/gnome-google-hub && cd gnome-google-hub &&
+Envie de regarder d'abord ? `git clone https://github.com/maximeallanic/omnishell && cd omnishell &&
 ./install.sh --dry-run`. Paquets par distribution, options et compilation de whisper.cpp :
 [docs/installation.md](docs/installation.md) (en anglais).
 
 Vérifier ou désinstaller à tout moment :
 
 ```sh
-~/.local/share/google-hub/source/verify.sh
-~/.local/share/google-hub/source/uninstall.sh     # --purge retire aussi réglages, modèle et connexion Gemini
+~/.local/share/omnishell/source/verify.sh
+~/.local/share/omnishell/source/uninstall.sh     # --purge retire aussi réglages, modèle et connexion Gemini
 ```
 
 ## Utilisation
 
 | Geste | Effet |
 |---|---|
-| Super, puis taper | Résultats Google, Chrome et Agenda & Tâches sous les applications |
+| Super, puis taper | Recherche web, Chrome et Agenda & Tâches sous les applications |
 | `yt …`, `maps …`, `w …`, `gh …`, `drive …` | Recherche directe sur ce site |
 | `t Acheter du pain vendredi` | Une tâche Google pour vendredi |
 | `demain`, `lundi`… | Les événements de ce jour |
@@ -159,7 +161,7 @@ Vérifier ou désinstaller à tout moment :
 | Super+Maj+G | Demander à Gemini à la voix (de nouveau ou clic : terminer ; Échap : annuler) |
 | Menu de l'horloge | Vos tâches ; cocher pour terminer, « + Ajouter une tâche » |
 
-Les raccourcis et la largeur du volet sont des clés GSettings ; `~/.config/google-hub/config.json` règle le modèle
+Les raccourcis et la largeur du volet sont des clés GSettings ; `~/.config/omnishell/config.json` règle le modèle
 et la langue de la voix, l'heure du résumé, le profil du navigateur et des langues de dates supplémentaires ;
 `keywords.json` ajoute des mots-clés de recherche. Plus de détails : [docs/usage.md](docs/usage.md) et
 [docs/configuration.md](docs/configuration.md) (en anglais).
@@ -178,12 +180,12 @@ voix fonctionnent. L'Agenda et les Tâches demandent le compte.
 
 **Qu'est-ce que ça ajoute à ce que GNOME fait déjà ?**
 Avec un compte Google dans les Comptes en ligne, GNOME affiche déjà vos événements Google Agenda dans le menu de
-l'horloge et dans Agenda de GNOME. Google Hub ajoute ce que GNOME n'a pas : résultats et suggestions Google dans la
+l'horloge et dans Agenda de GNOME. Omnishell ajoute ce que GNOME n'a pas : résultats et suggestions Google dans la
 recherche, événements et tâches dans la recherche, Tâches Google dans le menu de l'horloge, et Gemini dans le Shell.
 
 **Pourquoi pas une application Gemini de bureau ou une extension Gemini pour la barre ?**
 Prenez-en une si c'est une fenêtre séparée ou une discussion dans la barre que vous voulez ; certaines demandent une
-clé d'API Gemini. Google Hub ouvre l'application web Gemini que vous utilisez déjà, avec votre compte et votre
+clé d'API Gemini. Omnishell ouvre l'application web Gemini que vous utilisez déjà, avec votre compte et votre
 historique, dans un volet lié à la recherche de GNOME et au clavier.
 
 **Puis-je dicter dans n'importe quelle application ?**
@@ -206,7 +208,7 @@ La documentation détaillée est en anglais : [Installation](docs/installation.m
 ## Aidez-le à progresser
 
 Essayez-le et racontez comment ça s'est passé, surtout sur Fedora, Arch, Ubuntu ou une autre distribution : ouvrez
-un [ticket](https://github.com/maximeallanic/gnome-google-hub/issues) avec la sortie de `verify.sh`. Traductions,
+un [ticket](https://github.com/maximeallanic/omnishell/issues) avec la sortie de `verify.sh`. Traductions,
 correctifs quand la page de Gemini change, et une étoile s'il vous évite quelques onglets : tout est bienvenu. Voir
 [CONTRIBUTING.md](CONTRIBUTING.md), [SUPPORT.md](SUPPORT.md) et le [code de conduite](CODE_OF_CONDUCT.md). Problèmes
 de sécurité : [SECURITY.md](SECURITY.md).
@@ -215,7 +217,7 @@ de sécurité : [SECURITY.md](SECURITY.md).
 
 [MIT](LICENSE) © 2026 Maxime Allanic. Mentions des tiers : [NOTICE.md](NOTICE.md).
 
-Google Hub n'est ni affilié à Google LLC, ni approuvé, ni parrainé par Google LLC. Google, Gemini, Google Agenda,
+Omnishell n'est ni affilié à Google LLC, ni approuvé, ni parrainé par Google LLC. Google, Gemini, Google Agenda,
 Google Tasks, Google Drive, Google Maps, YouTube et Chrome sont des marques de Google LLC, citées ici uniquement pour
 dire avec quoi le logiciel fonctionne. Les icônes livrées avec l'extension sont dessinées pour ce projet ; ce ne sont
 pas des logos Google.

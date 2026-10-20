@@ -1,4 +1,4 @@
-# Google Hub documentation
+# Omnishell documentation
 
 - [Installation](installation.md): requirements, one-line install, dependencies per distribution, dictation,
   uninstall

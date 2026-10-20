@@ -1,0 +1,73 @@
+/* Omnishell: layout and neutral colours that follow the Shell's accent colour (-st-accent-color, GNOME 47+).
+   A theme may restyle every class below (the m3e-gnome theme does).
+   The "Listening" pill reuses the geometry and colours of the Shell's OSD (.osd-window). */
+
+/* "Listening" pill */
+.omnishell-pill-icon {
+  icon-size: 24px;
+}
+
+/* Microphone level: M3E determinate linear indicator (LinearProgressIndicatorTokens) drawn by voice-pill.js:
+   accent indicator, gap, neutral track, accent stop indicator. */
+.omnishell-level,
+.omnishell-level-track,
+.omnishell-level-stop {
+  height: 4px;
+  border-radius: 999px;
+}
+.omnishell-level,
+.omnishell-level-stop {
+  background-color: -st-accent-color;
+}
+.omnishell-level-stop {
+  width: 4px;
+}
+.omnishell-level-track {
+  background-color: rgba(127, 127, 127, 0.35);
+}
+
+/* Tasks section of the clock menu */
+.omnishell-tasks {
+  spacing: 6px;
+}
+
+.omnishell-tasks-header {
+  padding-top: 6px;
+  font-size: 0.85em;
+  color: rgba(127, 127, 127, 1);
+}
+
+.omnishell-task {
+  spacing: 8px;
+}
+
+.omnishell-task-check {
+  padding: 6px;
+  border-radius: 999px;
+  transition-duration: 150ms;
+}
+.omnishell-task-check StIcon {
+  icon-size: 16px;
+}
+.omnishell-task-check:hover {
+  background-color: rgba(127, 127, 127, 0.15);
+}
+.omnishell-task-check:active {
+  background-color: rgba(127, 127, 127, 0.25);
+}
+
+.omnishell-tasks-link {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: -st-accent-color;
+  transition-duration: 150ms;
+}
+.omnishell-tasks-link:hover,
+.omnishell-tasks-link:focus {
+  background-color: rgba(127, 127, 127, 0.15);
+}
+
+.omnishell-task-entry {
+  margin-top: 6px;
+}

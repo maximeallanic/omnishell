@@ -1,9 +1,0 @@
-{
-  "uuid": "google-hub@maximeallanic.github.io",
-  "name": "Google Hub",
-  "description": "Google services in GNOME: omnibox in the search, Gemini in a side drawer with local Whisper dictation, Calendar and Tasks.",
-  "gettext-domain": "google-hub",
-  "shell-version": ["50", "51"],
-  "session-modes": ["user", "unlock-dialog"],
-  "settings-schema": "org.gnome.shell.extensions.google-hub"
-}

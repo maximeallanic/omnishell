@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Omnishell drawer
+Name[fr]=Volet Omnishell
+Comment=Opens the Gemini web app in a side drawer. Not affiliated with Google.
+Comment[fr]=Ouvre l'application web Gemini dans un volet latéral. Non affilié à Google.
+# Only the Shell extension starts the drawer (Meta.WaylandClient, panel.js): a copy started elsewhere would take
+# the bus name and leave the Shell without its window. Launching this entry (gtk-launch, a click on one of the
+# drawer's notifications) therefore asks the extension to toggle the drawer, as Super+G does (control.js).
+Exec=/usr/bin/gdbus call --session --dest io.github.maximeallanic.OmnishellShell --object-path /io/github/maximeallanic/OmnishellShell --method io.github.maximeallanic.OmnishellShell.Toggle
+Icon=omnishell-gemini-symbolic
+NoDisplay=true

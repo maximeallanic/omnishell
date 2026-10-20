@@ -8,14 +8,14 @@ import time
 import unittest
 from pathlib import Path
 
-from google_hub.text import normalize
-from google_hub.voice import CaptureError, Endpointer, Listener, WavSource, pcm_to_wav
-from google_hub.whisper import TranscribeError, WhisperServer, audio_ctx_for, wav_duration
+from omnishell.text import normalize
+from omnishell.voice import CaptureError, Endpointer, Listener, WavSource, pcm_to_wav
+from omnishell.whisper import TranscribeError, WhisperServer, audio_ctx_for, wav_duration
 
 FIXTURES = Path(__file__).with_name("fixtures")
-# Model installed by install.sh; GOOGLE_HUB_WHISPER_MODEL points the real-Whisper tests at another file.
-MODEL = Path(os.environ.get("GOOGLE_HUB_WHISPER_MODEL")
-             or Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "google-hub/models/ggml-small.bin")
+# Model installed by install.sh; OMNISHELL_WHISPER_MODEL points the real-Whisper tests at another file.
+MODEL = Path(os.environ.get("OMNISHELL_WHISPER_MODEL")
+             or Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local/share") / "omnishell/models/ggml-small.bin")
 PHRASE = "bonjour, quel temps fera-t-il demain matin à Paris"
 
 

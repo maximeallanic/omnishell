@@ -5,8 +5,8 @@ import unittest
 
 from gi.repository import Gio, GLib
 
-from google_hub.goa import ACCOUNT, BUS, OAUTH2, ROOT, GoaTokens
-from google_hub.google_api import NoAccountError
+from omnishell.goa import ACCOUNT, BUS, OAUTH2, ROOT, GoaTokens
+from omnishell.google_api import NoAccountError
 
 XML = f"""<node>
   <interface name="org.freedesktop.DBus.ObjectManager">

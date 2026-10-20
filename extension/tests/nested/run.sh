@@ -15,9 +15,9 @@ while (($#)); do
         *) echo "unknown option: $1" >&2; exit 2 ;;
     esac
 done
-[[ -n $OUT ]] || OUT=$(mktemp -d "${TMPDIR:-/tmp}/google-hub-nested.XXXXXX") || exit 2
+[[ -n $OUT ]] || OUT=$(mktemp -d "${TMPDIR:-/tmp}/omnishell-nested.XXXXXX") || exit 2
 mkdir -p "$OUT" && OUT=$(cd "$OUT" && pwd) || exit 2
-WORK=$(mktemp -d "${TMPDIR:-/tmp}/google-hub-nested-work.XXXXXX") || exit 2
+WORK=$(mktemp -d "${TMPDIR:-/tmp}/omnishell-nested-work.XXXXXX") || exit 2
 SERVER_PID=''
 cleanup() {
     [[ -z $SERVER_PID ]] || kill "$SERVER_PID" 2>/dev/null
@@ -31,7 +31,7 @@ for _ in $(seq 50); do [[ -s $WORK/port ]] && break; sleep 0.1; done
 [[ -s $WORK/port ]] || { echo "run.sh: page server did not start" >&2; exit 2; }
 PORT=$(cat "$WORK/port")
 cat >"$WORK/drawer.keyfile" <<K
-[org/gnome/shell/extensions/google-hub]
+[org/gnome/shell/extensions/omnishell]
 panel-url='${URL:-http://127.0.0.1:$PORT/page.html}'
 K
 echo "$PORT" >"$OUT/port"

@@ -1,0 +1,9 @@
+<node>
+  <interface name="io.github.maximeallanic.OmnishellPanel">
+    <method name="Ask"><arg type="s" name="text" direction="in"/><arg type="b" name="sent" direction="out"/></method>
+    <method name="Focus"/>
+    <method name="Show"><arg type="s" name="state" direction="out"/></method>
+    <method name="Hide"/>
+    <method name="ProbeComposer"><arg type="b" name="found" direction="out"/></method>
+  </interface>
+</node>

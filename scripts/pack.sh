@@ -8,7 +8,7 @@
 # docs/development.md#extensionsgnomeorg before uploading.
 set -euo pipefail
 REPO_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-UUID=google-hub@maximeallanic.github.io
+UUID=omnishell@maximeallanic.github.io
 SRC=$REPO_ROOT/extension/$UUID
 out=$REPO_ROOT/dist
 die() { echo "error: $*" >&2; exit 1; }
@@ -24,8 +24,8 @@ command -v gnome-extensions >/dev/null || die "gnome-extensions is required (pac
 mkdir -p "$out"
 out=$(cd "$out" && pwd)
 
-args=(--force --quiet --out-dir "$out" --podir "$REPO_ROOT/po" --gettext-domain google-hub
-      --schema "$SRC/schemas/org.gnome.shell.extensions.google-hub.gschema.xml")
+args=(--force --quiet --out-dir "$out" --podir "$REPO_ROOT/po" --gettext-domain omnishell
+      --schema "$SRC/schemas/org.gnome.shell.extensions.omnishell.gschema.xml")
 # Everything else of the extension folder: modules, icons, the vendored M3E motion toolkit.
 while IFS= read -r entry; do
     case "$entry" in

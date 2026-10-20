@@ -1,7 +1,7 @@
 import unittest
 from datetime import date, datetime
 
-from google_hub.notify import next_summary_time, summary_due, summary_text
+from omnishell.notify import next_summary_time, summary_due, summary_text
 
 
 def dt(*a):
