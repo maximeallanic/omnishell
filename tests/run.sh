@@ -21,7 +21,7 @@ suite() { # NAME COMMAND...: runs a suite, records PASS or FAIL
 skip() { printf '\n=== %s\n%s\n' "$1" "$2"; RESULTS+=("SKIP  $1 ($2)"); }
 have() { command -v "$1" >/dev/null 2>&1; }
 
-# shellcheck disable=SC2329  # called through suite()
+# shellcheck disable=SC2317,SC2329  # called through suite(): SC2317 up to shellcheck 0.10, SC2329 from 0.11
 run_shellcheck() {
     local files
     mapfile -t files < <(git ls-files -co --exclude-standard '*.sh' 2>/dev/null || find . -name '*.sh' -not -path './.git/*')
