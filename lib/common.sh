@@ -1,7 +1,7 @@
 # shellcheck shell=bash disable=SC2034  # the constants below are used by the scripts that source this file
 # Shared by install.sh, uninstall.sh and verify.sh: version, paths, messages, prompts.
 
-OMNISHELL_VERSION=0.1.0
+OMNISHELL_VERSION=0.1.1
 UUID=omnishell@maximeallanic.github.io
 BUS_NAME=io.github.maximeallanic.Omnishell
 PANEL_APP_ID=io.github.maximeallanic.OmnishellPanel
