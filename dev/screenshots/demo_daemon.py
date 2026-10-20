@@ -145,6 +145,7 @@ def main():
         task_store=TaskStore(api, cache / "tasks.json", dates), calendar=CalendarStore(api, dates),
         keywords=load_keywords(None, wikipedia_language(ui)),
         suggest=lambda q: [f"{q} tutorial", f"{q} documentation", f"{q} release date"],
+        suggestions_enabled=lambda: True,
         listener_factory=lambda on_state: DemoListener(on_state, phrase),
         open_uri=lambda uri: log.info("open %s", uri), spawn=lambda argv: log.info("spawn %s", argv),
         notify=lambda *a, **k: None, state_dir=cache / "state", summary_hour=23,

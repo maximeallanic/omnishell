@@ -2,8 +2,6 @@
 import locale
 import logging
 import signal
-import urllib.parse
-import urllib.request
 from functools import partial
 from pathlib import Path
 
@@ -16,9 +14,10 @@ from .dates import DateReader
 from .goa import GoaTokens
 from .google_api import GoogleApi
 from .notify import Notifier
-from .omnibox import load_keywords, parse_suggest
+from .omnibox import load_keywords
 from .service import Deps, HubService
 from .session_locale import google_hl, session_locale, wikipedia_language
+from .suggest import SuggestionSwitch, find_schema, schema_dirs, suggest
 from .tasks import TaskStore
 from .voice import Listener, MicSource
 from .whisper import WhisperServer, default_threads
@@ -30,16 +29,6 @@ CONFIG = Path(GLib.get_user_config_dir()) / "google-hub"
 CACHE = Path(GLib.get_user_cache_dir()) / "google-hub"
 STATE = Path(GLib.get_user_state_dir()) / "google-hub"
 DATA = Path(GLib.get_user_data_dir()) / "google-hub"
-SUGGEST_URL = "https://suggestqueries.google.com/complete/search?client=firefox&hl={hl}&q={q}"
-
-
-def suggest(q: str, hl: str) -> list[str]:
-    url = SUGGEST_URL.format(hl=urllib.parse.quote(hl), q=urllib.parse.quote(q))
-    try:
-        with urllib.request.urlopen(url, timeout=1.5) as r:
-            return parse_suggest(r.read(), r.headers.get("Content-Type", ""))
-    except OSError:
-        return []
 
 
 def open_uri(uri: str) -> None:
@@ -92,6 +81,7 @@ def main():
         tokens=tokens, chrome=ChromeIndex(root=chrome_root, cache_dir=CACHE),
         task_store=TaskStore(api, CACHE / "tasks.json", dates), calendar=CalendarStore(api, dates),
         keywords=load_keywords(CONFIG / "keywords.json", wikipedia_language(ui)), suggest=partial(suggest, hl=google_hl(ui)),
+        suggestions_enabled=SuggestionSwitch(find_schema(schema_dirs())),
         listener_factory=lambda on_state: Listener(MicSource, whisper.transcribe, on_state),
         open_uri=open_uri, spawn=spawn, notify=Notifier(bus, open_uri), state_dir=STATE,
         summary_hour=int(cfg["summary_hour"]), whisper_loaded=lambda: whisper.running,

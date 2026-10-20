@@ -78,14 +78,15 @@ Google Hub connects your desktop to Google, so part of what you do goes to Googl
 
 | Goes to Google | Stays on your computer |
 |---|---|
-| **What you type in the GNOME search**, from three characters, to `suggestqueries.google.com` for suggestions. There is no switch to turn this off in this release. | **Your voice.** Recorded only while the "Listening…" pill or Gemini's microphone is active, transcribed by `whisper-server` on `127.0.0.1`, then dropped. |
+| **What you type in the GNOME search**, from three characters, to `suggestqueries.google.com` for suggestions. On by default; turn **Google suggestions** off in the extension's preferences and nothing is sent as you type. | **Your voice.** Recorded only while the "Listening…" pill or Gemini's microphone is active, transcribed by `whisper-server` on `127.0.0.1`, then dropped. |
 | **Calendar and Tasks requests**, with your GNOME Online Accounts token, to Google's Calendar and Tasks APIs. | **Your browser history and bookmarks**, read from a local copy and matched locally. |
 | **Everything you do in the Gemini drawer**, under Google's terms. | **Your credentials**: the Online Accounts token stays in the daemon's memory; the Gemini sign-in is a cookie in the drawer's own profile. |
 | | **Your tasks cache**, so the clock menu works offline. |
 
 No telemetry, no analytics, no server run by this project. The only other download is the speech model, once, from
-Hugging Face, checksum-verified. If sending your search keystrokes to Google is not acceptable to you, Google Hub is
-not for you yet. Full details: [docs/privacy.md](docs/privacy.md).
+Hugging Face, checksum-verified. If you do not want your search keystrokes sent to Google, switch suggestions off in
+the preferences (Extensions app): the search then sends nothing until you pick "Search on Google" or another web
+result. Full details: [docs/privacy.md](docs/privacy.md).
 
 ## Requirements and limitations
 

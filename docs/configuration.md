@@ -2,12 +2,15 @@
 
 Google Hub works without configuration. Three places change its behaviour.
 
-## Keyboard shortcuts and the drawer (GSettings)
+## Search, keyboard shortcuts and the drawer (GSettings)
 
-Schema `org.gnome.shell.extensions.google-hub`. Changes apply at once.
+Schema `org.gnome.shell.extensions.google-hub`. Changes apply at once. The preferences window (Extensions app, or
+`gnome-extensions prefs google-hub@maximeallanic.github.io`) has the suggestions switch; the other keys are set with
+`gsettings`.
 
 | Key | Default | What |
 |---|---|---|
+| `search-suggestions` | `true` | Send what you type in the GNOME search to Google for suggestions. `false`: no suggestion request is made ([privacy](privacy.md)). |
 | `toggle-panel` | `['<Super>g']` | Open or close the Gemini drawer |
 | `voice` | `['<Super><Shift>g']` | Ask Gemini by voice |
 | `panel-width` | `600` | Drawer width, in logical pixels (clamped to the monitor) |
@@ -18,6 +21,7 @@ S="gsettings --schemadir $HOME/.local/share/gnome-shell/extensions/google-hub@ma
 $S set org.gnome.shell.extensions.google-hub toggle-panel "['<Super>space']"
 $S set org.gnome.shell.extensions.google-hub panel-width 720
 $S reset org.gnome.shell.extensions.google-hub voice
+$S set org.gnome.shell.extensions.google-hub search-suggestions false
 ```
 
 ## The daemon: `~/.config/google-hub/config.json`
@@ -73,5 +77,5 @@ Google Hub follows your session language, like the rest of GNOME (`LANGUAGE`, `L
   (`po/`, see [CONTRIBUTING](../CONTRIBUTING.md#translations)).
 - **Dates** are shown in your locale's format (Babel) and read in your language plus `date_languages` (dateparser),
   for any language those libraries support.
-- **Google suggestions and Wikipedia** use your session language.
+- **Google suggestions** (when on) **and Wikipedia** use your session language.
 - **Dictation** transcribes any language the Whisper model knows (99 for the multilingual models).

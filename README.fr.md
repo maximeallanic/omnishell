@@ -81,14 +81,15 @@ Google Hub relie votre bureau à Google : une partie de ce que vous faites part 
 
 | Part chez Google | Reste sur votre ordinateur |
 |---|---|
-| **Ce que vous tapez dans la recherche de GNOME**, dès trois caractères, vers `suggestqueries.google.com` pour les suggestions. Aucun réglage ne permet de le couper dans cette version. | **Votre voix.** Enregistrée seulement pendant que la pastille « J’écoute… » ou le micro de Gemini est actif, transcrite par `whisper-server` sur `127.0.0.1`, puis effacée. |
+| **Ce que vous tapez dans la recherche de GNOME**, dès trois caractères, vers `suggestqueries.google.com` pour les suggestions. Activé par défaut ; désactivez **Suggestions Google** dans les préférences de l'extension et rien n'est envoyé pendant la frappe. | **Votre voix.** Enregistrée seulement pendant que la pastille « J’écoute… » ou le micro de Gemini est actif, transcrite par `whisper-server` sur `127.0.0.1`, puis effacée. |
 | **Les requêtes Agenda et Tâches**, avec le jeton des Comptes en ligne, vers les API Agenda et Tasks de Google. | **Votre historique et vos favoris**, lus depuis une copie locale et comparés localement. |
 | **Tout ce que vous faites dans le volet Gemini**, selon les conditions de Google. | **Vos identifiants** : le jeton des Comptes en ligne reste dans la mémoire du démon ; la connexion Gemini est un cookie du profil propre au volet. |
 | | **Le cache de vos tâches**, pour que le menu de l'horloge marche hors ligne. |
 
 Aucune télémétrie, aucune mesure d'audience, aucun serveur tenu par ce projet. Le seul autre téléchargement est le
-modèle vocal, une fois, depuis Hugging Face, avec vérification de somme de contrôle. Si envoyer votre frappe de
-recherche à Google ne vous convient pas, Google Hub n'est pas encore pour vous. Détails :
+modèle vocal, une fois, depuis Hugging Face, avec vérification de somme de contrôle. Si vous ne voulez pas que votre
+frappe de recherche parte chez Google, coupez les suggestions dans les préférences (application Extensions) : la
+recherche n'envoie alors rien tant que vous ne choisissez pas « Rechercher sur Google » ou un autre résultat web. Détails :
 [docs/privacy.md](docs/privacy.md) (en anglais).
 
 ## Prérequis et limites

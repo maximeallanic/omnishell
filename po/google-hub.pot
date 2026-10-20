@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: google-hub\n"
 "Report-Msgid-Bugs-To: https://github.com/maximeallanic/gnome-google-hub/"
 "issues\n"
-"POT-Creation-Date: 2026-10-20 12:24+0200\n"
+"POT-Creation-Date: 2026-10-20 14:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -176,6 +176,21 @@ msgstr ""
 
 #: extension/google-hub@maximeallanic.github.io/logic.js
 msgid "Transcription failed"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/prefs.js
+msgid "Search"
+msgstr ""
+
+#: extension/google-hub@maximeallanic.github.io/prefs.js
+msgid "Google suggestions"
+msgstr ""
+
+#. Translators: subtitle of the "Google suggestions" switch in the preferences window.
+#: extension/google-hub@maximeallanic.github.io/prefs.js
+msgid ""
+"Sends what you type in the search to Google as you type, to suggest "
+"searches. When off, nothing you type is sent until you pick a result."
 msgstr ""
 
 #: extension/google-hub@maximeallanic.github.io/search.js

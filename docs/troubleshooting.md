@@ -24,7 +24,7 @@ Start with the checker. It changes nothing and prints a hint for every problem:
 | Symptom | What to do |
 |---|---|
 | No Google group at all | Type at least three letters (one CJK character). Check that the extension is enabled (`gnome-extensions info google-hub@maximeallanic.github.io`) and the daemon runs (`systemctl --user status google-hub-daemon`). |
-| Only "Search on Google" and "Ask Gemini", no suggestions | The daemon is not answering: `journalctl --user -u google-hub-daemon -b`. Offline, there are no suggestions. |
+| Only "Search on Google" and "Ask Gemini", no suggestions | Check that **Google suggestions** is on in the extension's preferences. Otherwise the daemon is not answering: `journalctl --user -u google-hub-daemon -b` (it logs "Google suggestions on/off" at start). Offline, there are no suggestions. |
 | Calendar & Tasks group says "Connect your Google account" | Settings > Online Accounts > Google, with Calendar enabled. |
 | No Chrome group | No Chrome or Chromium profile was found; set `chrome_dir` in `config.json` ([configuration](configuration.md)). |
 | A date in `t …` is not recognised | It must end the text, in your session language or one of `date_languages`. |

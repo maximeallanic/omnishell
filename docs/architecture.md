@@ -19,7 +19,8 @@ google-hub-daemon (Python, systemd user service)   google-hub-panel (Python, GTK
   Search, Activate                                    Show, Hide, Ask, Focus, ProbeComposer
   ListTasks, CompleteTask, AddTask                    gemini.google.com in its own WebKit profile
   Listen, StopListen, CancelListen                    speech-polyfill.js: SpeechRecognition → daemon Listen
-  ├─ omnibox.py   Google suggestions, keywords, addresses
+  ├─ omnibox.py   Google group: keywords, addresses, suggestion rows
+  ├─ suggest.py   suggestion request, gated by the search-suggestions GSettings key
   ├─ chrome.py    bookmarks and history (a copy of the History database)
   ├─ goa.py       Google token from GNOME Online Accounts
   ├─ google_api.py, calendar.py, tasks.py   Calendar v3 and Tasks v1 REST, offline queue
@@ -40,7 +41,9 @@ returns what is ready (suggestions, history, events) so that typing never blocks
 - **Tasks** are cached in `~/.cache/google-hub/tasks.json`. A change made offline is applied locally, queued and
   replayed when the network returns (GNOME's network monitor); a change Google refuses produces a notification.
 - **Calendar**: the events of the next 30 days, cached five minutes.
-- **Suggestions** come from Google's public suggest endpoint in the session language.
+- **Suggestions** come from Google's public suggest endpoint in the session language, only while the extension's
+  `search-suggestions` key is true. The daemon reads that key itself (from the schema compiled in the extension's
+  folder) and checks it before every request, so no caller can make it send what the user switched off.
 - **Voice.** `Listen()` captures the default microphone with GStreamer, detects the end of speech (energy over a
   calibrated noise floor), encodes WAV in memory and posts it to `whisper-server`, started on demand on a random port of
   127.0.0.1 and stopped after 15 minutes idle. The audio context is sized to the length of the sentence, which makes

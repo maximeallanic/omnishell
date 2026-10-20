@@ -17,5 +17,10 @@
       <default>''</default>
       <summary>Address loaded in the drawer (empty: Gemini)</summary>
     </key>
+    <key name="search-suggestions" type="b">
+      <default>true</default>
+      <summary>Google suggestions in the search</summary>
+      <description>Send the text typed in the GNOME search to Google's suggestion service and show its suggestions. When false, no suggestion request is made.</description>
+    </key>
   </schema>
 </schemalist>

@@ -58,6 +58,7 @@ class Deps:
     calendar: object
     keywords: dict
     suggest: Callable[[str], list]
+    suggestions_enabled: Callable[[], bool]  # the user's "search-suggestions" switch, read before every request
     listener_factory: Callable
     open_uri: Callable[[str], None]
     spawn: Callable[[list], None]
@@ -184,6 +185,8 @@ class HubService:
 
     # --- search --------------------------------------------------------
     def _suggest(self, q):
+        if not self.d.suggestions_enabled():
+            return []  # switched off: no request, and earlier answers are not shown either
         with self._lock:
             if q in self._sugg:
                 self._sugg.move_to_end(q)

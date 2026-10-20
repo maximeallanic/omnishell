@@ -55,7 +55,7 @@ make a claim either way.
 - No API key: Calendar and Tasks use the GNOME Online Accounts Google account.
 - Architecture: a Shell extension (GJS), a Python daemon on D-Bus for network, audio and speech (so the Shell never
   blocks), and a GTK 4 / WebKitGTK program for the drawer.
-- Goes to Google: search text from three characters (suggestions, no off switch yet), Calendar/Tasks API calls,
+- Goes to Google: search text from three characters (suggestions, on by default, off switch in preferences), Calendar/Tasks API calls,
   whatever you do in Gemini. Stays local: voice, browser history, credentials, tasks cache. No telemetry.
 - Limits: only Debian testing run for real; Fedora lacks a `whisper-server` package (build whisper.cpp once); Gemini
   page selectors can break when Google changes the page; not on extensions.gnome.org (needs the daemon and drawer);
@@ -78,7 +78,7 @@ make a claim either way.
 2. **What it does**, in three or four plain sentences from the fact sheet above.
 3. **How it works**, because HN readers ask: extension + daemon + WebKitGTK drawer, and why the daemon exists.
 4. **What goes to Google and what stays local**, said up front before someone asks. Name the suggestion
-   keystrokes and the missing off switch.
+   keystrokes and the preferences switch that stops them.
 5. **What is rough**: Gemini selectors, only Debian testing tested, Fedora and whisper-server.
 6. **How it was built**, including AI assistance if any. `[AUTHOR]`
 7. **What feedback you want**: tests on other distributions, whether the privacy trade-off is acceptable, the name.
@@ -106,7 +106,7 @@ the repository; a native video or GIF upload usually does better than a bare lin
 > - Google Tasks in the clock menu, works offline, morning summary
 > - No API key: it uses your GNOME Online Accounts Google account
 >
-> Privacy, up front: what you type in the search goes to Google's suggestion service (no off switch yet); voice,
+> Privacy, up front: what you type in the search goes to Google's suggestion service (on by default, one switch in preferences turns it off); voice,
 > history and credentials stay local; no telemetry. Details in the README.
 >
 > Limits: GNOME 50/51 Wayland only, only tested for real on Debian testing, not on extensions.gnome.org yet because
@@ -134,10 +134,10 @@ privacy split, not with Gemini.
 > instead of browser tabs: Google suggestions in the GNOME search, Gemini in a Super+G drawer, Google Tasks in the
 > clock menu, and voice questions transcribed on your machine with whisper.cpp.
 >
-> What goes to Google: your search text for suggestions (no off switch yet), Calendar/Tasks API calls through GNOME
+> What goes to Google: your search text for suggestions (on by default, switch in preferences), Calendar/Tasks API calls through GNOME
 > Online Accounts, and whatever you do in Gemini. What stays local: voice, browser history, credentials. No
-> telemetry, no server of its own. If sending search keystrokes to Google is a dealbreaker, this is not for you yet,
-> and I would like to hear whether an off switch would change that.
+> telemetry, no server of its own. If sending search keystrokes to Google is a dealbreaker, switch suggestions off in
+> the preferences: the daemon then sends nothing while you type.
 >
 > It is a Shell extension plus a Python daemon (so slow work never blocks the Shell) and a GTK 4/WebKitGTK drawer.
 > GNOME 50/51 Wayland only. The installer handles Debian/Ubuntu, Fedora and Arch packages, but only Debian testing

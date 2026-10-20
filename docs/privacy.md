@@ -6,14 +6,18 @@ Google Hub connects your desktop to Google. This page says exactly what leaves y
 
 | When | What | Where |
 |---|---|---|
-| You type in the GNOME search (from three letters) | The text, to get suggestions | `suggestqueries.google.com`, with your session language |
+| You type in the GNOME search (from three letters), while **Google suggestions** is on (the default) | The text, to get suggestions | `suggestqueries.google.com`, with your session language |
 | You open a result | The page, in your browser | The site of the result |
 | Calendar & Tasks are used | Requests with the token of your Google account | `www.googleapis.com/calendar/v3`, `tasks.googleapis.com` |
 | You use the drawer | Whatever you do in Gemini | `gemini.google.com`, under Google's terms |
 
-What you type in the search goes to Google's suggestion service as you type, as in a browser's address bar. If you
-do not want that, do not install Google Hub: suggestions are part of its purpose and there is no switch for them in
-this release.
+What you type in the search goes to Google's suggestion service as you type, as in a browser's address bar. To stop
+it, open the extension's preferences (Extensions app, or `gnome-extensions prefs google-hub@maximeallanic.github.io`)
+and turn off **Google suggestions**, or set the GSettings key `search-suggestions` to `false`
+([configuration](configuration.md)). The change applies at once: the daemon, which is the process that would send
+the request, reads the switch before every search and sends nothing while it is off. The search still shows "Search
+on Google", "Ask Gemini", keywords, history and agenda; your text reaches a website only when you pick one of those
+web results. If the daemon cannot find the extension's settings schema, it treats suggestions as off.
 
 ## What stays on your computer
 

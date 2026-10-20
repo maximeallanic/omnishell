@@ -162,8 +162,9 @@ step_deps
 if ((WANT_MODEL && VOICE_READY)); then step_model
 elif ((WANT_MODEL)); then msg_info "Speech model skipped: dictation is unavailable on this system for now"; fi
 step_files
-step_service
+# The extension first: the daemon reads its search-suggestions key from the compiled schema when it starts.
 step_extension
+step_service
 step_source_copy
 
 cat <<EOF

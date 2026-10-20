@@ -3,6 +3,8 @@ import threading
 import time
 import unittest
 from datetime import date
+from functools import partial
+from unittest import mock
 from pathlib import Path
 
 from gi.repository import Gio, GLib
@@ -12,6 +14,7 @@ from babel import Locale
 from google_hub.calendar import CalendarStore
 from google_hub.dates import DateReader
 from google_hub.google_api import GoogleApi
+from google_hub import suggest as suggest_module
 from google_hub.service import BUS_NAME, IFACE, LISTEN_TIMEOUT_MS, PATH, Deps, HubService
 from google_hub.tasks import TaskStore
 from google_hub.voice import FIRST_SAMPLE_S, MAX_CAPTURE_MS, CaptureError
@@ -70,10 +73,13 @@ class TestService(unittest.TestCase):
         api = GoogleApi(self.tokens, tasks_base=self.g.url, cal_base=self.g.url, timeout=2)
         self.opened, self.spawned, self.notes = [], [], []
         self.suggest_delay = 0.0
+        self.suggestions_on = True
+        self.suggested = []
         self.listener_kw = {}
         self.network_callbacks = []
 
         def suggest(q):
+            self.suggested.append(q)
             time.sleep(self.suggest_delay)
             return [q + " suggestion"]
 
@@ -81,7 +87,7 @@ class TestService(unittest.TestCase):
             tokens=self.tokens, chrome=StubChrome(),
             task_store=TaskStore(api, Path(self.tmp.name, "tasks.json"), DateReader(["fr"], "DMY", FR_FR), today=lambda: TODAY),
             calendar=CalendarStore(api, DateReader(["fr"], "DMY", FR_FR)), keywords={"yt": ("YouTube", "https://y/{q}")},
-            suggest=suggest,
+            suggest=suggest, suggestions_enabled=lambda: self.suggestions_on,
             listener_factory=lambda on_state: StubListener(on_state, **self.listener_kw),
             open_uri=self.opened.append, spawn=self.spawned.append,
             notify=lambda title, body, uri=None: self.notes.append((title, body, uri)),
@@ -127,6 +133,35 @@ class TestService(unittest.TestCase):
         self.assertIn("chrome", groups)
         self.assertEqual(len({i["id"] for i in r}), len(r))
         self.assertEqual(self.search("gi"), [])
+
+    def test_suggestions_off_sends_no_request(self):
+        # The real suggestion function, with urlopen wrapped to record the requests to the suggestion service: the
+        # switch must stop the request itself, not only hide its answer. Other requests (the fake Google API) go on.
+        self.deps.suggest = partial(suggest_module.suggest, hl="fr")
+        real_urlopen, sent = suggest_module.urllib.request.urlopen, []
+
+        def urlopen(url, *args, **kwargs):
+            if "suggestqueries.google.com" in str(getattr(url, "full_url", url)):
+                sent.append(url)
+                raise OSError("no network in tests")
+            return real_urlopen(url, *args, **kwargs)
+
+        with mock.patch.object(suggest_module.urllib.request, "urlopen", urlopen):
+            self.suggestions_on = False
+            r = self.search("chat noir")
+            self.assertEqual(sent, [])
+            self.assertEqual([i["id"] for i in r if i["group"] == "google"], ["google:search", "google:gemini"])
+            self.suggestions_on = True  # the same path with the switch on does reach the network
+            self.search("chat noir")
+            self.assertEqual(len(sent), 1)
+
+    def test_suggestions_off_skips_cached_answers(self):
+        self.assertIn("google:sugg:chat noir suggestion", [i["id"] for i in self.search("chat noir")])
+        self.suggestions_on = False
+        r = self.search("chat noir")
+        self.assertEqual([i["id"] for i in r if i["group"] == "google"], ["google:search", "google:gemini"])
+        self.search("chat noir et blanc")
+        self.assertEqual(self.suggested, ["chat noir"])
 
     def test_search_concurrent_slow_suggest(self):
         self.suggest_delay = 3

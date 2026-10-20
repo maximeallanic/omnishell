@@ -14,6 +14,8 @@ First public release.
 - **Google in the GNOME search**: "Search on Google" and "Ask Gemini" rows, Google suggestions, direct addresses,
   keyword searches (`yt`, `maps`, `w`, `gh`, `drive`, your own in `keywords.json`), Chrome or Chromium bookmarks and
   history, Google Calendar events and Google Tasks, and `t <task> [date]` to create a task.
+- **Google suggestions switch** in the preferences window (GSettings key `search-suggestions`, on by default): when
+  off, the daemon sends no suggestion request at all.
 - **Gemini drawer**: the Gemini web app in a drawer that slides in from the right edge of the screen under the
   pointer (Super+G or the top bar icon), prepared in the background so it opens already drawn, hidden from Alt+Tab,
   the dock and the overview, with an offline state.
