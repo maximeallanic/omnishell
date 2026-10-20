@@ -29,7 +29,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y --no-install-recommends ca-certificates git gnome-shell gettext
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Trust the checkout
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
       - name: Build the tarball and check it matches the pin in install.sh
